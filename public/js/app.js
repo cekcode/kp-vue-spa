@@ -51028,6 +51028,9 @@ var index_esm = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_informasi_List_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_informasi_List_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_BukuTamu_vue__ = __webpack_require__(74);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_BukuTamu_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_BukuTamu_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_auth_Login_vue__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_auth_Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_auth_Login_vue__);
+
 
 
 
@@ -51082,6 +51085,9 @@ var routes = [{
 }, {
     path: '/buku-tamu',
     component: __WEBPACK_IMPORTED_MODULE_11__components_BukuTamu_vue___default.a
+}, {
+    path: '/login',
+    component: __WEBPACK_IMPORTED_MODULE_12__components_auth_Login_vue___default.a
 }];
 
 /***/ }),
@@ -57829,6 +57835,145 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-1d4b7674", module.exports)
+  }
+}
+
+/***/ }),
+/* 86 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = null
+/* template */
+var __vue_template__ = __webpack_require__(87)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/auth/Login.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4221c3ad", Component.options)
+  } else {
+    hotAPI.reload("data-v-4221c3ad", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 87 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("div", { staticClass: "margin-top-90" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-xl-5 offset-xl-3" }, [
+            _c("div", { staticClass: "login-register-page" }, [
+              _c("div", { staticClass: "welcome-text" }, [
+                _c("h3", [_vm._v("Halaman Login Administrator")])
+              ]),
+              _vm._v(" "),
+              _c("form", { attrs: { method: "post", id: "login-form" } }, [
+                _c("div", { staticClass: "input-with-icon-left" }, [
+                  _c("i", {
+                    staticClass: "icon-material-baseline-mail-outline"
+                  }),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass: "input-text with-border",
+                    attrs: {
+                      type: "text",
+                      name: "emailaddress",
+                      id: "emailaddress",
+                      placeholder: "Email Address",
+                      required: ""
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-with-icon-left" }, [
+                  _c("i", { staticClass: "icon-material-outline-lock" }),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass: "input-text with-border",
+                    attrs: {
+                      type: "password",
+                      name: "password",
+                      id: "password",
+                      placeholder: "Password",
+                      required: ""
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "button full-width button-sliding-icon ripple-effect margin-top-10",
+                  attrs: { type: "submit", form: "login-form" }
+                },
+                [
+                  _vm._v("Log In "),
+                  _c("i", {
+                    staticClass: "icon-material-outline-arrow-right-alt"
+                  })
+                ]
+              )
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "margin-top-70" })
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4221c3ad", module.exports)
   }
 }
 

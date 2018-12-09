@@ -10,6 +10,7 @@ import LayananList from './components/layanan/List.vue';
 import InformasiMain from './components/informasi/Main.vue';
 import InformasiList from './components/informasi/List.vue';
 import BukuTamu from './components/BukuTamu.vue';
+import Login from './components/auth/Login.vue';
 
 
 export const routes = [
@@ -70,5 +71,9 @@ export const routes = [
     {
         path: '/buku-tamu',
         component: BukuTamu
+    },
+    {
+        path: '/login',
+        component: Login
     }
 ];
