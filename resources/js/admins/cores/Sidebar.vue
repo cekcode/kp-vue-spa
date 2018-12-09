@@ -58,3 +58,10 @@
     <!-- Dashboard Sidebar / End -->
 </template>
 
+<style scoped>
+a { color: #66676b; transition: 0.3s; }
+a, button { outline: none !important; }
+a:focus,
+a:hover { text-decoration: none; color: #333;}
+</style>
+

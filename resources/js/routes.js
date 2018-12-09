@@ -15,6 +15,7 @@ import DashboardMain from './admins/MainAdmin.vue';
 import DashboardList from './admins/dashboard/List.vue';
 import AdminProfile from './admins/profile/List.vue';
 import ProfileNew from './admins/profile/New.vue';
+import ProfileView from './admins/profile/View.vue';
 
 
 export const routes = [
@@ -98,6 +99,10 @@ export const routes = [
             {
                 path: 'profile/new',
                 component: ProfileNew
+            },
+            {
+                path: 'profile/:id',
+                component: ProfileView
             }
         ]
     }

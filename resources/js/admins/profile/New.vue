@@ -155,6 +155,7 @@
                 axios.post('/api/profiles/new', this.$data.profile)
                     .then((response) => {
                         this.$router.push('/admin/profile');
+                        location.reload();
                     }).catch(e => {
                         console.log(e);
                     });
@@ -186,5 +187,8 @@
     border-radius:5px;
     padding: 21px 0 2px 0;
 }
+a { color: #66676b; transition: 0.3s; }
+a, button { outline: none !important; }
+a:focus,
+a:hover { text-decoration: none; color: #333;}
 </style>
-
