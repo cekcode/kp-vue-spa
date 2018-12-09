@@ -13,6 +13,7 @@ import BukuTamu from './components/BukuTamu.vue';
 import Login from './components/auth/Login.vue';
 
 
+
 export const routes = [
     {
         path: '/',

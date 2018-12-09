@@ -19,21 +19,28 @@
                         </div>
                             
                         <!-- Form -->
-                        <form method="post" id="login-form">
+                        <form @submit.prevent="authenticate">
                             <div class="input-with-icon-left">
                                 <i class="icon-material-baseline-mail-outline"></i>
-                                <input type="text" class="input-text with-border" name="emailaddress" id="emailaddress" placeholder="Email Address" required/>
+                                <input type="text" class="input-text with-border" v-model="form.email" placeholder="Email Address" required/>
                             </div>
 
                             <div class="input-with-icon-left">
                                 <i class="icon-material-outline-lock"></i>
-                                <input type="password" class="input-text with-border" name="password" id="password" placeholder="Password" required/>
+                                <input type="password" class="input-text with-border" v-model="form.password" placeholder="Password" required/>
                             </div>
+
+                            <!-- Button -->
+                            <input class="button full-width button-sliding-icon ripple-effect margin-top-10" type="submit" value="Login" />
+
+                            <div class="form-group row" v-if="authError">
+                                <p class="error">
+                                    {{ authError }}
+                                </p>
+                            </div>
+                        
                         </form>
-                        
-                        <!-- Button -->
-                        <button class="button full-width button-sliding-icon ripple-effect margin-top-10" type="submit" form="login-form">Log In <i class="icon-material-outline-arrow-right-alt"></i></button>
-                        
+                         
                     </div>
 
                 </div>
@@ -46,3 +53,45 @@
         <!-- Spacer / End-->
     </div>
 </template>
+
+
+<script>
+    import {login} from '../../helpers/auth';
+    export default {
+        name: "login",
+        data() {
+            return {
+                form: {
+                    email: '',
+                    password: ''
+                },
+                error: null
+            };
+        },
+        methods: {
+            authenticate() {
+                this.$store.dispatch('login');
+                login(this.$data.form)
+                    .then((res) => {
+                        this.$store.commit("loginSuccess", res);
+                        this.$router.push({path: '/'});
+                    })
+                    .catch((error) => {
+                        this.$store.commit("loginFailed", {error});
+                    });
+            }
+        },
+        computed: {
+            authError() {
+                return this.$store.getters.authError;
+            }
+        }
+    }
+</script>
+
+<style scoped>
+.error {
+    text-align: center;
+    color: red;
+}
+</style>

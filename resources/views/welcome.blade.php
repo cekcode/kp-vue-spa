@@ -17,7 +17,7 @@
 
        
     </head>
-    <body class="gray">>
+    <body class="gray">
     <!-- Wrapper -->
     <div id="wrapper">
         <div id="app">
