@@ -36,7 +36,7 @@
         <script src="{{ asset('frontend/js/bootstrap-select.min.js') }}"></script>
         <script src="{{ asset('frontend/js/snackbar.js') }}"></script>
         <script src="{{ asset('frontend/js/clipboard.min.js') }}"></script>
-        <script src="{{ asset('frontend/js/counterup.min.js') }}"></script>
+        <!-- <script src="{{ asset('frontend/js/counterup.min.js') }}"></script> -->
         <script src="{{ asset('frontend/js/magnific-popup.min.js') }}"></script>
         <script src="{{ asset('frontend/js/slick.min.js') }}"></script>
         <script src="{{ asset('frontend/js/custom.js') }}"></script>

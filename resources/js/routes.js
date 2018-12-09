@@ -11,7 +11,10 @@ import InformasiMain from './components/informasi/Main.vue';
 import InformasiList from './components/informasi/List.vue';
 import BukuTamu from './components/BukuTamu.vue';
 import Login from './components/auth/Login.vue';
-
+import DashboardMain from './admins/MainAdmin.vue';
+import DashboardList from './admins/dashboard/List.vue';
+import AdminProfile from './admins/profile/List.vue';
+import ProfileNew from './admins/profile/New.vue';
 
 
 export const routes = [
@@ -76,5 +79,26 @@ export const routes = [
     {
         path: '/login',
         component: Login
+    },
+    {
+        path: '/admin',
+        component: DashboardMain,
+        meta: {
+            requiresAuth: true
+        },
+        children: [
+            {
+                path: '/',
+                component: DashboardList
+            },
+            {
+                path: 'profile',
+                component: AdminProfile
+            },
+            {
+                path: 'profile/new',
+                component: ProfileNew
+            }
+        ]
     }
 ];

@@ -7,7 +7,8 @@ export default {
         currentUser: user,
         isLoggedIn: !!user,
         loading: false,
-        auth_error: null
+        auth_error: null,
+        profiles: []
     },
     getters: {
         isLoading(state) {
@@ -21,6 +22,9 @@ export default {
         },
         authError(state) {
             return state.auth_error;
+        },
+        profiles(state) {
+            return state.profiles;
         }
     },
     mutations: {
@@ -44,11 +48,20 @@ export default {
             localStorage.removeItem("user");
             state.isLoggedIn = false;
             state.currentUser = null;
+        },
+        updateProfiles(state, payload) {
+            state.profiles = payload;
         }
     },
     actions: {
         login(context) {
             context.commit("login");
+        },
+        getProfiles(context) {
+            axios.get('/api/profiles')
+            .then((response) => {
+                context.commit('updateProfiles', response.data.profiles);
+            })
         }
     }
 };

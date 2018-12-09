@@ -40,6 +40,21 @@
                         </div>
                         <!-- Left Side Content / End -->
 
+                        <!-- Right Side Content / End -->
+                        <div class="right-side">
+
+                            <!-- Mobile Navigation Button -->
+                            <span class="mmenu-trigger">
+                                <button class="hamburger hamburger--collapse" type="button">
+                                    <span class="hamburger-box">
+                                        <span class="hamburger-inner"></span>
+                                    </span>
+                                </button>
+                            </span>
+
+                        </div>
+                        <!-- Right Side Content / End -->
+
                     </div>
                 </div>
                 <!-- Header / End -->
@@ -58,25 +73,7 @@
                                 <a href="index.html"><img src="/frontend/images/logo.png" alt=""></a>
                             </div>
 
-                            <!-- Main Navigation -->
-                            <nav id="navigation">
-                                <ul id="responsive">
 
-                                    <li><a href="#"><router-link to="/">Home</router-link></a></li>
-                                    <li><a href="#"><router-link to="/profile">Profile</router-link></a></li>
-
-                                    <li><a href="#">Dokter</a>
-                                        <ul class="dropdown-nav">
-                                            <li><a href="#"><router-link to="/daftar-dokter">Daftar Dokter</router-link></a></li>
-                                            <li><a href="#"><router-link to="/jadwal-dokter">Jadwal Dokter</router-link></a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#"><router-link to="/layanan">Layanan</router-link></a></li>
-                                    <li><a href="#"><router-link to="/informasi">Informasi</router-link></a></li>
-                                    <li><a href="#"><router-link to="/buku-tamu">Buku Tamu</router-link></a></li>
-
-                                </ul>
-                            </nav>
                             <div class="clearfix"></div>
                             <!-- Main Navigation / End -->
                             
@@ -266,15 +263,6 @@
 
                             </div>
                             <!-- User Menu / End -->
-
-                            <!-- Mobile Navigation Button -->
-                            <span class="mmenu-trigger">
-                                <button class="hamburger hamburger--collapse" type="button">
-                                    <span class="hamburger-box">
-                                        <span class="hamburger-inner"></span>
-                                    </span>
-                                </button>
-                            </span>
 
                         </div>
                         <!-- Right Side Content / End -->

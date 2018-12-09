@@ -27,8 +27,7 @@
 
                                 <!-- Details -->
                                 <div class="job-listing-description">
-                                    <h4 class="job-listing-company">Hexagon <span class="verified-badge" title="Verified Employer" data-tippy-placement="top"></span></h4>
-                                    <h3 class="job-listing-title">Bilingual Event Support Specialist</h3>
+                                    <h3 class="job-listing-title">Sejarah</h3>
                                     <p class="job-listing-text">Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value.</p>
                                 </div>
 
@@ -59,8 +58,7 @@
 
                                 <!-- Details -->
                                 <div class="job-listing-description">
-                                    <h4 class="job-listing-company">Coffee</h4>
-                                    <h3 class="job-listing-title">Barista and Cashier</h3>
+                                    <h3 class="job-listing-title">Visi dan Misi</h3>
                                     <p class="job-listing-text">Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value.</p>
                                 </div>
 

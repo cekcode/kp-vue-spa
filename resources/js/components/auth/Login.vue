@@ -74,7 +74,8 @@
                 login(this.$data.form)
                     .then((res) => {
                         this.$store.commit("loginSuccess", res);
-                        this.$router.push({path: '/'});
+                        this.$router.push({path: '/admin'});
+                        location.reload();
                     })
                     .catch((error) => {
                         this.$store.commit("loginFailed", {error});
