@@ -52,14 +52,13 @@
 
 												<!-- Details -->
 												<div class="job-listing-description">
-													<h3 class="job-listing-title"><a href="#">{{ profile.title }}</a></h3>
+													<h3 class="job-listing-title"><router-link :to="`/admin/profile/${profile.id}`" title="Lihat" data-tippy-placement="left">{{ profile.title }}</router-link></h3>
 												</div>
 											</div>
 										</div>
 										<!-- Buttons -->
 										<div class="buttons-to-right">
-											<router-link :to="`/admin/profile/${profile.id}`" class="button gray ripple-effect-dark ico" title="Lihat" data-tippy-placement="left"><i class="icon-material-outline-visibility"></i></router-link>
-											<a href="#" class="button dark ripple-effect ico" title="Edit" data-tippy-placement="left"><i class="icon-feather-edit"></i></a>
+											<a href="#" class="button gray ripple-effect-dark ico" title="Edit" data-tippy-placement="left"><i class="icon-feather-edit"></i></a>
 											<a href="#" class="button red ripple-effect ico" title="Hapus" data-tippy-placement="left"><i class="icon-feather-trash-2"></i></a>
 										</div>
 									</li>

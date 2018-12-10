@@ -36,7 +36,7 @@
                                     <div class="col-xl-12">
                                         <div class="submit-field">
                                             <h5>Judul</h5>
-                                            <input type="text" class="with-border" v-model="profile.title">
+                                            <input type="text" class="with-border form-control" v-model="profile.title">
                                         </div>
                                     </div>
 
@@ -50,7 +50,9 @@
                                     <div class="col-xl-12">
                                         <div class="submit-field">
                                             <h5>Description</h5>
-                                            <textarea cols="30" rows="5" class="with-border" v-model="profile.description"></textarea>
+                                            <!-- <wysiwyg v-model="profile.description" /> -->
+                                            <vue-editor v-model="profile.description"></vue-editor>
+                                            <!-- <textarea cols="30" rows="5" class="with-border" v-model="profile.description"></textarea> -->
                                             <div class="uploadButton margin-top-30">
                                                 <input class="uploadButton-input" type="file" accept="image/*, application/pdf" id="upload" multiple/>
                                                 <label class="uploadButton-button ripple-effect" for="upload">Upload Files</label>
@@ -121,6 +123,7 @@
 
 <script>
     import validate from 'validate.js';
+    import { VueEditor } from 'vue2-editor';
 
     export default {
         name: 'new',
@@ -133,6 +136,9 @@
                 },
                 errors: null
             };
+        },
+        components: {
+            VueEditor
         },
         computed: {
             currentUser() {
@@ -180,6 +186,7 @@
         }
     }
 </script>
+
 
 <style>
 .errors {

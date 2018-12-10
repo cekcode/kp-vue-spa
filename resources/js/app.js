@@ -6,7 +6,9 @@ import {routes} from './routes';
 import MainApp from './components/MainApp.vue';
 import StoreData from './store';
 import {initialize} from './helpers/general';
+// import wysiwyg from "vue-wysiwyg";
 
+// Vue.use(wysiwyg, {});
 Vue.use(VueRouter);
 Vue.use(Vuex);
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Profile;
 use App\Http\Requests\CreateProfileRequest;
+use Illuminate\Support\Str;
 
 class ProfileController extends Controller
 {
@@ -24,8 +25,12 @@ class ProfileController extends Controller
     }
     public function new(CreateProfileRequest $request)
     {
-        $profile = Profile::create($request->only(["title", "image", "description"]));
-
+        $profile = new Profile();
+        $profile->title = $request->get('title');
+        $profile->slug = Str::slug($request->get('title'));
+        $profile->image = $request->get('image');
+        $profile->description = $request->get('description');
+        $profile->save();
         return response()->json([
             "profile" => $profile
         ], 200);
