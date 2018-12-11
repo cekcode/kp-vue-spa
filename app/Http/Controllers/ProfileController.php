@@ -25,10 +25,22 @@ class ProfileController extends Controller
     }
     public function new(CreateProfileRequest $request)
     {
+        // if ($request->hasFile('image')) {
+        //     $image = $request->file('image');
+        //     $name = str_slug($request->title) . '.' . $image->getClientOriginalExtension();
+        //     $destinationPath = public_path('/uploads');
+        //     $imagePath = $destinationPath . "/" . $name;
+        //     $image->move($destinationPath, $name);
+        //     $profile->image = $name;
+        // }
         $profile = new Profile();
+
+        $imageName = time().'.'.$request->image->getClientOriginalExtension();
+        $request->image->move(public_path('uploads'), $imageName);
+
         $profile->title = $request->get('title');
         $profile->slug = Str::slug($request->get('title'));
-        $profile->image = $request->get('image');
+        $profile->image = $imageName;
         $profile->description = $request->get('description');
         $profile->save();
         return response()->json([

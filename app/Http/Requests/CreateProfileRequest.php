@@ -16,6 +16,7 @@ class CreateProfileRequest extends FormRequest
     public function rules(Request $request)
     {
         return [
+            // |mimes:jpeg,png,jpg,gif,svg
             // "title" => "required|min:3|max:100|unique:profile,title,'.$request->id",
             "title" => "required|min:3|max:100",
             "image" => "required",

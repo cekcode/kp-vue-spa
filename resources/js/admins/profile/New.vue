@@ -31,19 +31,23 @@
 						</div>
 
 						<div class="content with-padding padding-bottom-10">
-                            <form @submit.prevent="add">
+                            <form @submit.prevent="add" enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col-xl-12">
                                         <div class="submit-field">
                                             <h5>Judul</h5>
-                                            <input type="text" class="with-border form-control" v-model="profile.title">
+                                            <input type="text" ref="title" class="with-border form-control" v-model="profile.title">
                                         </div>
                                     </div>
 
                                     <div class="col-xl-12">
                                         <div class="submit-field">
                                             <h5>Image</h5>
-                                            <input type="text" class="with-border" v-model="profile.image">
+                                            <div class="uploadButton margin-top-30">
+                                                <input class="uploadButton-input" type="file" accept="image/*" id="upload" v-on:change="onImageChange"/>
+                                                <label class="uploadButton-button ripple-effect" for="upload">Upload Files</label>
+                                                <span class="uploadButton-file-name">Images or documents that might be helpful in describing your job</span>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -51,13 +55,9 @@
                                         <div class="submit-field">
                                             <h5>Description</h5>
                                             <!-- <wysiwyg v-model="profile.description" /> -->
-                                            <vue-editor v-model="profile.description"></vue-editor>
+                                            <vue-editor  ref="description" v-model="profile.description"></vue-editor>
                                             <!-- <textarea cols="30" rows="5" class="with-border" v-model="profile.description"></textarea> -->
-                                            <div class="uploadButton margin-top-30">
-                                                <input class="uploadButton-input" type="file" accept="image/*, application/pdf" id="upload" multiple/>
-                                                <label class="uploadButton-button ripple-effect" for="upload">Upload Files</label>
-                                                <span class="uploadButton-file-name">Images or documents that might be helpful in describing your job</span>
-                                            </div>
+                                            
                                         </div>
                                     </div>
 
@@ -146,19 +146,32 @@
             }
         },
         methods: {
+            onImageChange(e){
+                console.log(e.target.files[0]);
+                this.image = e.target.files[0];
+            },
             add() {
                 this.errors = null;
-
                 const constraints = this.getConstraints();
-
                 const errors = validate(this.$data.profile, constraints);
+
+                let currentObj = this;
+                const config = {
+                    headers: { 'content-type': 'multipart/form-data' }
+                }
+
+                let formData = new FormData();
+
+                formData.append('image', this.image);
+                formData.append("title", this.$refs.title.value);
+                formData.append("description", this.$refs.description.value);
 
                 if(errors) {
                     this.errors = errors;
                     return;
                 }
 
-                axios.post('/api/profiles/new', this.$data.profile)
+                axios.post('/api/profiles/new', formData)
                     .then((response) => {
                         this.$router.push('/admin/profile');
                         location.reload();
@@ -174,9 +187,6 @@
                             minimum: 3,
                             message: 'Minimal 3 Karakter'
                         }
-                    },
-                    image: {
-                        presence: true
                     },
                     description: {
                         presence: true
