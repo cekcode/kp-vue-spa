@@ -101,7 +101,7 @@ export const routes = [
                 component: ProfileNew
             },
             {
-                path: 'profile/:id',
+                path: 'profile/:slug',
                 component: ProfileView
             }
         ]

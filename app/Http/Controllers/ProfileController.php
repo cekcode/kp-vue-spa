@@ -16,9 +16,9 @@ class ProfileController extends Controller
             "profiles" => $profiles
         ], 200);
     }
-    public function get($id)
+    public function get($slug)
     {
-        $profile = Profile::whereId($id)->first();
+        $profile = Profile::where('slug', $slug)->first();
         return response()->json([
             "profile" => $profile
         ], 200);
@@ -34,8 +34,8 @@ class ProfileController extends Controller
         //     $profile->image = $name;
         // }
         $profile = new Profile();
-
-        $imageName = time().'.'.$request->image->getClientOriginalExtension();
+        $image = $request->file('image');
+        $imageName = time().'-'.str_slug($request->title).'.'.$request->image->getClientOriginalExtension();
         $request->image->move(public_path('uploads'), $imageName);
 
         $profile->title = $request->get('title');
@@ -43,6 +43,7 @@ class ProfileController extends Controller
         $profile->image = $imageName;
         $profile->description = $request->get('description');
         $profile->save();
+
         return response()->json([
             "profile" => $profile
         ], 200);

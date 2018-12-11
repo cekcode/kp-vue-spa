@@ -155,11 +155,6 @@
                 const constraints = this.getConstraints();
                 const errors = validate(this.$data.profile, constraints);
 
-                let currentObj = this;
-                const config = {
-                    headers: { 'content-type': 'multipart/form-data' }
-                }
-
                 let formData = new FormData();
 
                 formData.append('image', this.image);

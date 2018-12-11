@@ -31,8 +31,8 @@
                                 <!-- Blog Post Thumbnail -->
                                 <div class="blog-post-thumbnail">
                                     <div class="blog-post-thumbnail-inner">
-                                        <span class="blog-item-tag">Tips</span>
-                                        <img src="https://cdn-images-1.medium.com/max/1024/0*-1zAEk8K-cT1b4Oh.png" alt="">
+                                        <span class="blog-item-tag">Image</span>
+                                        <img v-bind:src="'../../uploads/'+profile.image" alt="">
                                     </div>
                                 </div>
 
@@ -113,9 +113,9 @@
         name: 'view',
         created() {
             if (this.profiles.length) {
-                this.profile = this.profiles.find((profile) => profile.id == this.$route.params.id);
+                this.profile = this.profiles.find((profile) => profile.slug == this.$route.params.slug);
             } else {
-                axios.get(`/api/profiles/${this.$route.params.id}`)
+                axios.get(`/api/profiles/${this.$route.params.slug}`)
                     .then((response) => {
                         this.profile = response.data.profile
                     });
