@@ -70,12 +70,11 @@
                             
                             <!-- Logo -->
                             <div id="logo">
-                                <a href="index.html"><img src="/frontend/images/logo.png" alt=""></a>
+                                <router-link to="/"><img src="/frontend/images/logo.png" alt=""></router-link>
                             </div>
 
 
                             <div class="clearfix"></div>
-                            <!-- Main Navigation / End -->
                             
                         </div>
                         <!-- Left Side Content / End -->

@@ -110,7 +110,6 @@
 
 <script>
     export default {
-        name: 'view',
         created() {
             if (this.profiles.length) {
                 this.profile = this.profiles.find((profile) => profile.slug == this.$route.params.slug);

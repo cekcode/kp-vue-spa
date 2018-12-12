@@ -13,7 +13,7 @@
 					<ul>
 						<li><router-link to="/admin">Admin</router-link></li>
                         <li><router-link to="/admin/profile">Profile</router-link></li>
-						<li>New</li>
+						<li>Edit</li>
 					</ul>
 				</nav>
 			</div>
@@ -27,27 +27,29 @@
 
 						<!-- Headline -->
 						<div class="headline">
-							<h3><i class="icon-feather-folder-plus"></i> Form Tambah Profile Baru</h3>
+							<h3><i class="icon-feather-folder-plus"></i> Form Edit Profile</h3>
 						</div>
 
 						<div class="content with-padding padding-bottom-10">
-                            <form @submit.prevent="add" enctype="multipart/form-data">
+                            <form  enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col-xl-12">
                                         <div class="submit-field">
                                             <h5>Judul</h5>
-                                            <input type="text" ref="title" class="with-border form-control" v-model="profile.title" required>
+                                            <input type="text" ref="title" class="with-border form-control" v-model="profile.title">
                                         </div>
                                     </div>
 
                                     <div class="col-xl-12">
                                         <div class="submit-field">
                                             <h5>Image</h5>
+                                            <img :src="'../../../uploads/'+profile.image" height="200px" width="300px">
                                             <div class="uploadButton margin-top-30">
-                                                <input class="uploadButton-input" type="file" accept="image/*" id="upload" v-on:change="onImageChange" required/>
+                                                <input class="uploadButton-input" type="file" accept="image/*" id="upload" v-on:change="onImageChange"/>
                                                 <label class="uploadButton-button ripple-effect" for="upload">Upload Files</label>
-                                                <span class="uploadButton-file-name">Images or documents that might be helpful in describing your job</span>
+                                                <span class="uploadButton-file-name">Jangan Masukan gambar apabila tidak ingin merubah gambar profile</span>
                                             </div>
+                                            
                                         </div>
                                     </div>
 
@@ -67,13 +69,13 @@
                                 
                                 </div>
 
-                                <div class="errors" v-if="errors">
+                                <!-- <div class="errors" v-if="errors">
                                     <ul>
                                         <li v-for="(fieldsError, fieldName) in errors" :key="fieldName">
                                             <strong>{{ fieldName }}</strong> {{ fieldsError.join('\n') }}
                                         </li>
                                     </ul>
-                                </div>
+                                </div> -->
                             </form>
 						</div>
 					</div>
@@ -120,85 +122,47 @@
 	<!-- Dashboard Content / End -->
 </template>
 
-
 <script>
-    import validate from 'validate.js';
-    import { VueEditor } from 'vue2-editor';
+import { VueEditor } from 'vue2-editor';
 
     export default {
-        name: 'new',
-        data() {
-            return {
-                profile: {
-                    title: '',
-                    image: '',
-                    description: ''
-                },
-                errors: null
-            };
-        },
+        name: 'edit',
         components: {
             VueEditor
+        },
+        created() {
+            if (this.profiles.length) {
+                this.profile = this.profiles.find((profile) => profile.slug == this.$route.params.slug);
+            } else {
+                axios.get(`/api/profiles/${this.$route.params.slug}`)
+                    .then((response) => {
+                        this.profile = response.data.profile
+                    });
+            }
+        },
+        data() {
+            return {
+                profile: null
+            };
         },
         computed: {
             currentUser() {
                 return this.$store.getters.currentUser;
+            },
+            profiles() {
+                return this.$store.getters.profiles;
             }
         },
         methods: {
             onImageChange(e){
                 console.log(e.target.files[0]);
                 this.image = e.target.files[0];
-            },
-            add() {
-                this.errors = null;
-                const constraints = this.getConstraints();
-                const errors = validate(this.$data.profile, constraints);
-
-                let formData = new FormData();
-
-                formData.append('image', this.image);
-                formData.append("title", this.$refs.title.value);
-                formData.append("description", this.$refs.description.value);
-
-                if(errors) {
-                    this.errors = errors;
-                    return;
-                }
-
-                axios.post('/api/profiles/new', formData)
-                    .then((response) => {
-                        this.$router.push('/admin/profile');
-                        location.reload();
-                    }).catch(e => {
-                        console.log(e);
-                    });
-            },
-            getConstraints() {
-                return {
-                    title: {
-                        presence: true,
-                        length: {
-                            minimum: 3,
-                            message: 'Minimal 3 Karakter'
-                        }
-                    },
-                    description: {
-                        presence: true
-                    }
-                };
             }
         }
     }
 </script>
 
-
-<style>
-.errors {
-    background: lightcoral;
-    border-radius:5px;
-    padding: 21px 0 2px 0;
-}
+<style scoped>
 a { color: #66676b; transition: 0.3s; }
 a, button { outline: none !important; }
 a:focus,

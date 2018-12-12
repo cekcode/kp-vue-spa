@@ -48,4 +48,10 @@ class ProfileController extends Controller
             "profile" => $profile
         ], 200);
     }
+
+    public function destroy($id)
+    {
+        Profile::where('id',$id)->delete();
+    }
+
 }

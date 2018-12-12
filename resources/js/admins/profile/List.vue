@@ -37,7 +37,7 @@
 							</template>
 
 							 <template v-else>
-								<ul class="dashboard-box-list" v-for="profile in profiles" :key="profile.id">
+								<ul class="dashboard-box-list" v-for="(profile, index) in profiles" :key="profile.id">
 									<li>
 										<!-- Job Listing -->
 										<div class="job-listing">
@@ -58,8 +58,8 @@
 										</div>
 										<!-- Buttons -->
 										<div class="buttons-to-right">
-											<a href="#" class="button gray ripple-effect-dark ico" title="Edit" data-tippy-placement="left"><i class="icon-feather-edit"></i></a>
-											<a href="#" class="button red ripple-effect ico" title="Hapus" data-tippy-placement="left"><i class="icon-feather-trash-2"></i></a>
+											<router-link :to="`/admin/profile/edit/${profile.slug}`" title="Edit" data-tippy-placement="left" class="button gray ripple-effect-dark ico"><i class="icon-feather-edit"></i></router-link>
+											<a @click="del(profile.id, index)" class="button red ripple-effect ico" title="Hapus" data-tippy-placement="left"><i class="icon-feather-trash-2"></i></a>
 										</div>
 									</li>
 									<hr>
@@ -77,7 +77,7 @@
 			<div class="dashboard-footer-spacer"></div>
 			<div class="small-footer margin-top-15">
 				<div class="small-footer-copyrights">
-					Â© 2018 <strong>Hireo</strong>. All Rights Reserved.
+					© 2018 <strong>Hireo</strong>. All Rights Reserved.
 				</div>
 				<ul class="footer-social-links">
 					<li>
@@ -113,7 +113,13 @@
 
 <script>
     export default {
-        name: 'list',
+		name: 'list',
+			data(){
+				return{
+					errors:{},
+					rows:[]
+				}
+		},
         mounted() {
             if (this.profiles.length > 1) {
                 return;
@@ -124,7 +130,24 @@
             profiles() {
                 return this.$store.getters.profiles;
             }
-        }
+        },
+		methods:{
+			del(id, index){
+				if (confirm("Are you sure ?")) {
+				axios
+				.delete(`/api/profiles/delete/${id}`)
+				.then(res => {
+					this.profiles.splice(index, 1);
+				})
+				.catch((error) => this.errors = error.response.data.errors)	
+					// axios.delete(`/katlayanan/${id}`)
+					// .then((response)=> {this.lists.splice(key,1);this.loading = !this.loading})
+					// .catch((error) => this.errors = error.response.data.errors)	
+				}
+				console.log(`${index} ${id}`)
+				// window.location.reload(true)
+			}
+		}
     }
 </script>
 

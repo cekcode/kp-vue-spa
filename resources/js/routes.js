@@ -16,6 +16,7 @@ import DashboardList from './admins/dashboard/List.vue';
 import AdminProfile from './admins/profile/List.vue';
 import ProfileNew from './admins/profile/New.vue';
 import ProfileView from './admins/profile/View.vue';
+import ProfileEdit from './admins/profile/Edit.vue';
 
 
 export const routes = [
@@ -103,6 +104,10 @@ export const routes = [
             {
                 path: 'profile/:slug',
                 component: ProfileView
+            },
+            {
+                path: 'profile/edit/:slug',
+                component: ProfileEdit
             }
         ]
     }
