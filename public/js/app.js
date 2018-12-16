@@ -78724,7 +78724,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             url: null,
-            profile: {},
+            selectedFile: null,
+            profile: {
+                title: '',
+                image: '',
+                description: ''
+            },
             errors: {}
         };
     },
@@ -78746,27 +78751,61 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     computed: {
-        currentUser: function currentUser() {
-            return this.$store.getters.currentUser;
-        },
         profiles: function profiles() {
             return this.$store.getters.profiles;
         }
     },
     methods: {
         onFileChange: function onFileChange(e) {
-            var file = e.target.files[0];
-            this.url = URL.createObjectURL(file);
+            this.selectedFile = event.target.files[0];
+            this.url = URL.createObjectURL(this.selectedFile);
         },
         update: function update() {
-            var _this2 = this;
+            this.errors = null;
+            var constraints = this.getConstraints();
+            var errors = __WEBPACK_IMPORTED_MODULE_0_validate_js___default()(this.$data.profile, constraints);
+            if (errors) {
+                this.errors = errors;
+                return;
+            }
 
-            axios.patch('/api/profiles/update/' + this.profile.id, this.$data.profile).then(function (response) {
-                _this2.$router.push('/admin/profile');
-                location.reload();
-            }).catch(function (e) {
-                console.log(e);
-            });
+            var formData = new FormData();
+
+            formData.append("id", this.profile.id);
+            formData.append("title", this.$refs.title.value);
+            formData.append("description", this.$refs.description.value);
+            if (this.selectedFile != null) {
+                formData.append('image', this.selectedFile, this.selectedFile.name);
+            }
+            var options = {
+                id: this.profile.id,
+                data: formData
+            };
+
+            this.$store.dispatch('updateProfile', options);
+            this.$router.push('/admin/profile');
+            // this.$router.push('/admin/profile');
+            // axios.patch(`/api/profiles/update/${this.profile.id}`,this.$data.profile)
+            // .then((response)=> {
+            //     this.$router.push('/admin/profile');
+            //     location.reload();
+            // }).catch(e => {
+            //     console.log(e);
+            //     });
+        },
+        getConstraints: function getConstraints() {
+            return {
+                title: {
+                    presence: true,
+                    length: {
+                        minimum: 3,
+                        message: 'Minimal 3 Karakter'
+                    }
+                },
+                description: {
+                    presence: true
+                }
+            };
         }
     }
 });
@@ -78826,132 +78865,140 @@ var render = function() {
                 "div",
                 { staticClass: "content with-padding padding-bottom-10" },
                 [
-                  _c("form", { attrs: { enctype: "multipart/form-data" } }, [
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-xl-12" }, [
-                        _c("div", { staticClass: "submit-field" }, [
-                          _c("h5", [_vm._v("Judul")]),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.profile.title,
-                                expression: "profile.title"
-                              }
-                            ],
-                            staticClass: "with-border form-control",
-                            attrs: { type: "text" },
-                            domProps: { value: _vm.profile.title },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.profile,
-                                  "title",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          })
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-xl-12" }, [
-                        _c("div", { staticClass: "submit-field" }, [
-                          _c("h5", [_vm._v("Image")]),
-                          _vm._v(" "),
-                          _c("div", { attrs: { id: "preview" } }, [
-                            _vm.url
-                              ? _c("img", {
-                                  attrs: {
-                                    src: _vm.url,
-                                    height: "200px",
-                                    width: "300px"
-                                  }
-                                })
-                              : _c("img", {
-                                  attrs: {
-                                    src:
-                                      "../../../uploads/" + _vm.profile.image,
-                                    height: "200px",
-                                    width: "300px"
-                                  }
-                                })
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "uploadButton margin-top-30" },
-                            [
-                              _c("input", {
-                                staticClass: "uploadButton-input",
-                                attrs: {
-                                  type: "file",
-                                  accept: "image/*",
-                                  id: "upload"
-                                },
-                                on: { change: _vm.onFileChange }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "label",
-                                {
-                                  staticClass:
-                                    "uploadButton-button ripple-effect",
-                                  attrs: { for: "upload" }
-                                },
-                                [_vm._v("Upload Files")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "span",
-                                { staticClass: "uploadButton-file-name" },
-                                [
-                                  _vm._v(
-                                    "Jangan Masukan gambar apabila tidak ingin merubah gambar profile"
-                                  )
-                                ]
-                              )
-                            ]
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-xl-12" }, [
-                        _c(
-                          "div",
-                          { staticClass: "submit-field" },
-                          [
-                            _c("h5", [_vm._v("Description")]),
+                  _c(
+                    "form",
+                    {
+                      attrs: { enctype: "multipart/form-data" },
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.update($event)
+                        }
+                      }
+                    },
+                    [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-xl-12" }, [
+                          _c("div", { staticClass: "submit-field" }, [
+                            _c("h5", [_vm._v("Judul")]),
                             _vm._v(" "),
-                            _c("vue-editor", {
-                              ref: "description",
-                              model: {
-                                value: _vm.profile.description,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.profile, "description", $$v)
-                                },
-                                expression: "profile.description"
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.profile.title,
+                                  expression: "profile.title"
+                                }
+                              ],
+                              ref: "title",
+                              staticClass: "with-border form-control",
+                              attrs: { type: "text" },
+                              domProps: { value: _vm.profile.title },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.profile,
+                                    "title",
+                                    $event.target.value
+                                  )
+                                }
                               }
                             })
-                          ],
-                          1
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-xl-12" }, [
-                        _c("input", {
-                          staticClass: "button ripple-effect big margin-top-30",
-                          attrs: { type: "submit" },
-                          on: { click: _vm.update }
-                        })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-xl-12" }, [
+                          _c("div", { staticClass: "submit-field" }, [
+                            _c("h5", [_vm._v("Image")]),
+                            _vm._v(" "),
+                            _c("div", { attrs: { id: "preview" } }, [
+                              _vm.url
+                                ? _c("img", {
+                                    attrs: {
+                                      src: _vm.url,
+                                      height: "200px",
+                                      width: "300px"
+                                    }
+                                  })
+                                : _c("img", {
+                                    attrs: {
+                                      src:
+                                        "../../../uploads/" + _vm.profile.image,
+                                      height: "200px",
+                                      width: "300px"
+                                    }
+                                  })
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "uploadButton margin-top-30" },
+                              [
+                                _c("input", {
+                                  staticClass: "uploadButton-input",
+                                  attrs: {
+                                    type: "file",
+                                    accept: "image/*",
+                                    id: "file",
+                                    name: "file"
+                                  },
+                                  on: { change: _vm.onFileChange }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass:
+                                      "uploadButton-button ripple-effect",
+                                    attrs: { for: "file" }
+                                  },
+                                  [_vm._v("Upload Files")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  { staticClass: "uploadButton-file-name" },
+                                  [
+                                    _vm._v(
+                                      "Jangan Masukan gambar apabila tidak ingin merubah gambar profile"
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-xl-12" }, [
+                          _c(
+                            "div",
+                            { staticClass: "submit-field" },
+                            [
+                              _c("h5", [_vm._v("Description")]),
+                              _vm._v(" "),
+                              _c("vue-editor", {
+                                ref: "description",
+                                model: {
+                                  value: _vm.profile.description,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.profile, "description", $$v)
+                                  },
+                                  expression: "profile.description"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(1)
                       ])
-                    ])
-                  ])
+                    ]
+                  )
                 ]
               )
             ])
@@ -78960,7 +79007,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "dashboard-footer-spacer" }),
         _vm._v(" "),
-        _vm._m(1)
+        _vm._m(2)
       ])
     ]
   )
@@ -78981,11 +79028,80 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-xl-12" }, [
+      _c("input", {
+        staticClass: "button ripple-effect big margin-top-30",
+        attrs: { type: "submit", value: "Update" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "small-footer margin-top-15" }, [
       _c("div", { staticClass: "small-footer-copyrights" }, [
         _vm._v("\n\t\t\t\t\t© 2018 "),
         _c("strong", [_vm._v("Hireo")]),
         _vm._v(". All Rights Reserved.\n\t\t\t\t")
+      ]),
+      _vm._v(" "),
+      _c("ul", { staticClass: "footer-social-links" }, [
+        _c("li", [
+          _c(
+            "a",
+            {
+              attrs: {
+                href: "#",
+                title: "Facebook",
+                "data-tippy-placement": "top"
+              }
+            },
+            [_c("i", { staticClass: "icon-brand-facebook-f" })]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c(
+            "a",
+            {
+              attrs: {
+                href: "#",
+                title: "Twitter",
+                "data-tippy-placement": "top"
+              }
+            },
+            [_c("i", { staticClass: "icon-brand-twitter" })]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c(
+            "a",
+            {
+              attrs: {
+                href: "#",
+                title: "Google Plus",
+                "data-tippy-placement": "top"
+              }
+            },
+            [_c("i", { staticClass: "icon-brand-google-plus-g" })]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c(
+            "a",
+            {
+              attrs: {
+                href: "#",
+                title: "LinkedIn",
+                "data-tippy-placement": "top"
+              }
+            },
+            [_c("i", { staticClass: "icon-brand-linkedin-in" })]
+          )
+        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "clearfix" })
@@ -80396,7 +80512,7 @@ if (false) {
         updateProfiles: function updateProfiles(state, payload) {
             state.profiles = payload;
         },
-        removeProfile: function removeProfile(state, profile) {
+        removeProfile: function removeProfile(state) {
             state.profiles;
             // profiles.splice(profiles.indexOf(profile), 1);
         },
@@ -80455,6 +80571,11 @@ var user = Object(__WEBPACK_IMPORTED_MODULE_0__helpers_auth__["a" /* getLocalUse
         context.commit('pushProfile', formData);
         context.commit('updateProfiles', false);
         // router.push('/admin/profile');
+    },
+    updateProfile: function updateProfile(context, payload) {
+        axios.post('/api/profiles/update/' + payload.id, payload.data);
+        context.commit('removeProfile');
+        context.commit('updateProfiles', false);
     }
 });
 

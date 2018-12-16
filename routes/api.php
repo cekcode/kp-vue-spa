@@ -28,5 +28,5 @@ Route::group(['middleware' => 'jwt.auth'], function ($router) {
     Route::get('profiles/{slug}', 'ProfileController@get');
     Route::get('profiles/edit/{slug}', 'ProfileController@get');
     Route::delete('profiles/delete/{id}', 'ProfileController@destroy');
-    Route::patch('profiles/update/{id}', 'ProfileController@update');
+    Route::post('profiles/update/{id}', 'ProfileController@update');
 });

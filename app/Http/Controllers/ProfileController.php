@@ -43,6 +43,11 @@ class ProfileController extends Controller
 
     public function update($id,Request $request)
     {
+        $this->validate($request, [
+            'title' =>  'required',
+            'description'  =>  'required'
+        ]);
+
         $dt = Profile::find($id);
         if($request->file('image') !== null){
             $image = $request->file('image');
@@ -50,7 +55,7 @@ class ProfileController extends Controller
             $request->image->move(public_path('uploads'), $imageName);
             $dt->image = $imageName;
         }
-        $dt->slug = Str::slug($request->get('title'));
+        $dt->slug = Str::slug($request->title);
         $dt->title = $request->title;
         $dt->description = $request->description;
         $dt->save();

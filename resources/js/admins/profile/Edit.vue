@@ -31,12 +31,12 @@
 						</div>
 
 						<div class="content with-padding padding-bottom-10">
-                            <form enctype="multipart/form-data">
+                            <form @submit.prevent="update" enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col-xl-12">
                                         <div class="submit-field">
                                             <h5>Judul</h5>
-                                            <input type="text" class="with-border form-control" v-model="profile.title">
+                                            <input type="text" ref="title" class="with-border form-control" v-model="profile.title">
                                         </div>
                                     </div>
 
@@ -49,8 +49,8 @@
                                             </div>
                                             <!-- <img :src="'../../../uploads/'+profile.image" height="200px" width="300px"> -->
                                             <div class="uploadButton margin-top-30">
-                                                <input class="uploadButton-input" type="file" accept="image/*" id="upload" @change="onFileChange"/>
-                                                <label class="uploadButton-button ripple-effect" for="upload">Upload Files</label>
+                                                <input class="uploadButton-input" type="file" accept="image/*" id="file" name="file" v-on:change="onFileChange"/>
+                                                <label class="uploadButton-button ripple-effect" for="file">Upload Files</label>
                                                 <span class="uploadButton-file-name">Jangan Masukan gambar apabila tidak ingin merubah gambar profile</span>
                                             </div>
                                             
@@ -68,7 +68,7 @@
                                     </div>
 
                                     <div class="col-xl-12">
-                                        <input type="submit" class="button ripple-effect big margin-top-30" @click='update'>
+                                        <input type="submit" class="button ripple-effect big margin-top-30" value="Update">
                                     </div>
                                 
                                 </div>
@@ -95,7 +95,7 @@
 				<div class="small-footer-copyrights">
 					© 2018 <strong>Hireo</strong>. All Rights Reserved.
 				</div>
-                <!-- Footer
+ 
 				<ul class="footer-social-links">
 					<li>
 						<a href="#" title="Facebook" data-tippy-placement="top">
@@ -118,7 +118,7 @@
 						</a>
 					</li>
 				</ul>
-                -->
+               
 				<div class="clearfix"></div>
 			</div>
 			<!-- Footer / End -->
@@ -137,7 +137,12 @@ import { VueEditor } from 'vue2-editor';
         data: function() {
             return {
                 url:null,
-                profile: {},
+                selectedFile:null,
+                profile: {
+                    title: '',
+                    image: '',
+                    description: ''
+                },
                 errors:{}
             }
         },
@@ -155,27 +160,63 @@ import { VueEditor } from 'vue2-editor';
             }
         },
         computed: {
-            currentUser() {
-                return this.$store.getters.currentUser;
-            },
             profiles() {
                 return this.$store.getters.profiles;
             }
         },
         methods: {
             onFileChange(e) {
-                const file = e.target.files[0];
-                this.url = URL.createObjectURL(file);
+                this.selectedFile = event.target.files[0];
+                this.url = URL.createObjectURL(this.selectedFile);
             },
             update(){
-            axios.patch(`/api/profiles/update/${this.profile.id}`,this.$data.profile)
-            .then((response)=> {
+                this.errors = null;
+                const constraints = this.getConstraints();
+                const errors = validate(this.$data.profile, constraints);
+                if(errors) {
+                    this.errors = errors;
+                    return;
+                }
+
+                let formData = new FormData();
+
+                
+                formData.append("id", this.profile.id);
+                formData.append("title", this.$refs.title.value);
+                formData.append("description", this.$refs.description.value);
+                if(this.selectedFile!=null){
+                    formData.append('image', this.selectedFile, this.selectedFile.name);
+                }
+                var options = { 
+                    id: this.profile.id,
+                    data: formData 
+                };
+                
+                this.$store.dispatch('updateProfile', options);
                 this.$router.push('/admin/profile');
-                location.reload();
-            }).catch(e => {
-                console.log(e);
-                });
-			}
+                // this.$router.push('/admin/profile');
+                // axios.patch(`/api/profiles/update/${this.profile.id}`,this.$data.profile)
+                // .then((response)=> {
+                //     this.$router.push('/admin/profile');
+                //     location.reload();
+                // }).catch(e => {
+                //     console.log(e);
+                //     });
+			},
+            getConstraints() {
+                return {
+                    title: {
+                        presence: true,
+                        length: {
+                            minimum: 3,
+                            message: 'Minimal 3 Karakter'
+                        }
+                    },
+                    description: {
+                        presence: true
+                    }
+                };
+            }
         }
     }
 </script>

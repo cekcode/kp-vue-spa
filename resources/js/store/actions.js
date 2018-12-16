@@ -20,8 +20,13 @@ export default {
     },
     addProfile(context, formData){
         axios.post('/api/profiles/new', formData);
-        context.commit('pushProfile', formData)
-        context.commit('updateProfiles', false)
+        context.commit('pushProfile', formData);
+        context.commit('updateProfiles', false);
         // router.push('/admin/profile');
+    },
+    updateProfile(context, payload){
+        axios.post('/api/profiles/update/'+ payload.id, payload.data);
+        context.commit('removeProfile');
+        context.commit('updateProfiles', false);
     }
 }

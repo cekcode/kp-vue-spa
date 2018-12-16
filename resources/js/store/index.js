@@ -47,7 +47,7 @@ export default {
         updateProfiles(state, payload) {
             state.profiles = payload;
         },
-        removeProfile(state, profile){
+        removeProfile(state){
             state.profiles;
             // profiles.splice(profiles.indexOf(profile), 1);
         },
