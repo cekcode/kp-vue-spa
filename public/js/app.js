@@ -75904,7 +75904,7 @@ var render = function() {
             _c("div", { staticClass: "dashboard-nav-inner" }, [
               _c(
                 "ul",
-                { attrs: { "data-submenu-title": "Start" } },
+                { attrs: { "data-submenu-title": "Primary" } },
                 [
                   _c("router-link", { attrs: { to: "/admin" } }, [
                     _c("li", [
@@ -75921,21 +75921,55 @@ var render = function() {
                     _c("li", [
                       _c("a", { attrs: { href: "" } }, [
                         _c("i", {
-                          staticClass: "icon-material-outline-star-border"
+                          staticClass: "icon-material-outline-business"
                         }),
                         _vm._v(" Profile")
                       ])
                     ])
                   ]),
                   _vm._v(" "),
-                  _vm._m(1)
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("router-link", { attrs: { to: "/admin/profile" } }, [
+                    _c("li", [
+                      _c("a", { attrs: { href: "" } }, [
+                        _c("i", {
+                          staticClass:
+                            "icon-material-outline-settings-input-component"
+                        }),
+                        _vm._v(" Pelayanan Medik")
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(2)
                 ],
                 1
               ),
               _vm._v(" "),
-              _vm._m(2),
+              _c(
+                "ul",
+                { attrs: { "data-submenu-title": "Secondary" } },
+                [
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _vm._m(4),
+                  _vm._v(" "),
+                  _c("router-link", { attrs: { to: "/admin" } }, [
+                    _c("li", [
+                      _c("a", { attrs: { href: "" } }, [
+                        _c("i", {
+                          staticClass: "icon-material-baseline-mail-outline"
+                        }),
+                        _vm._v("Buku Tamu")
+                      ])
+                    ])
+                  ])
+                ],
+                1
+              ),
               _vm._v(" "),
-              _vm._m(3)
+              _vm._m(5)
             ])
           ])
         ])
@@ -75969,9 +76003,24 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("li", [
-      _c("a", { attrs: { href: "dashboard-reviews.html" } }, [
-        _c("i", { staticClass: "icon-material-outline-rate-review" }),
-        _vm._v(" Reviews")
+      _c("a", { attrs: { href: "#" } }, [
+        _c("i", { staticClass: "icon-material-outline-supervisor-account" }),
+        _vm._v(" Dokter")
+      ]),
+      _vm._v(" "),
+      _c("ul", [
+        _c("li", [
+          _c("a", { attrs: { href: "dashboard-manage-jobs.html" } }, [
+            _vm._v("Daftar Dokter "),
+            _c("span", { staticClass: "nav-tag" }, [_vm._v("3")])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("a", { attrs: { href: "dashboard-manage-candidates.html" } }, [
+            _vm._v("Jadwal Dokter")
+          ])
+        ])
       ])
     ])
   },
@@ -75979,80 +76028,85 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      { attrs: { "data-submenu-title": "Organize and Manage" } },
-      [
+    return _c("li", [
+      _c("a", { attrs: { href: "#" } }, [
+        _c("i", { staticClass: "icon-feather-activity" }),
+        _vm._v(" Instalasi")
+      ]),
+      _vm._v(" "),
+      _c("ul", [
         _c("li", [
-          _c("a", { attrs: { href: "#" } }, [
-            _c("i", { staticClass: "icon-material-outline-business-center" }),
-            _vm._v(" Jobs")
-          ]),
-          _vm._v(" "),
-          _c("ul", [
-            _c("li", [
-              _c("a", { attrs: { href: "dashboard-manage-jobs.html" } }, [
-                _vm._v("Manage Jobs "),
-                _c("span", { staticClass: "nav-tag" }, [_vm._v("3")])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("a", { attrs: { href: "dashboard-manage-candidates.html" } }, [
-                _vm._v("Manage Candidates")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("a", { attrs: { href: "dashboard-post-a-job.html" } }, [
-                _vm._v("Post a Job")
-              ])
-            ])
+          _c("a", { attrs: { href: "dashboard-manage-jobs.html" } }, [
+            _vm._v("Kategori "),
+            _c("span", { staticClass: "nav-tag" }, [_vm._v("3")])
           ])
         ]),
         _vm._v(" "),
         _c("li", [
-          _c("a", { attrs: { href: "#" } }, [
-            _c("i", { staticClass: "icon-material-outline-assignment" }),
-            _vm._v(" Tasks")
-          ]),
-          _vm._v(" "),
-          _c("ul", [
-            _c("li", [
-              _c("a", { attrs: { href: "dashboard-manage-tasks.html" } }, [
-                _vm._v("Manage Tasks "),
-                _c("span", { staticClass: "nav-tag" }, [_vm._v("2")])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("a", { attrs: { href: "dashboard-manage-bidders.html" } }, [
-                _vm._v("Manage Bidders")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("a", { attrs: { href: "dashboard-my-active-bids.html" } }, [
-                _vm._v("My Active Bids "),
-                _c("span", { staticClass: "nav-tag" }, [_vm._v("4")])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("a", { attrs: { href: "dashboard-post-a-task.html" } }, [
-                _vm._v("Post a Task")
-              ])
-            ])
+          _c("a", { attrs: { href: "dashboard-manage-candidates.html" } }, [
+            _vm._v("Instalasi")
           ])
         ])
-      ]
-    )
+      ])
+    ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("ul", { attrs: { "data-submenu-title": "Account" } }, [
+    return _c("li", [
+      _c("a", { attrs: { href: "#" } }, [
+        _c("i", { staticClass: "icon-material-outline-speaker-notes" }),
+        _vm._v(" Informasi")
+      ]),
+      _vm._v(" "),
+      _c("ul", [
+        _c("li", [
+          _c("a", { attrs: { href: "dashboard-manage-jobs.html" } }, [
+            _vm._v("Kategori "),
+            _c("span", { staticClass: "nav-tag" }, [_vm._v("3")])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("a", { attrs: { href: "dashboard-manage-candidates.html" } }, [
+            _vm._v("Informasi")
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { attrs: { href: "#" } }, [
+        _c("i", { staticClass: "icon-material-outline-business-center" }),
+        _vm._v(" Karir")
+      ]),
+      _vm._v(" "),
+      _c("ul", [
+        _c("li", [
+          _c("a", { attrs: { href: "dashboard-manage-jobs.html" } }, [
+            _vm._v("Kategori "),
+            _c("span", { staticClass: "nav-tag" }, [_vm._v("3")])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("a", { attrs: { href: "dashboard-manage-candidates.html" } }, [
+            _vm._v("Informasi")
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ul", { attrs: { "data-submenu-title": "Support" } }, [
       _c("li", [
         _c("a", { attrs: { href: "dashboard-settings.html" } }, [
           _c("i", { staticClass: "icon-material-outline-settings" }),

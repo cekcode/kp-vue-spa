@@ -19,31 +19,41 @@
                 <div class="dashboard-nav">
                     <div class="dashboard-nav-inner">
 
-                        <ul data-submenu-title="Start">
+                        <ul data-submenu-title="Primary">
                             <router-link to="/admin"><li><a href=""><i class="icon-material-outline-dashboard"></i>Dashboard</a></li></router-link>
-                            <router-link to="/admin/profile"><li><a href=""><i class="icon-material-outline-star-border"></i> Profile</a></li></router-link>
-                            <li><a href="dashboard-reviews.html"><i class="icon-material-outline-rate-review"></i> Reviews</a></li>
-                        </ul>
-                        
-                        <ul data-submenu-title="Organize and Manage">
-                            <li><a href="#"><i class="icon-material-outline-business-center"></i> Jobs</a>
+                            <router-link to="/admin/profile"><li><a href=""><i class="icon-material-outline-business"></i> Profile</a></li></router-link>
+                            <li><a href="#"><i class="icon-material-outline-supervisor-account"></i> Dokter</a>
                                 <ul>
-                                    <li><a href="dashboard-manage-jobs.html">Manage Jobs <span class="nav-tag">3</span></a></li>
-                                    <li><a href="dashboard-manage-candidates.html">Manage Candidates</a></li>
-                                    <li><a href="dashboard-post-a-job.html">Post a Job</a></li>
+                                    <li><a href="dashboard-manage-jobs.html">Daftar Dokter <span class="nav-tag">3</span></a></li>
+                                    <li><a href="dashboard-manage-candidates.html">Jadwal Dokter</a></li>
                                 </ul>	
                             </li>
-                            <li><a href="#"><i class="icon-material-outline-assignment"></i> Tasks</a>
+                            <router-link to="/admin/profile"><li><a href=""><i class="icon-material-outline-settings-input-component"></i> Pelayanan Medik</a></li></router-link>
+                            <li><a href="#"><i class="icon-feather-activity"></i> Instalasi</a>
                                 <ul>
-                                    <li><a href="dashboard-manage-tasks.html">Manage Tasks <span class="nav-tag">2</span></a></li>
-                                    <li><a href="dashboard-manage-bidders.html">Manage Bidders</a></li>
-                                    <li><a href="dashboard-my-active-bids.html">My Active Bids <span class="nav-tag">4</span></a></li>
-                                    <li><a href="dashboard-post-a-task.html">Post a Task</a></li>
+                                    <li><a href="dashboard-manage-jobs.html">Kategori <span class="nav-tag">3</span></a></li>
+                                    <li><a href="dashboard-manage-candidates.html">Instalasi</a></li>
                                 </ul>	
                             </li>
                         </ul>
+                        <ul data-submenu-title="Secondary">
+                            <li><a href="#"><i class="icon-material-outline-speaker-notes"></i> Informasi</a>
+                                <ul>
+                                    <li><a href="dashboard-manage-jobs.html">Kategori <span class="nav-tag">3</span></a></li>
+                                    <li><a href="dashboard-manage-candidates.html">Informasi</a></li>
+                                </ul>	
+                            </li>
+                            <li><a href="#"><i class="icon-material-outline-business-center"></i> Karir</a>
+                                <ul>
+                                    <li><a href="dashboard-manage-jobs.html">Kategori <span class="nav-tag">3</span></a></li>
+                                    <li><a href="dashboard-manage-candidates.html">Informasi</a></li>
+                                </ul>	
+                            </li>
+                            <router-link to="/admin"><li><a href=""><i class="icon-material-baseline-mail-outline"></i>Buku Tamu</a></li></router-link>
+                        </ul>
+                           
 
-                        <ul data-submenu-title="Account">
+                        <ul data-submenu-title="Support">
                             <li><a href="dashboard-settings.html"><i class="icon-material-outline-settings"></i> Settings</a></li>
                             <li><a href="index-logged-out.html"><i class="icon-material-outline-power-settings-new"></i> Logout</a></li>
                         </ul>
