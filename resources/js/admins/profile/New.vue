@@ -171,6 +171,7 @@
                 formData.append("description", this.$refs.description.value);
                 
                 this.$store.dispatch("addProfile", formData);
+                this.$router.push('/admin/profile');
                 // this.$router.push('/admin/profile');
                 // axios.post('/api/profiles/new', formData)
                 //     .then((response) => {

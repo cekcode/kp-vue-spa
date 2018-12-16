@@ -135,10 +135,7 @@ let Add = require('./New.vue');
         computed: {
             profiles() {
                 return this.$store.getters.profiles;
-			},
-			newProfile(){
-                return this.$store.getters.newProfile;
-            }
+			}
         },
 		methods:{
 			del(id,index){

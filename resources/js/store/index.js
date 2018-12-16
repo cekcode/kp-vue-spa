@@ -1,15 +1,10 @@
-import { getLocalUser } from "./helpers/auth";
 
-const user = getLocalUser();
+import state from './state';
+import actions from './actions';
+
 
 export default {
-    state: {
-        currentUser: user,
-        isLoggedIn: !!user,
-        loading: false,
-        auth_error: null,
-        profiles: []
-    },
+    state,
     getters: {
         isLoading(state) {
             return state.loading;
@@ -52,42 +47,13 @@ export default {
         updateProfiles(state, payload) {
             state.profiles = payload;
         },
-        REMOVE_PROFILE(state, profile){
+        removeProfile(state, profile){
             state.profiles;
             // profiles.splice(profiles.indexOf(profile), 1);
         },
-        ADD_PROFILE(state){
-            state.profiles.push({
-                body: state.newProfile,
-                completed: false
-            });
+        pushProfile(state, formData){
+            state.profiles.push(formData);
         }
     },
-    actions: {
-        login(context) {
-            context.commit("login");
-        },
-        getProfiles(context) {
-            axios.get('/api/profiles')
-            .then((response) => {
-                context.commit('updateProfiles', response.data.profiles);
-            })
-        },
-        deleteProfile({commit}, id) {
-            axios.delete(`/api/profiles/delete/${id}`);
-            commit('REMOVE_PROFILE');
-            router.push('/admin/profile');
-            
-            // axios.delete(`/api/profiles/delete/${id}`)
-            // .then((response) => {
-            //     id.commit('updateProfiles', response.data.profiles);
-            // })
-        },
-        addProfile({commit}, formData){
-            axios.post('/api/profiles/new', formData);
-            router.push('/admin/profile');
-            commit('ADD_PROFILE');
-            
-        }
-    }
+    actions
 };

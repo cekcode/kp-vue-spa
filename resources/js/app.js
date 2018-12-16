@@ -7,7 +7,7 @@ import VueRouter from 'vue-router';
 import Vuex from 'vuex';
 import {routes} from './routes';
 import MainApp from './components/MainApp.vue';
-import StoreData from './store';
+import StoreData from './store/index';
 import {initialize} from './helpers/general';
 
 Vue.use(BootstrapVue);

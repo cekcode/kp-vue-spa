@@ -186,8 +186,4 @@ import { VueEditor } from 'vue2-editor';
     justify-content: center;
     align-items: center;
 }
-a { color: #66676b; transition: 0.3s; }
-a, button { outline: none !important; }
-a:focus,
-a:hover { text-decoration: none; color: #333;}
 </style>
