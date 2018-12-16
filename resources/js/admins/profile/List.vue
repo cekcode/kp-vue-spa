@@ -7,6 +7,9 @@
 			<!-- Dashboard Headline -->
 			<div class="dashboard-headline">
 				<h3>Profile</h3>
+				<span class="is-pulled-right" v-if="loading">
+					<a href="#" class="button dark ripple-effect"><i class="icon-feather-rotate-ccw"></i></a>
+				</span>
 
 				<!-- Breadcrumbs -->
 				<nav id="breadcrumbs" class="dark">
@@ -25,7 +28,7 @@
 					<div class="dashboard-box margin-top-0">
 						<!-- Headline -->
 						<div class="headline">
-							<h3><router-link to="/admin/profile/new" class="button gray ripple-effect-dark">Tambah Baru <i class="icon-feather-file-plus"></i></router-link></h3>
+							<router-link to="/admin/profile/new" class="btn btn-primary">Tambah <i class="icon-material-outline-arrow-right-alt"></i></router-link>
 						</div>
 
 						<div class="content">
@@ -44,7 +47,7 @@
 
 											<!-- Job Listing Details -->
 											<div class="job-listing-details">
-
+												<label hidden>{{ index }}</label>
 												<!-- Logo -->
 												<a href="#" class="job-listing-company-logo">
 													<img v-bind:src="'../uploads/'+profile.image">
@@ -106,18 +109,21 @@
 			<!-- Footer / End -->
 
 		</div>
+		<Add hidden></Add>
 	</div>
 	<!-- Dashboard Content / End -->
 </template>
 
 
 <script>
+let Add = require('./New.vue');
     export default {
+		components:{Add},
 		name: 'list',
 			data(){
 				return{
-					errors:{},
-					rows:[]
+					loading:false,
+					errors:{}
 				}
 		},
         mounted() {
@@ -129,20 +135,16 @@
         computed: {
             profiles() {
                 return this.$store.getters.profiles;
+			},
+			newProfile(){
+                return this.$store.getters.newProfile;
             }
         },
 		methods:{
-			del(id, index){
+			del(id,index){
 				if (confirm("Are you sure ?")) {
-				axios
-				.delete(`/api/profiles/delete/${id}`)
-				.then(res => {
-					this.profiles.splice(index, 1);
-				})
-				.catch((error) => this.errors = error.response.data.errors)	
-					// axios.delete(`/katlayanan/${id}`)
-					// .then((response)=> {this.lists.splice(key,1);this.loading = !this.loading})
-					// .catch((error) => this.errors = error.response.data.errors)	
+				this.$store.dispatch("deleteProfile", id);
+				this.profiles.splice(index, 1);
 				}
 				console.log(`${index} ${id}`)
 				// window.location.reload(true)
@@ -151,9 +153,3 @@
     }
 </script>
 
-<style scoped>
-a { color: #66676b; transition: 0.3s; }
-a, button { outline: none !important; }
-a:focus,
-a:hover { text-decoration: none; color: #333;}
-</style>

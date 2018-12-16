@@ -1,5 +1,5 @@
 <template>
-    <!-- Dashboard Content
+<!-- Dashboard Content
 	================================================== -->
 	<div class="dashboard-content-container" data-simplebar>
 		<div class="dashboard-content-inner" >
@@ -43,10 +43,13 @@
                                     <div class="col-xl-12">
                                         <div class="submit-field">
                                             <h5>Image</h5>
+                                            <div id="preview">
+                                                <img v-if="url" v-bind:src="url" height="200px" width="300px"/>                                            
+                                            </div>
                                             <div class="uploadButton margin-top-30">
-                                                <input class="uploadButton-input" type="file" accept="image/*" id="upload" v-on:change="onImageChange" required/>
-                                                <label class="uploadButton-button ripple-effect" for="upload">Upload Files</label>
-                                                <span class="uploadButton-file-name">Images or documents that might be helpful in describing your job</span>
+                                                <input class="uploadButton-input" type="file" accept="image/*" id="image" name="image" v-on:change="onImageChange" required/>
+                                                <label class="uploadButton-button ripple-effect" for="image">Upload Files</label>
+                                                <span class="uploadButton-file-name">Hanya dapat upload file image jpeg,jpg,png,gif</span>
                                             </div>
                                         </div>
                                     </div>
@@ -87,7 +90,7 @@
 			<div class="dashboard-footer-spacer"></div>
 			<div class="small-footer margin-top-15">
 				<div class="small-footer-copyrights">
-					Â© 2018 <strong>Hireo</strong>. All Rights Reserved.
+					© 2018 <strong>Hireo</strong>. All Rights Reserved.
 				</div>
 				<ul class="footer-social-links">
 					<li>
@@ -129,6 +132,8 @@
         name: 'new',
         data() {
             return {
+                url:null,
+                selectedFile:null,
                 profile: {
                     title: '',
                     image: '',
@@ -146,33 +151,34 @@
             }
         },
         methods: {
-            onImageChange(e){
-                console.log(e.target.files[0]);
-                this.image = e.target.files[0];
+            onImageChange(event) {
+                this.selectedFile = event.target.files[0];
+                this.url = URL.createObjectURL(this.selectedFile);
             },
             add() {
                 this.errors = null;
                 const constraints = this.getConstraints();
                 const errors = validate(this.$data.profile, constraints);
-
-                let formData = new FormData();
-
-                formData.append('image', this.image);
-                formData.append("title", this.$refs.title.value);
-                formData.append("description", this.$refs.description.value);
-
                 if(errors) {
                     this.errors = errors;
                     return;
                 }
 
-                axios.post('/api/profiles/new', formData)
-                    .then((response) => {
-                        this.$router.push('/admin/profile');
-                        location.reload();
-                    }).catch(e => {
-                        console.log(e);
-                    });
+                let formData = new FormData();
+
+                formData.append("image", this.selectedFile, this.selectedFile.name);
+                formData.append("title", this.$refs.title.value);
+                formData.append("description", this.$refs.description.value);
+                
+                this.$store.dispatch("addProfile", formData);
+                // this.$router.push('/admin/profile');
+                // axios.post('/api/profiles/new', formData)
+                //     .then((response) => {
+                //         this.$router.push('/admin/profile');
+                //         location.reload();
+                //     }).catch(e => {
+                //         console.log(e);
+                //     });
             },
             getConstraints() {
                 return {
@@ -194,13 +200,14 @@
 
 
 <style>
+#preview{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .errors {
     background: lightcoral;
     border-radius:5px;
     padding: 21px 0 2px 0;
 }
-a { color: #66676b; transition: 0.3s; }
-a, button { outline: none !important; }
-a:focus,
-a:hover { text-decoration: none; color: #333;}
 </style>

@@ -14,17 +14,17 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet"/>
-
        
     </head>
     <body class="gray">
+       
     <!-- Wrapper -->
     <div id="wrapper">
         <div id="app">
             <main-app/>
         </div>
     </div>
-
+        <script src="{{ asset('js/app.js') }}"></script>
         <!-- Scripts
         ================================================== -->
         <script src="{{ asset('frontend/js/jquery-3.3.1.min.js') }}"></script>
@@ -40,7 +40,5 @@
         <script src="{{ asset('frontend/js/magnific-popup.min.js') }}"></script>
         <script src="{{ asset('frontend/js/slick.min.js') }}"></script>
         <script src="{{ asset('frontend/js/custom.js') }}"></script>
-        <script src="{{ asset('js/app.js') }}"></script>
-
     </body>
 </html>

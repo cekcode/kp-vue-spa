@@ -51,6 +51,16 @@ export default {
         },
         updateProfiles(state, payload) {
             state.profiles = payload;
+        },
+        REMOVE_PROFILE(state, profile){
+            state.profiles;
+            // profiles.splice(profiles.indexOf(profile), 1);
+        },
+        ADD_PROFILE(state){
+            state.profiles.push({
+                body: state.newProfile,
+                completed: false
+            });
         }
     },
     actions: {
@@ -62,6 +72,22 @@ export default {
             .then((response) => {
                 context.commit('updateProfiles', response.data.profiles);
             })
+        },
+        deleteProfile({commit}, id) {
+            axios.delete(`/api/profiles/delete/${id}`);
+            commit('REMOVE_PROFILE');
+            router.push('/admin/profile');
+            
+            // axios.delete(`/api/profiles/delete/${id}`)
+            // .then((response) => {
+            //     id.commit('updateProfiles', response.data.profiles);
+            // })
+        },
+        addProfile({commit}, formData){
+            axios.post('/api/profiles/new', formData);
+            router.push('/admin/profile');
+            commit('ADD_PROFILE');
+            
         }
     }
 };

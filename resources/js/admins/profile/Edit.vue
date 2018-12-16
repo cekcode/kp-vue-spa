@@ -31,21 +31,25 @@
 						</div>
 
 						<div class="content with-padding padding-bottom-10">
-                            <form  enctype="multipart/form-data">
+                            <form enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col-xl-12">
                                         <div class="submit-field">
                                             <h5>Judul</h5>
-                                            <input type="text" ref="title" class="with-border form-control" v-model="profile.title">
+                                            <input type="text" class="with-border form-control" v-model="profile.title">
                                         </div>
                                     </div>
 
                                     <div class="col-xl-12">
                                         <div class="submit-field">
                                             <h5>Image</h5>
-                                            <img :src="'../../../uploads/'+profile.image" height="200px" width="300px">
+                                            <div id="preview">
+                                                <img v-if="url" v-bind:src="url" height="200px" width="300px"/>
+                                                <img v-else :src="'../../../uploads/'+profile.image" height="200px" width="300px"/>
+                                            </div>
+                                            <!-- <img :src="'../../../uploads/'+profile.image" height="200px" width="300px"> -->
                                             <div class="uploadButton margin-top-30">
-                                                <input class="uploadButton-input" type="file" accept="image/*" id="upload" v-on:change="onImageChange"/>
+                                                <input class="uploadButton-input" type="file" accept="image/*" id="upload" @change="onFileChange"/>
                                                 <label class="uploadButton-button ripple-effect" for="upload">Upload Files</label>
                                                 <span class="uploadButton-file-name">Jangan Masukan gambar apabila tidak ingin merubah gambar profile</span>
                                             </div>
@@ -64,7 +68,7 @@
                                     </div>
 
                                     <div class="col-xl-12">
-                                        <input type="submit" class="button ripple-effect big margin-top-30" value="Save">
+                                        <input type="submit" class="button ripple-effect big margin-top-30" @click='update'>
                                     </div>
                                 
                                 </div>
@@ -89,8 +93,9 @@
 			<div class="dashboard-footer-spacer"></div>
 			<div class="small-footer margin-top-15">
 				<div class="small-footer-copyrights">
-					Â© 2018 <strong>Hireo</strong>. All Rights Reserved.
+					© 2018 <strong>Hireo</strong>. All Rights Reserved.
 				</div>
+                <!-- Footer
 				<ul class="footer-social-links">
 					<li>
 						<a href="#" title="Facebook" data-tippy-placement="top">
@@ -113,6 +118,7 @@
 						</a>
 					</li>
 				</ul>
+                -->
 				<div class="clearfix"></div>
 			</div>
 			<!-- Footer / End -->
@@ -123,10 +129,18 @@
 </template>
 
 <script>
+import validate from 'validate.js';
 import { VueEditor } from 'vue2-editor';
 
     export default {
         name: 'edit',
+        data: function() {
+            return {
+                url:null,
+                profile: {},
+                errors:{}
+            }
+        },
         components: {
             VueEditor
         },
@@ -140,11 +154,6 @@ import { VueEditor } from 'vue2-editor';
                     });
             }
         },
-        data() {
-            return {
-                profile: null
-            };
-        },
         computed: {
             currentUser() {
                 return this.$store.getters.currentUser;
@@ -154,15 +163,29 @@ import { VueEditor } from 'vue2-editor';
             }
         },
         methods: {
-            onImageChange(e){
-                console.log(e.target.files[0]);
-                this.image = e.target.files[0];
-            }
+            onFileChange(e) {
+                const file = e.target.files[0];
+                this.url = URL.createObjectURL(file);
+            },
+            update(){
+            axios.patch(`/api/profiles/update/${this.profile.id}`,this.$data.profile)
+            .then((response)=> {
+                this.$router.push('/admin/profile');
+                location.reload();
+            }).catch(e => {
+                console.log(e);
+                });
+			}
         }
     }
 </script>
 
 <style scoped>
+#preview{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 a { color: #66676b; transition: 0.3s; }
 a, button { outline: none !important; }
 a:focus,

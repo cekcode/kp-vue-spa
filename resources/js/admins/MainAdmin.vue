@@ -8,6 +8,7 @@
 </template>
 
 <script>
+
 import Sidebar from './cores/Sidebar.vue';
     export default {
         name: 'dashboard-main',

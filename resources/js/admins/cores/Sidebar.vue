@@ -20,7 +20,7 @@
                     <div class="dashboard-nav-inner">
 
                         <ul data-submenu-title="Start">
-                            <router-link to="/admin"><li class="active"><a href=""><i class="icon-material-outline-dashboard"></i>Dashboard</a></li></router-link>
+                            <router-link to="/admin"><li><a href=""><i class="icon-material-outline-dashboard"></i>Dashboard</a></li></router-link>
                             <router-link to="/admin/profile"><li><a href=""><i class="icon-material-outline-star-border"></i> Profile</a></li></router-link>
                             <li><a href="dashboard-reviews.html"><i class="icon-material-outline-rate-review"></i> Reviews</a></li>
                         </ul>
@@ -59,7 +59,7 @@
 </template>
 
 <style scoped>
-a { color: #66676b; transition: 0.3s; }
+a { color: #000000; transition: 0.3s; }
 a, button { outline: none !important; }
 a:focus,
 a:hover { text-decoration: none; color: #333;}

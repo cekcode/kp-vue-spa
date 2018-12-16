@@ -14,3 +14,10 @@
         components: {Header,Footer}
     }
 </script>
+
+<style scoped>
+a { color: #000000; transition: 0.3s; }
+a, button { outline: none !important; }
+a:focus,
+a:hover { text-decoration: none; color: #333;}
+</style>
