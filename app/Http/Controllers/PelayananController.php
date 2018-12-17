@@ -60,15 +60,4 @@ class PelayananController extends Controller
         ], 200);
     }
 
-    public function images(Request $request)
-    {
-        $image = $request->file('image');
-        $imageName = time().'.'.$request->image->getClientOriginalExtension();
-        $request->image->move(public_path('uploads'), $imageName);
-
-        return response()->json([
-            "url" => $imageName
-        ], 200);
-    }
-
 }

@@ -43,7 +43,7 @@
                                     <div class="col-xl-12">
                                         <div class="submit-field">
                                             <h5>Description</h5>
-                                            <vue-editor id="editor" useCustomImageHandler @imageAdded="handleImageAdded" ref="description" v-model="pelayanan.description"></vue-editor>
+                                            <vue-editor id="editor" :editorOptions="editorSettings" useCustomImageHandler @imageAdded="handleImageAdded" ref="description" v-model="pelayanan.description"></vue-editor>
                                         </div>
                                     </div>
 
@@ -109,13 +109,25 @@
 </template>
 
 <script>
-import validate from 'validate.js';
 import { VueEditor } from 'vue2-editor';
+import validate from 'validate.js';
+import Quill from 'quill'; 
+import { ImageDrop } from 'quill-image-drop-module';
+import ImageResize from 'quill-image-resize-module'; 
+
+Quill.register('modules/imageDrop', ImageDrop)
+Quill.register('modules/imageResize', ImageResize);
 
     export default {
         name: 'edit',
         data: function() {
             return {
+                editorSettings: {
+                    modules: {
+                        imageDrop: true,
+                        imageResize: {}
+                    }
+                },
                 pelayanan: {
                     title: '',
                     description: ''

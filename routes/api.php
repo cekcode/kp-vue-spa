@@ -35,5 +35,5 @@ Route::group(['middleware' => 'jwt.auth'], function ($router) {
     Route::get('pelayanans/{slug}', 'PelayananController@get');
     Route::post('pelayanans/update/{id}', 'PelayananController@update');
 
-    Route::post('images', 'PelayananController@images');
+    Route::post('images', 'ImageController@upload');
 });
