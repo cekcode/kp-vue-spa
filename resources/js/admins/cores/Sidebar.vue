@@ -28,7 +28,7 @@
                                     <li><a href="dashboard-manage-candidates.html">Jadwal Dokter</a></li>
                                 </ul>	
                             </li>
-                            <router-link to="/admin/profile"><li><a href=""><i class="icon-material-outline-settings-input-component"></i> Pelayanan Medik</a></li></router-link>
+                            <router-link to="/admin/pelayanan-medik"><li><a href=""><i class="icon-material-outline-settings-input-component"></i> Pelayanan Medik</a></li></router-link>
                             <li><a href="#"><i class="icon-feather-activity"></i> Instalasi</a>
                                 <ul>
                                     <li><a href="dashboard-manage-jobs.html">Kategori <span class="nav-tag">3</span></a></li>
@@ -54,8 +54,8 @@
                            
 
                         <ul data-submenu-title="Support">
-                            <li><a href="dashboard-settings.html"><i class="icon-material-outline-settings"></i> Settings</a></li>
-                            <li><a href="index-logged-out.html"><i class="icon-material-outline-power-settings-new"></i> Logout</a></li>
+                            <li><a href="dashboard-settings.html"><i class="icon-material-outline-settings"></i> Pengaturan</a></li>
+                            <li><a href="index-logged-out.html"><i class="icon-material-outline-power-settings-new"></i> Keluar</a></li>
                         </ul>
                         
                     </div>

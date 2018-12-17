@@ -17,6 +17,9 @@ import AdminProfile from './admins/profile/List.vue';
 import ProfileNew from './admins/profile/New.vue';
 import ProfileView from './admins/profile/View.vue';
 import ProfileEdit from './admins/profile/Edit.vue';
+import AdminPelayanan from './admins/pelayanan/List.vue';
+import PelayananNew from './admins/pelayanan/New.vue';
+import PelayananEdit from './admins/pelayanan/Edit.vue';
 
 
 export const routes = [
@@ -108,6 +111,18 @@ export const routes = [
             {
                 path: 'profile/edit/:slug',
                 component: ProfileEdit
+            },
+            {
+                path: 'pelayanan-medik',
+                component: AdminPelayanan
+            },
+            {
+                path: 'pelayanan-medik/new',
+                component: PelayananNew
+            },
+            {
+                path: 'pelayanan-medik/edit/:slug',
+                component: PelayananEdit
             }
         ]
     }

@@ -1,7 +1,7 @@
 
 import state from './state';
 import actions from './actions';
-
+ 
 
 export default {
     state,
@@ -20,6 +20,9 @@ export default {
         },
         profiles(state) {
             return state.profiles;
+        },
+        pelayanans(state) {
+            return state.pelayanans;
         }
     },
     mutations: {
@@ -53,6 +56,15 @@ export default {
         },
         pushProfile(state, formData){
             state.profiles.push(formData);
+        },
+        pushPelayanan(state, formData){
+            state.pelayanans.push(formData);
+        },
+        updatePelayanans(state, payload) {
+            state.pelayanans = payload;
+        },
+        removePelayanan(state){
+            state.pelayanans;
         }
     },
     actions

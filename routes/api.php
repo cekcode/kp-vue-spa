@@ -29,4 +29,11 @@ Route::group(['middleware' => 'jwt.auth'], function ($router) {
     Route::get('profiles/edit/{slug}', 'ProfileController@get');
     Route::delete('profiles/delete/{id}', 'ProfileController@destroy');
     Route::post('profiles/update/{id}', 'ProfileController@update');
+    Route::get('pelayanans', 'PelayananController@all');
+    Route::post('pelayanans/new', 'PelayananController@new');
+    Route::delete('pelayanans/delete/{id}', 'PelayananController@destroy');
+    Route::get('pelayanans/{slug}', 'PelayananController@get');
+    Route::post('pelayanans/update/{id}', 'PelayananController@update');
+
+    Route::post('images', 'PelayananController@images');
 });

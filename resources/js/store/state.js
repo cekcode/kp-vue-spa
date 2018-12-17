@@ -6,5 +6,6 @@ export default {
     isLoggedIn: !!user,
     loading: false,
     auth_error: null,
-    profiles: []
+    profiles: [],
+    pelayanans: []
 }
