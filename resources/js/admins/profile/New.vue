@@ -58,7 +58,7 @@
                                         <div class="submit-field">
                                             <h5>Description</h5>
                                             <!-- <wysiwyg v-model="profile.description" /> -->
-                                            <vue-editor  ref="description" v-model="profile.description"></vue-editor>
+                                            <vue-editor id="editor" :editorOptions="editorSettings" useCustomImageHandler @imageAdded="handleImageAdded" ref="description" v-model="profile.description"></vue-editor>
                                             <!-- <textarea cols="30" rows="5" class="with-border" v-model="profile.description"></textarea> -->
                                             
                                         </div>
@@ -125,13 +125,25 @@
 
 
 <script>
-    import validate from 'validate.js';
-    import { VueEditor } from 'vue2-editor';
+import validate from 'validate.js';
+import { VueEditor } from 'vue2-editor';
+import Quill from 'quill'; 
+import { ImageDrop } from 'quill-image-drop-module';
+import ImageResize from 'quill-image-resize-module'; 
+
+Quill.register('modules/imageDrop', ImageDrop)
+Quill.register('modules/imageResize', ImageResize);
 
     export default {
         name: 'new',
         data() {
             return {
+                editorSettings: {
+                    modules: {
+                        imageDrop: true,
+                        imageResize: {}
+                    }
+                },
                 url:null,
                 selectedFile:null,
                 profile: {
@@ -151,6 +163,22 @@
             }
         },
         methods: {
+            handleImageAdded: function(file, Editor, cursorLocation, resetUploader) {
+                var formData = new FormData();
+                formData.append('image', file)
+                axios({url: 'http://localhost:8000/api/images',method: 'POST', data: formData})
+                .then(result => {
+                console.log(result);
+                let localhost = 'http://localhost:8000/uploads/';
+                let url = localhost+result.data.url;
+
+                Editor.insertEmbed(cursorLocation, 'image', url);
+                resetUploader();
+                })
+                .catch((err) => {
+                console.log(err);
+                })
+            },
             onImageChange(event) {
                 this.selectedFile = event.target.files[0];
                 this.url = URL.createObjectURL(this.selectedFile);

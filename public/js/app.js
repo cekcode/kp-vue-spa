@@ -90584,6 +90584,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_validate_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_validate_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue2_editor__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue2_editor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue2_editor__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_quill__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_quill___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_quill__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_quill_image_drop_module__ = __webpack_require__(330);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_quill_image_resize_module__ = __webpack_require__(311);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_quill_image_resize_module___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_quill_image_resize_module__);
 //
 //
 //
@@ -90713,11 +90718,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
+
+
+
+__WEBPACK_IMPORTED_MODULE_2_quill___default.a.register('modules/imageDrop', __WEBPACK_IMPORTED_MODULE_3_quill_image_drop_module__["a" /* ImageDrop */]);
+__WEBPACK_IMPORTED_MODULE_2_quill___default.a.register('modules/imageResize', __WEBPACK_IMPORTED_MODULE_4_quill_image_resize_module___default.a);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'new',
     data: function data() {
         return {
+            editorSettings: {
+                modules: {
+                    imageDrop: true,
+                    imageResize: {}
+                }
+            },
             url: null,
             selectedFile: null,
             profile: {
@@ -90738,6 +90755,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
+        handleImageAdded: function handleImageAdded(file, Editor, cursorLocation, resetUploader) {
+            var formData = new FormData();
+            formData.append('image', file);
+            axios({ url: 'http://localhost:8000/api/images', method: 'POST', data: formData }).then(function (result) {
+                console.log(result);
+                var localhost = 'http://localhost:8000/uploads/';
+                var url = localhost + result.data.url;
+
+                Editor.insertEmbed(cursorLocation, 'image', url);
+                resetUploader();
+            }).catch(function (err) {
+                console.log(err);
+            });
+        },
         onImageChange: function onImageChange(event) {
             this.selectedFile = event.target.files[0];
             this.url = URL.createObjectURL(this.selectedFile);
@@ -91210,6 +91241,12 @@ var render = function() {
                               _vm._v(" "),
                               _c("vue-editor", {
                                 ref: "description",
+                                attrs: {
+                                  id: "editor",
+                                  editorOptions: _vm.editorSettings,
+                                  useCustomImageHandler: ""
+                                },
+                                on: { imageAdded: _vm.handleImageAdded },
                                 model: {
                                   value: _vm.profile.description,
                                   callback: function($$v) {
@@ -91966,7 +92003,7 @@ var render = function() {
                 _c("div", { staticClass: "blog-post-thumbnail" }, [
                   _c("div", { staticClass: "blog-post-thumbnail-inner" }, [
                     _c("span", { staticClass: "blog-item-tag" }, [
-                      _vm._v("Image")
+                      _vm._v("Gambar Utama")
                     ]),
                     _vm._v(" "),
                     _c("img", {
@@ -93091,6 +93128,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_validate_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_validate_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue2_editor__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue2_editor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue2_editor__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_quill__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_quill___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_quill__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_quill_image_drop_module__ = __webpack_require__(330);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_quill_image_resize_module__ = __webpack_require__(311);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_quill_image_resize_module___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_quill_image_resize_module__);
 //
 //
 //
@@ -93206,11 +93248,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
+
+
+
+
+__WEBPACK_IMPORTED_MODULE_2_quill___default.a.register('modules/imageDrop', __WEBPACK_IMPORTED_MODULE_3_quill_image_drop_module__["a" /* ImageDrop */]);
+__WEBPACK_IMPORTED_MODULE_2_quill___default.a.register('modules/imageResize', __WEBPACK_IMPORTED_MODULE_4_quill_image_resize_module___default.a);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'new',
     data: function data() {
         return {
+            editorSettings: {
+                modules: {
+                    imageDrop: true,
+                    imageResize: {}
+                }
+            },
             pelayanan: {
                 title: '',
                 description: ''
@@ -93228,6 +93283,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
+        handleImageAdded: function handleImageAdded(file, Editor, cursorLocation, resetUploader) {
+            var formData = new FormData();
+            formData.append('image', file);
+            axios({ url: 'http://localhost:8000/api/images', method: 'POST', data: formData }).then(function (result) {
+                console.log(result);
+                var localhost = 'http://localhost:8000/uploads/';
+                var url = localhost + result.data.url;
+
+                Editor.insertEmbed(cursorLocation, 'image', url);
+                resetUploader();
+            }).catch(function (err) {
+                console.log(err);
+            });
+        },
         add: function add() {
             this.errors = null;
             var constraints = this.getConstraints();
@@ -93374,6 +93443,12 @@ var render = function() {
                               _vm._v(" "),
                               _c("vue-editor", {
                                 ref: "description",
+                                attrs: {
+                                  id: "editor",
+                                  editorOptions: _vm.editorSettings,
+                                  useCustomImageHandler: ""
+                                },
+                                on: { imageAdded: _vm.handleImageAdded },
                                 model: {
                                   value: _vm.pelayanan.description,
                                   callback: function($$v) {

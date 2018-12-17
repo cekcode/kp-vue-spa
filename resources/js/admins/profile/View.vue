@@ -31,7 +31,7 @@
                                 <!-- Blog Post Thumbnail -->
                                 <div class="blog-post-thumbnail">
                                     <div class="blog-post-thumbnail-inner">
-                                        <span class="blog-item-tag">Image</span>
+                                        <span class="blog-item-tag">Gambar Utama</span>
                                         <img v-bind:src="'../../uploads/'+profile.image" alt="">
                                     </div>
                                 </div>
