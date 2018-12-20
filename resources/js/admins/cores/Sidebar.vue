@@ -28,19 +28,10 @@
                                     <li><a href="dashboard-manage-candidates.html">Jadwal Dokter</a></li>
                                 </ul>	
                             </li>
-                            <router-link to="/admin/pelayanan-medik"><li><a href=""><i class="icon-material-outline-settings-input-component"></i> Pelayanan Medik</a></li></router-link>
-                            <li><a href="#"><i class="icon-feather-activity"></i> Instalasi</a>
-                                <ul>
-                                    <li><a href="dashboard-manage-jobs.html">Kategori <span class="nav-tag">3</span></a></li>
-                                    <li><a href="dashboard-manage-candidates.html">Instalasi</a></li>
-                                </ul>	
-                            </li>
-                        </ul>
-                        <ul data-submenu-title="Secondary">
                             <li><a href="#"><i class="icon-material-outline-speaker-notes"></i> Informasi</a>
                                 <ul>
-                                    <li><a href="dashboard-manage-jobs.html">Kategori <span class="nav-tag">3</span></a></li>
-                                    <li><a href="dashboard-manage-candidates.html">Informasi</a></li>
+                                    <li><router-link to="/admin/peran-dan-kategori"><a>Peran & Kategori</a></router-link></li>
+                                    <li><a href="dashboard-manage-candidates.html">Post</a></li>
                                 </ul>	
                             </li>
                             <li><a href="#"><i class="icon-material-outline-business-center"></i> Karir</a>

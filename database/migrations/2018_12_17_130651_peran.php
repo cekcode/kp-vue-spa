@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Pelayananmedik extends Migration
+class Peran extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class Pelayananmedik extends Migration
      */
     public function up()
     {
-        Schema::create('pelayananmedik', function (Blueprint $table) {
+        Schema::create('peran', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
             $table->string('slug');
-            $table->text('description');
             $table->timestamps();
         });
     }

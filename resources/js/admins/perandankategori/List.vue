@@ -6,7 +6,7 @@
 			
 			<!-- Dashboard Headline -->
 			<div class="dashboard-headline">
-				<h3>Pelayanan Medik</h3>
+				<h3>Peran & Kategori</h3>
 				<span class="is-pulled-right" v-if="loading">
 					<a href="#" class="button dark ripple-effect"><i class="icon-feather-rotate-ccw"></i></a>
 				</span>
@@ -15,7 +15,7 @@
 				<nav id="breadcrumbs" class="dark">
 					<ul>
 						<li><router-link to="/admin">Admin</router-link></li>
-						<li>Pelayanan Medik</li>
+						<li>Peran & Kategori</li>
 					</ul>
 				</nav>
 			</div>
@@ -24,23 +24,23 @@
 			<div class="row">
 
 				<!-- Dashboard Box -->
-				<div class="col-xl-12">
+				<div class="col-xl-6">
 					<div class="dashboard-box margin-top-0">
 						<!-- Headline -->
 						<div class="headline">
-							<router-link to="/admin/pelayanan-medik/new" class="btn btn-primary">Tambah <i class="icon-material-outline-arrow-right-alt"></i></router-link>
+							<h3><i class="icon-material-outline-business"></i> PERAN</h3> <button v-on:click="showperan" class="btn btn-primary">Tambah <i class="icon-material-outline-arrow-right-alt"></i></button>
 						</div>
 
 						<div class="content">
 
-							<template v-if="!pelayanans.length">
+							<template v-if="!perans.length">
 								<ul class="dashboard-box-list">
-									<li colspan="4" class="text-center">Data Pelayanan Kosong</li>
+									<li colspan="4" class="text-center">Data Peran Kosong</li>
 								</ul>
 							</template>
 
 							 <template v-else>
-								<ul class="dashboard-box-list" v-for="(pelayanan, index) in pelayanans" :key="pelayanan.id">
+								<ul class="dashboard-box-list" v-for="(peran, index) in perans" :key="peran.id">
 									<li>
 										<!-- Job Listing -->
 										<div class="job-listing">
@@ -48,21 +48,17 @@
 											<!-- Job Listing Details -->
 											<div class="job-listing-details">
 												<label hidden>{{ index }}</label>
-												<!-- Logo -->
-												<!-- <a href="#" class="job-listing-company-logo">
-													<img v-bind:src="'../uploads/'+profile.image">
-												</a> -->
 
 												<!-- Details -->
 												<div class="job-listing-description">
-													<h3 class="job-listing-title"><router-link :to="`/admin/profile/${pelayanan.slug}`" title="Lihat" data-tippy-placement="left">{{ pelayanan.title }}</router-link></h3>
+													<h3 class="job-listing-title"><router-link :to="`/admin/peran/${peran.slug}`" title="Lihat" data-tippy-placement="left">{{ peran.title }}</router-link></h3>
 												</div>
 											</div>
 										</div>
 										<!-- Buttons -->
 										<div class="buttons-to-right">
-											<router-link :to="`/admin/pelayanan-medik/edit/${pelayanan.slug}`" title="Edit" data-tippy-placement="left" class="button gray ripple-effect-dark ico"><i class="icon-feather-edit"></i></router-link>
-											<a @click="del(pelayanan.id, index)" class="button red ripple-effect ico" title="Hapus" data-tippy-placement="left"><i class="icon-feather-trash-2"></i></a>
+											<a @click="editperan(index)" title="Edit" data-tippy-placement="left" class="button gray ripple-effect-dark ico"><i class="icon-feather-edit"></i></a>
+											<a @click="del(peran.id, index)" class="button red ripple-effect ico" title="Hapus" data-tippy-placement="left"><i class="icon-feather-trash-2"></i></a>
 										</div>
 									</li>
 									<hr>
@@ -72,6 +68,7 @@
 						</div>
 					</div>
 				</div>
+
 
 			</div>
 			<!-- Row / End -->
@@ -109,16 +106,21 @@
 			<!-- Footer / End -->
 
 		</div>
-		<Add hidden></Add>
+		<Addperan></Addperan>
+		<Editperan></Editperan>
+        <Addkategori></Addkategori>
 	</div>
 	<!-- Dashboard Content / End -->
 </template>
 
 
 <script>
-let Add = require('./New.vue');
+
+let Addperan = require('./Newperan.vue');
+let Editperan = require('./Editperan.vue');
+let Addkategori = require('./Newkategori.vue');
     export default {
-		components:{Add},
+		components:{Addperan,Addkategori,Editperan},
 		name: 'list',
 			data(){
 				return{
@@ -127,21 +129,34 @@ let Add = require('./New.vue');
 				}
 		},
         mounted() {
-            if (this.pelayanans.length > 1) {
-                return;
+            if (this.perans.length > 1) {
+                return ;
             }
-			this.$store.dispatch('getPelayanans');
+			this.$store.dispatch('getPerans');
         },
         computed: {
-            pelayanans() {
-                return this.$store.getters.pelayanans;
-			}
+            perans() {
+                return this.$store.getters.perans;
+            },
+            currentUser() {
+                return this.$store.getters.currentUser;
+            }
         },
 		methods:{
+            showperan () {
+                this.$modal.show('peran');
+            },
+            showkategori () {
+                this.$modal.show('kategori');
+			},
+			editperan (index) {
+				this.$children[2].peran = this.perans[index];
+                this.$modal.show('edit-peran');
+            },
 			del(id,index){
 				if (confirm("Are you sure ?")) {
-				this.$store.dispatch("deletePelayanan", id);
-				this.pelayanans.splice(index, 1);
+				this.$store.dispatch("deletePeran", id);
+				this.perans.splice(index, 1);
 				}
 				console.log(`${index} ${id}`)
 				// window.location.reload(true)

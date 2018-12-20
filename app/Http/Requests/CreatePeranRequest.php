@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
-class CreatePelayananRequest extends FormRequest
+class CreatePeranRequest extends FormRequest
 {
 
     public function authorize()
@@ -16,8 +16,7 @@ class CreatePelayananRequest extends FormRequest
     public function rules(Request $request)
     {
         return [
-            "title" => "required|min:3|max:100|unique:pelayananmedik,title,'.$request->id",
-            "description" => "required"
+            "title" => "required|min:3|max:20|unique:peran,title,'.$request->id"
         ];
     }
 }

@@ -28,7 +28,7 @@
 					<div class="dashboard-box margin-top-0">
 						<!-- Headline -->
 						<div class="headline">
-							<router-link to="/admin/profile/new" class="btn btn-primary">Tambah <i class="icon-material-outline-arrow-right-alt"></i></router-link>
+							<h3><i class="icon-material-outline-business"></i> PROFILE </h3> <router-link to="/admin/profile/new" class="btn btn-primary">Tambah <i class="icon-material-outline-arrow-right-alt"></i></router-link>
 						</div>
 
 						<div class="content">
@@ -135,7 +135,10 @@ let Add = require('./New.vue');
         computed: {
             profiles() {
                 return this.$store.getters.profiles;
-			}
+			},
+			currentUser() {
+                return this.$store.getters.currentUser;
+            }
         },
 		methods:{
 			del(id,index){

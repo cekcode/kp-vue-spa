@@ -1,4 +1,3 @@
-
 import state from './state';
 import actions from './actions';
  
@@ -21,8 +20,8 @@ export default {
         profiles(state) {
             return state.profiles;
         },
-        pelayanans(state) {
-            return state.pelayanans;
+        perans(state) {
+            return state.perans;
         }
     },
     mutations: {
@@ -57,14 +56,17 @@ export default {
         pushProfile(state, formData){
             state.profiles.push(formData);
         },
-        pushPelayanan(state, formData){
-            state.pelayanans.push(formData);
+        updatePerans(state, payload) {
+            state.perans = payload;
         },
-        updatePelayanans(state, payload) {
-            state.pelayanans = payload;
+        pushPeran(state, formData){
+            state.perans.push(formData);
         },
-        removePelayanan(state){
-            state.pelayanans;
+        removePeran(state){
+            state.perans;
+        },
+        updatePeran(state) {
+            state.perans;
         }
     },
     actions

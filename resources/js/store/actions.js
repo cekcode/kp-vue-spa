@@ -29,26 +29,23 @@ export default {
         context.commit('removeProfile');
         context.commit('updateProfiles', false);
     },
-    getPelayanans(context) {
-        axios.get('/api/pelayanans')
+    getPerans(context) {
+        axios.get('/api/perans')
         .then((response) => {
-            context.commit('updatePelayanans', response.data.pelayanans);
+            context.commit('updatePerans', response.data.perans);
         })
     },
-    addPelayanan(context, formData){
-        axios.post('/api/pelayanans/new', formData);
-        context.commit('pushPelayanan', formData);
-        context.commit('updatePelayanans', false);
-        // router.push('/admin/profile');
+    addPeran(context, formData){
+        axios.post('/api/perans/new', formData);
+        context.commit('pushPeran', formData);
     },
-    deletePelayanan({commit}, id) {
-        axios.delete(`/api/pelayanans/delete/${id}`);
-        commit('removePelayanan');
-        router.push('/admin/pelayanan-medik');
+    deletePeran({commit}, id) {
+        axios.delete(`/api/perans/delete/${id}`);
+        commit('removePeran');
     },
-    updatePelayanan(context, payload){
-        axios.post('/api/pelayanans/update/'+ payload.id, payload.data);
-        context.commit('removePelayanan');
-        context.commit('updatePelayanans', false);
+    updatePeran(context, payload){
+        axios.post('/api/perans/update/'+ payload.id, payload.data);
+        context.commit('updatePeran');
+        
     }
 }

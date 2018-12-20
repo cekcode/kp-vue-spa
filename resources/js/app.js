@@ -9,7 +9,9 @@ import {routes} from './routes';
 import MainApp from './components/MainApp.vue';
 import StoreData from './store/index';
 import {initialize} from './helpers/general';
+import VModal from 'vue-js-modal';
 
+Vue.use(VModal);
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
 Vue.use(Vuex);

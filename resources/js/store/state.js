@@ -7,5 +7,5 @@ export default {
     loading: false,
     auth_error: null,
     profiles: [],
-    pelayanans: []
+    perans: []
 }
