@@ -103973,55 +103973,118 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 var Addperan = __webpack_require__(304);
 var Editperan = __webpack_require__(307);
 var Addkategori = __webpack_require__(310);
 /* harmony default export */ __webpack_exports__["default"] = ({
-    components: { Addperan: Addperan, Addkategori: Addkategori, Editperan: Editperan },
-    name: 'list',
-    data: function data() {
-        return {
-            loading: false,
-            errors: {}
-        };
-    },
-    mounted: function mounted() {
-        if (this.perans.length > 1) {
-            return;
-        }
-        this.$store.dispatch('getPerans');
-    },
+	components: { Addperan: Addperan, Addkategori: Addkategori, Editperan: Editperan },
+	name: 'list',
+	data: function data() {
+		return {
+			loading: false,
+			errors: {}
+		};
+	},
+	mounted: function mounted() {
+		if (this.perans.length > 1) {
+			return;
+		}
+		this.$store.dispatch('getPerans');
 
-    computed: {
-        perans: function perans() {
-            return this.$store.getters.perans;
-        },
-        currentUser: function currentUser() {
-            return this.$store.getters.currentUser;
-        }
-    },
-    methods: {
-        showperan: function showperan() {
-            this.$modal.show('peran');
-        },
-        showkategori: function showkategori() {
-            this.$modal.show('kategori');
-        },
-        editperan: function editperan(index) {
-            this.$children[2].peran = this.perans[index];
-            this.$modal.show('edit-peran');
-        },
-        del: function del(id, index) {
-            if (confirm("Are you sure ?")) {
-                this.$store.dispatch("deletePeran", id);
-                this.perans.splice(index, 1);
-            }
-            console.log(index + ' ' + id);
-            // window.location.reload(true)
-        }
-    }
+		if (this.kategoris.length > 1) {
+			return;
+		}
+		this.$store.dispatch('getKategoris');
+	},
+
+	computed: {
+		perans: function perans() {
+			return this.$store.getters.perans;
+		},
+		kategoris: function kategoris() {
+			return this.$store.getters.kategoris;
+		},
+		currentUser: function currentUser() {
+			return this.$store.getters.currentUser;
+		}
+	},
+	methods: {
+		showperan: function showperan() {
+			this.$modal.show('peran');
+		},
+		showkategori: function showkategori() {
+			this.$modal.show('kategori');
+		},
+		editperan: function editperan(index) {
+			this.$children[2].peran = this.perans[index];
+			this.$modal.show('edit-peran');
+		},
+		delperan: function delperan(id, index) {
+			if (confirm("Are you sure ?")) {
+				this.$store.dispatch("deletePeran", id);
+				this.perans.splice(index, 1);
+			}
+			console.log(index + ' ' + id);
+			// window.location.reload(true)
+		},
+		editkategori: function editkategori(index) {},
+		delkategori: function delkategori(id, index) {
+			if (confirm("Are you sure ?")) {
+				this.$store.dispatch("deleteKategori", id);
+				this.kategoris.splice(index, 1);
+			}
+			console.log(index + ' ' + id);
+		}
+	}
 });
 
 /***/ }),
@@ -104511,82 +104574,91 @@ var render = function() {
                 "div",
                 { staticClass: "content with-padding padding-bottom-10" },
                 [
-                  _c("form", [
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-xl-12" }, [
-                        _c("div", { staticClass: "submit-field" }, [
-                          _c("h5", [_vm._v("Nama Peran")]),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.peran.title,
-                                expression: "peran.title"
-                              }
-                            ],
-                            ref: "title",
-                            staticClass: "with-border form-control",
-                            attrs: { type: "text", required: "" },
-                            domProps: { value: _vm.peran.title },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                  _c(
+                    "form",
+                    {
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.update($event)
+                        }
+                      }
+                    },
+                    [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-xl-12" }, [
+                          _c("div", { staticClass: "submit-field" }, [
+                            _c("h5", [_vm._v("Nama Peran")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.peran.title,
+                                  expression: "peran.title"
                                 }
-                                _vm.$set(
-                                  _vm.peran,
-                                  "title",
-                                  $event.target.value
-                                )
+                              ],
+                              ref: "title",
+                              staticClass: "with-border form-control",
+                              attrs: { type: "text", required: "" },
+                              domProps: { value: _vm.peran.title },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.peran,
+                                    "title",
+                                    $event.target.value
+                                  )
+                                }
                               }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm.errors.title
-                            ? _c("small", { staticClass: "has-text-danger" }, [
-                                _vm._v(_vm._s(_vm.errors.title[0]))
-                              ])
-                            : _vm._e()
+                            }),
+                            _vm._v(" "),
+                            _vm.errors.title
+                              ? _c(
+                                  "small",
+                                  { staticClass: "has-text-danger" },
+                                  [_vm._v(_vm._s(_vm.errors.title[0]))]
+                                )
+                              : _vm._e()
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-xl-12" }, [
+                          _c("input", {
+                            staticClass:
+                              "button ripple-effect big margin-top-30",
+                            attrs: { type: "submit", value: "Update" }
+                          })
                         ])
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-xl-12" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass:
-                              "button ripple-effect big margin-top-30",
-                            on: { click: _vm.update }
-                          },
-                          [_vm._v("Update")]
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _vm.errors
-                      ? _c("div", { staticClass: "errors" }, [
-                          _c(
-                            "ul",
-                            _vm._l(_vm.errors, function(
-                              fieldsError,
-                              fieldName
-                            ) {
-                              return _c("li", { key: fieldName }, [
-                                _c("strong", [_vm._v(_vm._s(fieldName))]),
-                                _vm._v(
-                                  " " +
-                                    _vm._s(fieldsError.join("\n")) +
-                                    "\n                                    "
-                                )
-                              ])
-                            }),
-                            0
-                          )
-                        ])
-                      : _vm._e()
-                  ])
+                      _vm.errors
+                        ? _c("div", { staticClass: "errors" }, [
+                            _c(
+                              "ul",
+                              _vm._l(_vm.errors, function(
+                                fieldsError,
+                                fieldName
+                              ) {
+                                return _c("li", { key: fieldName }, [
+                                  _c("strong", [_vm._v(_vm._s(fieldName))]),
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(fieldsError.join("\n")) +
+                                      "\n                                    "
+                                  )
+                                ])
+                              }),
+                              0
+                            )
+                          ])
+                        : _vm._e()
+                    ]
+                  )
                 ]
               )
             ])
@@ -104659,6 +104731,8 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_validate_js__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_validate_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_validate_js__);
 //
 //
 //
@@ -104712,18 +104786,73 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            errors: null
+            kategori: {
+                title: ''
+            },
+            peran_id: '',
+            errors: {}
         };
     },
+    mounted: function mounted() {
+        if (this.perans.length > 1) {
+            return;
+        }
+        this.$store.dispatch('getPerans');
+    },
 
+    computed: {
+        perans: function perans() {
+            return this.$store.getters.perans;
+        },
+        currentUser: function currentUser() {
+            return this.$store.getters.currentUser;
+        }
+    },
     methods: {
-        save: function save() {},
+        save: function save() {
+            this.errors = null;
+            var constraints = this.getConstraints();
+            var errors = __WEBPACK_IMPORTED_MODULE_0_validate_js___default()(this.$data.kategori, constraints);
+            if (errors) {
+                this.errors = errors;
+                return;
+            }
+            var formData = new FormData();
+            formData.append("title", this.$refs.title.value);
+            formData.append("peran_id", this.$refs.peran_id.value);
+
+            this.$store.dispatch("addKategori", formData);
+            this.$store.dispatch('getKategoris');
+            this.hide();
+            this.kategori.title = "";
+        },
         hide: function hide() {
             this.$modal.hide('kategori');
+        },
+        getConstraints: function getConstraints() {
+            return {
+                title: {
+                    presence: true,
+                    length: {
+                        minimum: 3,
+                        maximum: 20,
+                        message: 'Minimal 3, maksimal 20 Karakter'
+                    }
+                }
+            };
         }
     }
 });
@@ -104742,7 +104871,7 @@ var render = function() {
       attrs: {
         name: "kategori",
         draggable: ".window-header",
-        height: "50%",
+        height: "70%",
         width: "50%",
         align: "left"
       }
@@ -104763,65 +104892,140 @@ var render = function() {
                 "div",
                 { staticClass: "content with-padding padding-bottom-10" },
                 [
-                  _c("form", { attrs: { enctype: "multipart/form-data" } }, [
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-xl-12" }, [
-                        _c("div", { staticClass: "submit-field" }, [
-                          _c("h5", [_vm._v("Nama")]),
-                          _vm._v(" "),
+                  _c(
+                    "form",
+                    {
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.save($event)
+                        }
+                      }
+                    },
+                    [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-xl-12" }, [
+                          _c("div", { staticClass: "submit-field" }, [
+                            _c("h5", [_vm._v("Peran")]),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.peran_id,
+                                    expression: "peran_id"
+                                  }
+                                ],
+                                ref: "peran_id",
+                                attrs: {
+                                  "data-size": "7",
+                                  name: "peran_id",
+                                  required: ""
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.peran_id = $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  }
+                                }
+                              },
+                              _vm._l(_vm.perans, function(peran) {
+                                return _c(
+                                  "option",
+                                  {
+                                    key: peran.id,
+                                    domProps: { value: peran.id }
+                                  },
+                                  [_vm._v(_vm._s(peran.title))]
+                                )
+                              }),
+                              0
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-xl-12" }, [
+                          _c("div", { staticClass: "submit-field" }, [
+                            _c("h5", [_vm._v("Nama")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.kategori.title,
+                                  expression: "kategori.title"
+                                }
+                              ],
+                              ref: "title",
+                              staticClass: "with-border form-control",
+                              attrs: {
+                                type: "text",
+                                name: "title",
+                                required: ""
+                              },
+                              domProps: { value: _vm.kategori.title },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.kategori,
+                                    "title",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-xl-12" }, [
                           _c("input", {
-                            ref: "title",
-                            staticClass: "with-border form-control",
-                            attrs: { type: "text", required: "" }
+                            staticClass:
+                              "button ripple-effect big margin-top-30",
+                            attrs: { type: "submit", value: "Save" }
                           })
                         ])
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-xl-12" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass:
-                              "button ripple-effect big margin-top-30",
-                            on: { click: _vm.save }
-                          },
-                          [_vm._v("Save")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass:
-                              "button dark ripple-effect big margin-top-30",
-                            on: { click: _vm.hide }
-                          },
-                          [_vm._v("Close")]
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _vm.errors
-                      ? _c("div", { staticClass: "errors" }, [
-                          _c(
-                            "ul",
-                            _vm._l(_vm.errors, function(
-                              fieldsError,
-                              fieldName
-                            ) {
-                              return _c("li", { key: fieldName }, [
-                                _c("strong", [_vm._v(_vm._s(fieldName))]),
-                                _vm._v(
-                                  " " +
-                                    _vm._s(fieldsError.join("\n")) +
-                                    "\n                                    "
-                                )
-                              ])
-                            }),
-                            0
-                          )
-                        ])
-                      : _vm._e()
-                  ])
+                      _vm.errors
+                        ? _c("div", { staticClass: "errors" }, [
+                            _c(
+                              "ul",
+                              _vm._l(_vm.errors, function(
+                                fieldsError,
+                                fieldName
+                              ) {
+                                return _c("li", { key: fieldName }, [
+                                  _c("strong", [_vm._v(_vm._s(fieldName))]),
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(fieldsError.join("\n")) +
+                                      "\n                                    "
+                                  )
+                                ])
+                              }),
+                              0
+                            )
+                          ])
+                        : _vm._e()
+                    ]
+                  )
                 ]
               )
             ])
@@ -104988,7 +105192,136 @@ var render = function() {
                                     },
                                     on: {
                                       click: function($event) {
-                                        _vm.del(peran.id, index)
+                                        _vm.delperan(peran.id, index)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass: "icon-feather-trash-2"
+                                    })
+                                  ]
+                                )
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("hr")
+                          ]
+                        )
+                      })
+                ],
+                2
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-xl-6" }, [
+            _c("div", { staticClass: "dashboard-box margin-top-0" }, [
+              _c("div", { staticClass: "headline" }, [
+                _vm._m(3),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    on: { click: _vm.showkategori }
+                  },
+                  [
+                    _vm._v("Tambah "),
+                    _c("i", {
+                      staticClass: "icon-material-outline-arrow-right-alt"
+                    })
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "content" },
+                [
+                  !_vm.kategoris.length
+                    ? [_vm._m(4)]
+                    : _vm._l(_vm.kategoris, function(kategori, index) {
+                        return _c(
+                          "ul",
+                          {
+                            key: kategori.id,
+                            staticClass: "dashboard-box-list"
+                          },
+                          [
+                            _c("li", [
+                              _c("div", { staticClass: "job-listing" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "job-listing-details" },
+                                  [
+                                    _c("label", { attrs: { hidden: "" } }, [
+                                      _vm._v(_vm._s(index))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "job-listing-description"
+                                      },
+                                      [
+                                        _c(
+                                          "h3",
+                                          { staticClass: "job-listing-title" },
+                                          [_vm._v(_vm._s(kategori.title))]
+                                        ),
+                                        _vm._v(" "),
+                                        _vm._l(kategori.perans, function(
+                                          peran
+                                        ) {
+                                          return _c("div", { key: peran.id }, [
+                                            _vm._v("by "),
+                                            _c("b", [
+                                              _vm._v(_vm._s(peran.title))
+                                            ])
+                                          ])
+                                        })
+                                      ],
+                                      2
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "buttons-to-right" }, [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass:
+                                      "button gray ripple-effect-dark ico",
+                                    attrs: {
+                                      title: "Edit",
+                                      "data-tippy-placement": "left"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.editkategori(index)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass: "icon-feather-edit"
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "button red ripple-effect ico",
+                                    attrs: {
+                                      title: "Hapus",
+                                      "data-tippy-placement": "left"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.delkategori(kategori.id, index)
                                       }
                                     }
                                   },
@@ -105014,7 +105347,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "dashboard-footer-spacer" }),
         _vm._v(" "),
-        _vm._m(3)
+        _vm._m(5)
       ]),
       _vm._v(" "),
       _c("Addperan"),
@@ -105042,7 +105375,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("h3", [
-      _c("i", { staticClass: "icon-material-outline-business" }),
+      _c("i", { staticClass: "icon-material-outline-bookmark-border" }),
       _vm._v(" PERAN")
     ])
   },
@@ -105053,6 +105386,25 @@ var staticRenderFns = [
     return _c("ul", { staticClass: "dashboard-box-list" }, [
       _c("li", { staticClass: "text-center", attrs: { colspan: "4" } }, [
         _vm._v("Data Peran Kosong")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h3", [
+      _c("i", { staticClass: "icon-material-outline-bookmarks" }),
+      _vm._v(" KATEGORI")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ul", { staticClass: "dashboard-box-list" }, [
+      _c("li", { staticClass: "text-center", attrs: { colspan: "4" } }, [
+        _vm._v("Data Kategori Kosong")
       ])
     ])
   },
@@ -106508,6 +106860,9 @@ if (false) {
         },
         perans: function perans(state) {
             return state.perans;
+        },
+        kategoris: function kategoris(state) {
+            return state.kategoris;
         }
     },
     mutations: {
@@ -106553,6 +106908,15 @@ if (false) {
         },
         updatePeran: function updatePeran(state) {
             state.perans;
+        },
+        updateKategoris: function updateKategoris(state, payload) {
+            state.kategoris = payload;
+        },
+        pushKategori: function pushKategori(state, formData) {
+            state.kategoris.push(formData);
+        },
+        removeKategori: function removeKategori(state) {
+            state.kategoris;
         }
     },
     actions: __WEBPACK_IMPORTED_MODULE_1__actions__["a" /* default */]
@@ -106573,7 +106937,9 @@ var user = Object(__WEBPACK_IMPORTED_MODULE_0__helpers_auth__["a" /* getLocalUse
     loading: false,
     auth_error: null,
     profiles: [],
+    kategoris: [],
     perans: []
+
 });
 
 /***/ }),
@@ -106631,6 +106997,21 @@ var user = Object(__WEBPACK_IMPORTED_MODULE_0__helpers_auth__["a" /* getLocalUse
     updatePeran: function updatePeran(context, payload) {
         axios.post('/api/perans/update/' + payload.id, payload.data);
         context.commit('updatePeran');
+    },
+    getKategoris: function getKategoris(context) {
+        axios.get('/api/kategoris').then(function (response) {
+            context.commit('updateKategoris', response.data.kategoris);
+        });
+    },
+    addKategori: function addKategori(context, formData) {
+        axios.post('/api/kategoris/new', formData);
+        context.commit('pushKategori', formData);
+    },
+    deleteKategori: function deleteKategori(_ref3, id) {
+        var commit = _ref3.commit;
+
+        axios.delete('/api/kategoris/delete/' + id);
+        commit('removeKategori');
     }
 });
 

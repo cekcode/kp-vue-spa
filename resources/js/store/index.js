@@ -22,6 +22,9 @@ export default {
         },
         perans(state) {
             return state.perans;
+        },
+        kategoris(state) {
+            return state.kategoris;
         }
     },
     mutations: {
@@ -67,6 +70,15 @@ export default {
         },
         updatePeran(state) {
             state.perans;
+        },
+        updateKategoris(state, payload) {
+            state.kategoris = payload;
+        },
+        pushKategori(state, formData){
+            state.kategoris.push(formData);
+        },
+        removeKategori(state){
+            state.kategoris;
         }
     },
     actions

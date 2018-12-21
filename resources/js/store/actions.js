@@ -47,5 +47,19 @@ export default {
         axios.post('/api/perans/update/'+ payload.id, payload.data);
         context.commit('updatePeran');
         
+    },
+    getKategoris(context) {
+        axios.get('/api/kategoris')
+        .then((response) => {
+            context.commit('updateKategoris', response.data.kategoris);
+        })
+    },
+    addKategori(context, formData){
+        axios.post('/api/kategoris/new', formData);
+        context.commit('pushKategori', formData);
+    },
+    deleteKategori({commit}, id) {
+        axios.delete(`/api/kategoris/delete/${id}`);
+        commit('removeKategori');
     }
 }

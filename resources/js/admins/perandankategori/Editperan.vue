@@ -14,7 +14,7 @@
                         </div>
 
                         <div class="content with-padding padding-bottom-10">
-                            <form>
+                            <form @submit.prevent="update">
                                 <div class="row">
                                     <div class="col-xl-12">
                                         <div class="submit-field">
@@ -26,7 +26,7 @@
 
 
                                     <div class="col-xl-12">
-                                        <button class="button ripple-effect big margin-top-30" @click="update">Update</button>
+                                        <input type="submit" class="button ripple-effect big margin-top-30" value="Update">
                                     </div>
                                 
                                 </div>

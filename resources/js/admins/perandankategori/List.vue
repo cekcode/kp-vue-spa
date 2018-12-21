@@ -28,7 +28,7 @@
 					<div class="dashboard-box margin-top-0">
 						<!-- Headline -->
 						<div class="headline">
-							<h3><i class="icon-material-outline-business"></i> PERAN</h3> <button v-on:click="showperan" class="btn btn-primary">Tambah <i class="icon-material-outline-arrow-right-alt"></i></button>
+							<h3><i class="icon-material-outline-bookmark-border"></i> PERAN</h3> <button v-on:click="showperan" class="btn btn-primary">Tambah <i class="icon-material-outline-arrow-right-alt"></i></button>
 						</div>
 
 						<div class="content">
@@ -58,7 +58,7 @@
 										<!-- Buttons -->
 										<div class="buttons-to-right">
 											<a @click="editperan(index)" title="Edit" data-tippy-placement="left" class="button gray ripple-effect-dark ico"><i class="icon-feather-edit"></i></a>
-											<a @click="del(peran.id, index)" class="button red ripple-effect ico" title="Hapus" data-tippy-placement="left"><i class="icon-feather-trash-2"></i></a>
+											<a @click="delperan(peran.id, index)" class="button red ripple-effect ico" title="Hapus" data-tippy-placement="left"><i class="icon-feather-trash-2"></i></a>
 										</div>
 									</li>
 									<hr>
@@ -69,6 +69,53 @@
 					</div>
 				</div>
 
+
+				<!-- Dashboard Box -->
+				<div class="col-xl-6">
+					<div class="dashboard-box margin-top-0">
+						<!-- Headline -->
+						<div class="headline">
+							<h3><i class="icon-material-outline-bookmarks"></i> KATEGORI</h3> <button v-on:click="showkategori" class="btn btn-primary">Tambah <i class="icon-material-outline-arrow-right-alt"></i></button>
+						</div>
+
+						<div class="content">
+
+							<template v-if="!kategoris.length">
+								<ul class="dashboard-box-list">
+									<li colspan="4" class="text-center">Data Kategori Kosong</li>
+								</ul>
+							</template>
+
+							 <template v-else>
+								<ul class="dashboard-box-list" v-for="(kategori, index) in kategoris" :key="kategori.id">
+									<li>
+										<!-- Job Listing -->
+										<div class="job-listing">
+
+											<!-- Job Listing Details -->
+											<div class="job-listing-details">
+												<label hidden>{{ index }}</label>
+
+												<!-- Details -->
+												<div class="job-listing-description">
+													<h3 class="job-listing-title">{{ kategori.title }}</h3>
+													<div v-for="peran in kategori.perans" :key="peran.id">by <b>{{ peran.title }}</b> </div>
+												</div>
+											</div>
+										</div>
+										<!-- Buttons -->
+										<div class="buttons-to-right">
+											<a @click="editkategori(index)" title="Edit" data-tippy-placement="left" class="button gray ripple-effect-dark ico"><i class="icon-feather-edit"></i></a>
+											<a @click="delkategori(kategori.id, index)" class="button red ripple-effect ico" title="Hapus" data-tippy-placement="left"><i class="icon-feather-trash-2"></i></a>
+										</div>
+									</li>
+									<hr>
+								</ul>
+							 </template>
+
+						</div>
+					</div>
+				</div>
 
 			</div>
 			<!-- Row / End -->
@@ -129,14 +176,23 @@ let Addkategori = require('./Newkategori.vue');
 				}
 		},
         mounted() {
-            if (this.perans.length > 1) {
-                return ;
-            }
+            if(this.perans.length > 1) {
+				return;
+			}
 			this.$store.dispatch('getPerans');
+
+			if(this.kategoris.length > 1) {
+				return;
+			}
+			this.$store.dispatch('getKategoris');
+			
         },
         computed: {
             perans() {
                 return this.$store.getters.perans;
+			},
+			kategoris() {
+                return this.$store.getters.kategoris;
             },
             currentUser() {
                 return this.$store.getters.currentUser;
@@ -149,17 +205,27 @@ let Addkategori = require('./Newkategori.vue');
             showkategori () {
                 this.$modal.show('kategori');
 			},
-			editperan (index) {
+			editperan(index) {
 				this.$children[2].peran = this.perans[index];
                 this.$modal.show('edit-peran');
             },
-			del(id,index){
+			delperan(id,index){
 				if (confirm("Are you sure ?")) {
 				this.$store.dispatch("deletePeran", id);
 				this.perans.splice(index, 1);
 				}
 				console.log(`${index} ${id}`)
 				// window.location.reload(true)
+			},
+			editkategori(index) {
+				
+            },
+			delkategori(id,index){
+				if (confirm("Are you sure ?")) {
+				this.$store.dispatch("deleteKategori", id);
+				this.kategoris.splice(index, 1);
+				}
+				console.log(`${index} ${id}`)
 			}
 		}
     }
