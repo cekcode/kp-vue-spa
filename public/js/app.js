@@ -104020,13 +104020,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 var Addperan = __webpack_require__(304);
 var Editperan = __webpack_require__(307);
 var Addkategori = __webpack_require__(310);
+var Editkategori = __webpack_require__(331);
 /* harmony default export */ __webpack_exports__["default"] = ({
-	components: { Addperan: Addperan, Addkategori: Addkategori, Editperan: Editperan },
+	components: { Addperan: Addperan, Addkategori: Addkategori, Editperan: Editperan, Editkategori: Editkategori },
 	name: 'list',
 	data: function data() {
 		return {
@@ -104076,7 +104078,10 @@ var Addkategori = __webpack_require__(310);
 			console.log(index + ' ' + id);
 			// window.location.reload(true)
 		},
-		editkategori: function editkategori(index) {},
+		editkategori: function editkategori(index) {
+			this.$children[4].kategori = this.kategoris[index];
+			this.$modal.show('edit-kategori');
+		},
 		delkategori: function delkategori(id, index) {
 			if (confirm("Are you sure ?")) {
 				this.$store.dispatch("deleteKategori", id);
@@ -104503,7 +104508,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
-        update: function update() {
+        updateperan: function updateperan() {
             this.errors = null;
             var constraints = this.getConstraints();
             var errors = __WEBPACK_IMPORTED_MODULE_0_validate_js___default()(this.$data.peran, constraints);
@@ -104518,8 +104523,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 id: this.peran.id,
                 data: formData
             };
-            this.$store.dispatch('updatePeran', options);
             this.hide();
+            this.$store.dispatch('updatePeran', options);
         },
         hide: function hide() {
             this.$modal.hide('edit-peran');
@@ -104530,8 +104535,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     presence: true,
                     length: {
                         minimum: 3,
-                        maximum: 20,
-                        message: 'Minimal 3,maximal 20 Karakter'
+                        maximum: 30,
+                        message: 'Minimal 3,maximal 30 Karakter'
                     }
                 }
             };
@@ -104580,7 +104585,7 @@ var render = function() {
                       on: {
                         submit: function($event) {
                           $event.preventDefault()
-                          return _vm.update($event)
+                          return _vm.updateperan($event)
                         }
                       }
                     },
@@ -104615,15 +104620,7 @@ var render = function() {
                                   )
                                 }
                               }
-                            }),
-                            _vm._v(" "),
-                            _vm.errors.title
-                              ? _c(
-                                  "small",
-                                  { staticClass: "has-text-danger" },
-                                  [_vm._v(_vm._s(_vm.errors.title[0]))]
-                                )
-                              : _vm._e()
+                            })
                           ])
                         ]),
                         _vm._v(" "),
@@ -105275,7 +105272,7 @@ var render = function() {
                                           peran
                                         ) {
                                           return _c("div", { key: peran.id }, [
-                                            _vm._v("by "),
+                                            _vm._v("dari "),
                                             _c("b", [
                                               _vm._v(_vm._s(peran.title))
                                             ])
@@ -105354,7 +105351,9 @@ var render = function() {
       _vm._v(" "),
       _c("Editperan"),
       _vm._v(" "),
-      _c("Addkategori")
+      _c("Addkategori"),
+      _vm._v(" "),
+      _c("Editkategori")
     ],
     1
   )
@@ -106917,6 +106916,9 @@ if (false) {
         },
         removeKategori: function removeKategori(state) {
             state.kategoris;
+        },
+        updateKategori: function updateKategori(state) {
+            state.kategoris;
         }
     },
     actions: __WEBPACK_IMPORTED_MODULE_1__actions__["a" /* default */]
@@ -107012,6 +107014,12 @@ var user = Object(__WEBPACK_IMPORTED_MODULE_0__helpers_auth__["a" /* getLocalUse
 
         axios.delete('/api/kategoris/delete/' + id);
         commit('removeKategori');
+    },
+    updateKategori: function updateKategori(context, payload) {
+        axios.post('/api/kategoris/update/' + payload.id, payload.data);
+        // context.commit('updateKategoris',payload);
+        // context.commit('updateKategoris');
+        context.commit('updateKategori');
     }
 });
 
@@ -108048,6 +108056,369 @@ var user = Object(__WEBPACK_IMPORTED_MODULE_0__helpers_auth__["a" /* getLocalUse
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 330 */,
+/* 331 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(332)
+/* template */
+var __vue_template__ = __webpack_require__(333)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/admins/perandankategori/Editkategori.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-66965e36", Component.options)
+  } else {
+    hotAPI.reload("data-v-66965e36", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 332 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_validate_js__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_validate_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_validate_js__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'editkategori',
+    data: function data() {
+        return {
+            selected: "",
+            kategori: {},
+            errors: {}
+        };
+    },
+    mounted: function mounted() {
+        this.$store.dispatch('getPerans');
+    },
+
+    computed: {
+        perans: function perans() {
+            return this.$store.getters.perans;
+        },
+        currentUser: function currentUser() {
+            return this.$store.getters.currentUser;
+        }
+    },
+    methods: {
+        updatekategori: function updatekategori() {
+            this.errors = null;
+            var constraints = this.getConstraints();
+            var errors = __WEBPACK_IMPORTED_MODULE_0_validate_js___default()(this.$data.kategori, constraints);
+            if (errors) {
+                this.errors = errors;
+                return;
+            }
+
+            var formData = new FormData();
+            formData.append("title", this.$refs.title.value);
+            formData.append("peran_id", this.$refs.peran_id.value);
+
+            var options = {
+                id: this.kategori.id,
+                data: formData
+            };
+            this.$store.dispatch('updateKategori', options);
+            this.$store.dispatch('getKategoris');
+            this.hide();
+            // this.kategori = "";
+        },
+        hide: function hide() {
+            this.$modal.hide('edit-kategori');
+        },
+        getConstraints: function getConstraints() {
+            return {
+                title: {
+                    presence: true,
+                    length: {
+                        minimum: 3,
+                        maximum: 30,
+                        message: 'Minimal 3,maximal 30 Karakter'
+                    }
+                }
+            };
+        }
+    }
+});
+
+/***/ }),
+/* 333 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return !_vm.kategori.isComplete
+    ? _c(
+        "modal",
+        {
+          attrs: {
+            name: "edit-kategori",
+            draggable: ".window-header",
+            height: "70%",
+            width: "50%",
+            align: "left"
+          }
+        },
+        [
+          _c("div", { staticClass: "window-header" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-xl-12" }, [
+                _c("div", { staticClass: "dashboard-box margin-top-0" }, [
+                  _c("div", { staticClass: "headline" }, [
+                    _c("h3", [
+                      _c("i", { staticClass: "icon-feather-folder-plus" }),
+                      _vm._v(" Form Edit Kategori")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "content with-padding padding-bottom-10" },
+                    [
+                      _c(
+                        "form",
+                        {
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              return _vm.updatekategori($event)
+                            }
+                          }
+                        },
+                        [
+                          _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "col-xl-12" }, [
+                              _c("div", { staticClass: "submit-field" }, [
+                                _c("h5", [_vm._v("Peran")]),
+                                _vm._v(" "),
+                                _c(
+                                  "select",
+                                  {
+                                    ref: "peran_id",
+                                    attrs: {
+                                      "data-size": "7",
+                                      name: "peran_id",
+                                      required: ""
+                                    }
+                                  },
+                                  [
+                                    _vm._l(_vm.kategori.perans, function(
+                                      peran
+                                    ) {
+                                      return _c(
+                                        "option",
+                                        {
+                                          key: peran.id,
+                                          domProps: {
+                                            selected: true,
+                                            value: peran.id
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(peran.title))]
+                                      )
+                                    }),
+                                    _vm._v(" "),
+                                    _vm._l(_vm.perans, function(peran) {
+                                      return _c(
+                                        "option",
+                                        {
+                                          key: peran.id,
+                                          domProps: { value: peran.id }
+                                        },
+                                        [_vm._v(_vm._s(peran.title))]
+                                      )
+                                    })
+                                  ],
+                                  2
+                                )
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-xl-12" }, [
+                              _c("div", { staticClass: "submit-field" }, [
+                                _c("h5", [_vm._v("Nama Kategori")]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.kategori.title,
+                                      expression: "kategori.title"
+                                    }
+                                  ],
+                                  ref: "title",
+                                  staticClass: "with-border form-control",
+                                  attrs: { type: "text", required: "" },
+                                  domProps: { value: _vm.kategori.title },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.kategori,
+                                        "title",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-xl-12" }, [
+                              _c("input", {
+                                staticClass:
+                                  "button ripple-effect big margin-top-30",
+                                attrs: { type: "submit", value: "Update" }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm.errors
+                            ? _c("div", { staticClass: "errors" }, [
+                                _c(
+                                  "ul",
+                                  _vm._l(_vm.errors, function(
+                                    fieldsError,
+                                    fieldName
+                                  ) {
+                                    return _c("li", { key: fieldName }, [
+                                      _c("strong", [_vm._v(_vm._s(fieldName))]),
+                                      _vm._v(
+                                        " " +
+                                          _vm._s(fieldsError.join("\n")) +
+                                          "\n                                    "
+                                      )
+                                    ])
+                                  }),
+                                  0
+                                )
+                              ])
+                            : _vm._e()
+                        ]
+                      )
+                    ]
+                  )
+                ])
+              ])
+            ])
+          ])
+        ]
+      )
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-66965e36", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

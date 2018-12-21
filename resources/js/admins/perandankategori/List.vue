@@ -99,13 +99,13 @@
 												<!-- Details -->
 												<div class="job-listing-description">
 													<h3 class="job-listing-title">{{ kategori.title }}</h3>
-													<div v-for="peran in kategori.perans" :key="peran.id">by <b>{{ peran.title }}</b> </div>
+													<div v-for="peran in kategori.perans" :key="peran.id">dari <b>{{ peran.title }}</b> </div>
 												</div>
 											</div>
 										</div>
 										<!-- Buttons -->
 										<div class="buttons-to-right">
-											<a @click="editkategori(index)" title="Edit" data-tippy-placement="left" class="button gray ripple-effect-dark ico"><i class="icon-feather-edit"></i></a>
+											<a v-on:click="editkategori(index)" title="Edit" data-tippy-placement="left" class="button gray ripple-effect-dark ico"><i class="icon-feather-edit"></i></a>
 											<a @click="delkategori(kategori.id, index)" class="button red ripple-effect ico" title="Hapus" data-tippy-placement="left"><i class="icon-feather-trash-2"></i></a>
 										</div>
 									</li>
@@ -156,6 +156,7 @@
 		<Addperan></Addperan>
 		<Editperan></Editperan>
         <Addkategori></Addkategori>
+		<Editkategori></Editkategori>
 	</div>
 	<!-- Dashboard Content / End -->
 </template>
@@ -166,8 +167,9 @@
 let Addperan = require('./Newperan.vue');
 let Editperan = require('./Editperan.vue');
 let Addkategori = require('./Newkategori.vue');
+let Editkategori = require('./Editkategori.vue');
     export default {
-		components:{Addperan,Addkategori,Editperan},
+		components:{Addperan,Addkategori,Editperan,Editkategori},
 		name: 'list',
 			data(){
 				return{
@@ -218,7 +220,8 @@ let Addkategori = require('./Newkategori.vue');
 				// window.location.reload(true)
 			},
 			editkategori(index) {
-				
+				this.$children[4].kategori = this.kategoris[index];
+                this.$modal.show('edit-kategori');
             },
 			delkategori(id,index){
 				if (confirm("Are you sure ?")) {

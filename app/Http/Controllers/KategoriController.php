@@ -32,6 +32,22 @@ class KategoriController extends Controller
 
     }
 
+    public function update($id,Request $request)
+    {
+        $this->validate($request, [
+            'title' =>  'required'
+        ]); 
+
+        $dt = Kategori::find($id);
+        $dt->slug = Str::slug($request->title);
+        $dt->title = $request->title;
+        $dt->save();
+        $dt->perans()->sync($request->peran_id);
+        // return response()->json([
+        //     "kategori" => $dt
+        // ], 200);
+    }
+
     public function destroy($id)
     {
         Kategori::where('id',$id)->delete();

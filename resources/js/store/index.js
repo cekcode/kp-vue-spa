@@ -79,6 +79,9 @@ export default {
         },
         removeKategori(state){
             state.kategoris;
+        },
+        updateKategori(state) {
+            state.kategoris;
         }
     },
     actions

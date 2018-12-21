@@ -1,5 +1,5 @@
 <template>
-    <modal name="edit-peran" draggable=".window-header" height="50%" width="50%" align="left">
+    <modal name="edit-kategori" draggable=".window-header" height="70%" width="50%" align="left" v-if="!kategori.isComplete">
         <div class="window-header">
             <!-- Row -->
             <div class="row">
@@ -10,16 +10,26 @@
 
                         <!-- Headline -->
                         <div class="headline">
-                            <h3><i class="icon-feather-folder-plus"></i> Form Edit Peran</h3>
+                            <h3><i class="icon-feather-folder-plus"></i> Form Edit Kategori</h3>
                         </div>
 
                         <div class="content with-padding padding-bottom-10">
-                            <form @submit.prevent="updateperan">
+                            <form @submit.prevent="updatekategori">
                                 <div class="row">
                                     <div class="col-xl-12">
                                         <div class="submit-field">
-                                            <h5>Nama Peran</h5>
-                                            <input type="text" ref="title" v-model="peran.title" class="with-border form-control" required>
+                                            <h5>Peran</h5>
+                                            <select data-size="7" ref="peran_id" name="peran_id" required>
+                                                <option :selected="true" v-for="peran in kategori.perans" :key="peran.id" v-bind:value="peran.id">{{ peran.title }}</option>
+                                                <option v-for="peran in perans" :key="peran.id" v-bind:value="peran.id">{{ peran.title }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-12">
+                                        <div class="submit-field">
+                                            <h5>Nama Kategori</h5>
+                                            <input type="text" ref="title" v-model="kategori.title" class="with-border form-control" required>
                                             <!-- <small v-if="errors.title" class="has-text-danger">{{ errors.title[0] }}</small> -->
                                         </div>
                                     </div> 
@@ -54,23 +64,31 @@
 <script>
 import validate from 'validate.js';
 export default {
-    name: 'editperan',
+    name: 'editkategori',
     data(){
         return{
-            peran:{},
+            selected: "",
+            kategori:{},
             errors: {}
         }
     },
+    mounted() {
+        this.$store.dispatch('getPerans');
+        
+    },
     computed: {
+        perans() {
+            return this.$store.getters.perans;
+        },
         currentUser() {
             return this.$store.getters.currentUser;
         }
     },
     methods:{
-        updateperan(){
+        updatekategori(){
             this.errors = null;
             const constraints = this.getConstraints();
-            const errors = validate(this.$data.peran, constraints);
+            const errors = validate(this.$data.kategori, constraints);
             if(errors) {
                 this.errors = errors;
                 return;
@@ -78,16 +96,20 @@ export default {
 
             let formData = new FormData();
             formData.append("title", this.$refs.title.value);
+            formData.append("peran_id", this.$refs.peran_id.value);
+
             var options = { 
-                id: this.peran.id,
+                id: this.kategori.id,
                 data: formData 
             };
+            this.$store.dispatch('updateKategori', options);
+            this.$store.dispatch('getKategoris');
             this.hide();
-            this.$store.dispatch('updatePeran', options);
-            
+            // this.kategori = "";
+
         },
         hide () {
-            this.$modal.hide('edit-peran');
+            this.$modal.hide('edit-kategori');
         },
         getConstraints() {
             return {

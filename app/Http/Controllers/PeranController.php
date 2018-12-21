@@ -43,7 +43,7 @@ class PeranController extends Controller
         $dt = Peran::find($id);
         $dt->slug = Str::slug($request->title);
         $dt->title = $request->title;
-        // $dt->save();
+        $dt->save();
         // return response()->json([
         //     "peran" => $dt
         // ], 200);
