@@ -18,6 +18,14 @@ class KategoriController extends Controller
         ], 200);
     }
 
+    public function get($slug)
+    {
+        $kategori= Kategori::where('slug', $slug)->first();
+        return response()->json([
+            "kategori" => $kategori
+        ], 200);
+    }
+
     public function new(CreateKategoriRequest $request)
     {
         $kategori = new Kategori;

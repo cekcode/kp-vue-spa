@@ -18,6 +18,7 @@ import ProfileNew from './admins/profile/New.vue';
 import ProfileView from './admins/profile/View.vue';
 import ProfileEdit from './admins/profile/Edit.vue';
 import PeranKategroi from './admins/perandankategori/List.vue';
+import KategoriEdit from './admins/perandankategori/KategoriEdit.vue';
 
 export const routes = [
     {
@@ -112,6 +113,10 @@ export const routes = [
             {
                 path: 'peran-dan-kategori',
                 component: PeranKategroi
+            },
+            {
+                path: 'kategoris/edit/:slug',
+                component: KategoriEdit
             }
         ]
     }

@@ -58,7 +58,7 @@
 										<!-- Buttons -->
 										<div class="buttons-to-right">
 											<a @click="editperan(index)" title="Edit" data-tippy-placement="left" class="button gray ripple-effect-dark ico"><i class="icon-feather-edit"></i></a>
-											<a @click="delperan(peran.id, index)" class="button red ripple-effect ico" title="Hapus" data-tippy-placement="left"><i class="icon-feather-trash-2"></i></a>
+											<a @click="delperan(peran.id, index,peran.title)" class="button red ripple-effect ico" title="Hapus" data-tippy-placement="left"><i class="icon-feather-trash-2"></i></a>
 										</div>
 									</li>
 									<hr>
@@ -87,14 +87,15 @@
 							</template>
 
 							 <template v-else>
-								<ul class="dashboard-box-list" v-for="(kategori, index) in kategoris" :key="kategori.id">
+								<paginate name="kategoris" :list="kategoris" ref="paginator" :per="4" class="paginate-list">
+								<ul class="dashboard-box-list" v-for="(kategori, index) in paginated('kategoris')" :key="kategori.id">
 									<li>
 										<!-- Job Listing -->
 										<div class="job-listing">
 
 											<!-- Job Listing Details -->
 											<div class="job-listing-details">
-												<label hidden>{{ index }}</label>
+												<label hidden>{{index}}</label>
 
 												<!-- Details -->
 												<div class="job-listing-description">
@@ -105,12 +106,24 @@
 										</div>
 										<!-- Buttons -->
 										<div class="buttons-to-right">
-											<a v-on:click="editkategori(index)" title="Edit" data-tippy-placement="left" class="button gray ripple-effect-dark ico"><i class="icon-feather-edit"></i></a>
-											<a @click="delkategori(kategori.id, index)" class="button red ripple-effect ico" title="Hapus" data-tippy-placement="left"><i class="icon-feather-trash-2"></i></a>
+											<router-link :to="`/admin/kategoris/edit/${kategori.slug}`" title="Edit" data-tippy-placement="left" class="button gray ripple-effect-dark ico"><i class="icon-feather-edit"></i></router-link>
+											<!-- <a v-on:click="editkategori(index)" title="Edit" data-tippy-placement="left" class="button gray ripple-effect-dark ico"><i class="icon-feather-edit"></i></a> -->
+											<a @click="delkategori(kategori.id, kategori.title)" class="button red ripple-effect ico" title="Hapus" data-tippy-placement="left"><i class="icon-feather-trash-2"></i></a>
 										</div>
 									</li>
 									<hr>
 								</ul>
+								</paginate>
+								<div class="col-md-6">
+									<paginate-links :hide-single-page="true" :show-step-links="true" :async="true" for="kategoris" :simple="{
+									next: 'Next »',
+									prev: '« Back'
+									}" :classes="{
+									'ul': 'align-items-xl-center',
+									'.next > a': ['btn', 'btn-outline-primary'],
+									'.prev > a': ['btn', 'btn-outline-primary'] }"></paginate-links>
+									<span class="align-text-top" v-if="$refs.paginator"> View {{$refs.paginator.pageItemsCount}} data kategori</span>
+								</div>
 							 </template>
 
 						</div>
@@ -156,7 +169,7 @@
 		<Addperan></Addperan>
 		<Editperan></Editperan>
         <Addkategori></Addkategori>
-		<Editkategori></Editkategori>
+		<!-- <Editkategori></Editkategori> -->
 	</div>
 	<!-- Dashboard Content / End -->
 </template>
@@ -167,26 +180,29 @@
 let Addperan = require('./Newperan.vue');
 let Editperan = require('./Editperan.vue');
 let Addkategori = require('./Newkategori.vue');
-let Editkategori = require('./Editkategori.vue');
+// let Editkategori = require('./Editkategori.vue');
     export default {
-		components:{Addperan,Addkategori,Editperan,Editkategori},
+		components:{Addperan,Addkategori,Editperan},
 		name: 'list',
 			data(){
 				return{
+					paginate: ['kategoris'],
 					loading:false,
 					errors:{}
 				}
 		},
         mounted() {
+			if(this.kategoris.length > 1) {
+				return;
+			}
+			this.$store.dispatch('getKategoris');
+
             if(this.perans.length > 1) {
 				return;
 			}
 			this.$store.dispatch('getPerans');
 
-			if(this.kategoris.length > 1) {
-				return;
-			}
-			this.$store.dispatch('getKategoris');
+			
 			
         },
         computed: {
@@ -198,7 +214,7 @@ let Editkategori = require('./Editkategori.vue');
             },
             currentUser() {
                 return this.$store.getters.currentUser;
-            }
+			}
         },
 		methods:{
             showperan () {
@@ -210,27 +226,97 @@ let Editkategori = require('./Editkategori.vue');
 			editperan(index) {
 				this.$children[2].peran = this.perans[index];
                 this.$modal.show('edit-peran');
-            },
-			delperan(id,index){
-				if (confirm("Are you sure ?")) {
-				this.$store.dispatch("deletePeran", id);
-				this.perans.splice(index, 1);
-				}
-				console.log(`${index} ${id}`)
-				// window.location.reload(true)
+			},
+			delperan(id,index,title){
+				var self = this;
+				self.$swal({
+					title: "Ingin Hapus Peran "+title+" ?",
+					text: "Data akan dihapus permanen!",
+					icon: "warning",
+					buttons: true,
+  					dangerMode: true,
+					closeOnConfirm: true
+				}).then((isConfirm) => {
+					if(isConfirm) {
+						self.$store.dispatch("deletePeran", id);
+						self.perans.splice(index, 1);
+						self.$swal({
+							title: "Berhasil!",
+							text: "Berhasil Menghapus Peran "+title,
+							icon: "success",
+						});
+
+						return true;
+					}else {
+						return false;
+					}
+				});
 			},
 			editkategori(index) {
 				this.$children[4].kategori = this.kategoris[index];
                 this.$modal.show('edit-kategori');
             },
-			delkategori(id,index){
-				if (confirm("Are you sure ?")) {
-				this.$store.dispatch("deleteKategori", id);
-				this.kategoris.splice(index, 1);
-				}
-				console.log(`${index} ${id}`)
+			delkategori(id,title){
+				var self = this;
+				self.$swal({
+					title: "Ingin Hapus Kategori "+title+" ?",
+					text: "Data akan dihapus permanen!",
+					icon: "warning",
+					buttons: true,
+  					dangerMode: true,
+					closeOnConfirm: true
+				}).then((isConfirm) => {
+					if(isConfirm) {
+						self.$store.dispatch("deleteKategori", id);
+						// this.kategoris.splice(index, 1);
+						window.location.reload(true);
+						self.$swal({
+							title: "Berhasil!",
+							text: "Berhasil Menghapus Kategori "+title,
+							icon: "success",
+						});
+						return true;
+					}else {
+						return false;
+					}
+				});
 			}
 		}
     }
 </script>
 
+<style lang="sass">
+ul
+  list-style-type: none
+  padding: 0
+li
+  display: inline-block
+  margin: 0 10px
+.paginate-list
+  text-align: left
+  li
+    display: block
+    &:before
+      font-weight: bold
+      color: slategray
+    
+.paginate-links.items
+  user-select: none
+  a
+    cursor: pointer
+  
+  li.active a
+    font-weight: bold
+  
+  li.next:before
+    content: ' | '
+    margin-right: 13px
+    color: #ddd
+  
+  li.disabled a
+    color: #ccc
+    cursor: no-drop
+  
+a
+  color: #42b983
+</style>
