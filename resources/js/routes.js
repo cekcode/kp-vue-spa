@@ -17,8 +17,11 @@ import AdminProfile from './admins/profile/List.vue';
 import ProfileNew from './admins/profile/New.vue';
 import ProfileView from './admins/profile/View.vue';
 import ProfileEdit from './admins/profile/Edit.vue';
-import PeranKategroi from './admins/perandankategori/List.vue';
-import KategoriEdit from './admins/perandankategori/KategoriEdit.vue';
+import PeranKategori from './admins/perandankategori/List.vue';
+import KategoriEdit from './admins/perandankategori/Editkategori.vue';
+import KategoriNew from './admins/perandankategori/Newkategori.vue';
+import PeranEdit from './admins/perandankategori/Editperan.vue';
+import PeranNew from './admins/perandankategori/Newperan.vue';
 
 export const routes = [
     {
@@ -112,11 +115,23 @@ export const routes = [
             },
             {
                 path: 'peran-dan-kategori',
-                component: PeranKategroi
+                component: PeranKategori
+            },
+            {
+                path: 'kategori/new',
+                component: KategoriNew
             },
             {
                 path: 'kategoris/edit/:slug',
                 component: KategoriEdit
+            },
+            {
+                path: 'peran/new',
+                component: PeranNew
+            },
+            {
+                path: 'perans/edit/:slug',
+                component: PeranEdit
             }
         ]
     }

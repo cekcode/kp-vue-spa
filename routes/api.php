@@ -33,6 +33,7 @@ Route::group(['middleware' => 'jwt.auth'], function ($router) {
     Route::post('perans/new', 'PeranController@new');
     Route::delete('perans/delete/{id}', 'PeranController@destroy');
     Route::post('perans/update/{id}', 'PeranController@update');
+    Route::get('perans/{slug}', 'PeranController@get');
     Route::get('kategoris', 'KategoriController@all');
     Route::post('kategoris/new', 'KategoriController@new');
     Route::delete('kategoris/delete/{id}', 'KategoriController@destroy');

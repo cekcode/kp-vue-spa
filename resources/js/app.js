@@ -9,13 +9,11 @@ import {routes} from './routes';
 import MainApp from './components/MainApp.vue';
 import StoreData from './store/index';
 import {initialize} from './helpers/general';
-import VModal from 'vue-js-modal';
 import VuePaginate from 'vue-paginate';
 import VueSwal from 'vue-swal'
 
 Vue.use(VueSwal)
 Vue.use(VuePaginate)
-Vue.use(VModal);
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
 Vue.use(Vuex);

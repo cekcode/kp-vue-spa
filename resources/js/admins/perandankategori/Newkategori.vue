@@ -1,21 +1,39 @@
 <template>
-    <modal name="kategori" draggable=".window-header" height="70%" width="50%" align="left">
-        <div class="window-header">
-            <!-- Row -->
-            <div class="row">
+    <!-- Dashboard Content
+	================================================== -->
+	<div class="dashboard-content-container" data-simplebar>
+		<div class="dashboard-content-inner" >
+			
+			<!-- Dashboard Headline -->
+			<div class="dashboard-headline">
+				<h3>Profile</h3>
 
-                <!-- Dashboard Box -->
-                <div class="col-xl-12">
-                    <div class="dashboard-box margin-top-0">
+				<!-- Breadcrumbs -->
+				<nav id="breadcrumbs" class="dark">
+					<ul>
+						<li><router-link to="/admin">Admin</router-link></li>
+                        <li><router-link to="/admin/peran-dan-kategori">Peran & Kategori</router-link></li>
+						<li>Tambah Kategori</li>
+					</ul>
+				</nav>
+			</div>
+	
+			<!-- Row -->
+			<div class="row">
 
-                        <!-- Headline -->
-                        <div class="headline">
-                            <h3><i class="icon-feather-folder-plus"></i> Form Tambah Kategori Baru</h3>
-                        </div>
+				<!-- Dashboard Box -->
+				<div class="col-xl-12">
+					<div class="dashboard-box margin-top-0">
 
-                        <div class="content with-padding padding-bottom-10">
+						<!-- Headline -->
+						<div class="headline">
+							<h3><i class="icon-feather-folder-plus"></i> Form Tambah Kategori</h3>
+						</div>
+
+						<div class="content with-padding padding-bottom-10">
                             <form @submit.prevent="save">
                                 <div class="row">
+
                                     <div class="col-xl-12">
                                         <div class="submit-field">
                                             <h5>Peran</h5>
@@ -24,46 +42,73 @@
                                             </select>
                                         </div>
                                     </div>
+
                                     <div class="col-xl-12">
                                         <div class="submit-field">
-                                            <h5>Nama</h5>
-                                            <input type="text" name="title" v-model="kategori.title" ref="title" class="with-border form-control" required>
+                                            <h5>Nama Kategori</h5>
+                                            <input type="text" ref="title" v-model="kategori.title" class="with-border form-control" required>
                                         </div>
                                     </div>
 
-
                                     <div class="col-xl-12">
-                                        <input type="submit" class="button ripple-effect big margin-top-30" value="Save">
-                                        <!-- <button @click="hide" class="button dark ripple-effect big margin-top-30">Close</button> -->
+                                        <input type="submit" class="button ripple-effect big margin-top-30" value="Update">
                                     </div>
                                 
                                 </div>
 
-                                <div class="errors" v-if="errors">
-                                    <ul>
-                                        <li v-for="(fieldsError, fieldName) in errors" :key="fieldName">
-                                            <strong>{{ fieldName }}</strong> {{ fieldsError.join('\n') }}
-                                        </li>
-                                    </ul>
-                                </div>
-                                
                             </form>
-                        </div>
-                    </div>
-                </div>
+						</div>
+					</div>
+				</div>
 
-            </div>
-            <!-- Row / End -->
-        </div>
-    </modal>
+			</div>
+			<!-- Row / End -->
+
+
+			<!-- Footer -->
+			<div class="dashboard-footer-spacer"></div>
+			<div class="small-footer margin-top-15">
+				<div class="small-footer-copyrights">
+					© 2018 <strong>Hireo</strong>. All Rights Reserved.
+				</div>
+ 
+				<ul class="footer-social-links">
+					<li>
+						<a href="#" title="Facebook" data-tippy-placement="top">
+							<i class="icon-brand-facebook-f"></i>
+						</a>
+					</li>
+					<li>
+						<a href="#" title="Twitter" data-tippy-placement="top">
+							<i class="icon-brand-twitter"></i>
+						</a>
+					</li>
+					<li>
+						<a href="#" title="Google Plus" data-tippy-placement="top">
+							<i class="icon-brand-google-plus-g"></i>
+						</a>
+					</li>
+					<li>
+						<a href="#" title="LinkedIn" data-tippy-placement="top">
+							<i class="icon-brand-linkedin-in"></i>
+						</a>
+					</li>
+				</ul>
+               
+				<div class="clearfix"></div>
+			</div>
+			<!-- Footer / End -->
+
+		</div>
+	</div>
+	<!-- Dashboard Content / End -->
 </template>
-
 
 <script>
 import validate from 'validate.js';
 export default {
     data(){
-        return{
+        return{ 
             kategori: {
                 title: ''
             },
@@ -101,11 +146,7 @@ export default {
 
             this.$store.dispatch("addKategori", formData);
             this.$store.dispatch('getKategoris');
-            this.hide();
-            this.kategori.title = ""
-        },
-        hide () {
-            this.$modal.hide('kategori');
+            this.$router.push('/admin/peran-dan-kategori');
         },
         getConstraints() {
             return {
@@ -122,4 +163,3 @@ export default {
     }
 }
 </script>
-

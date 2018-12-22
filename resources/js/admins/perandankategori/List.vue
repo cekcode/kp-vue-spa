@@ -28,7 +28,7 @@
 					<div class="dashboard-box margin-top-0">
 						<!-- Headline -->
 						<div class="headline">
-							<h3><i class="icon-material-outline-bookmark-border"></i> PERAN</h3> <button v-on:click="showperan" class="btn btn-primary">Tambah <i class="icon-material-outline-arrow-right-alt"></i></button>
+							<h3><i class="icon-material-outline-bookmark-border"></i> PERAN</h3> <router-link :to="'/admin/peran/new/'" data-tippy-placement="left" class="btn btn-primary">Tambah</router-link>
 						</div>
 
 						<div class="content">
@@ -57,7 +57,7 @@
 										</div>
 										<!-- Buttons -->
 										<div class="buttons-to-right">
-											<a @click="editperan(index)" title="Edit" data-tippy-placement="left" class="button gray ripple-effect-dark ico"><i class="icon-feather-edit"></i></a>
+											<router-link :to="`/admin/perans/edit/${peran.slug}`" title="Edit" data-tippy-placement="left" class="button gray ripple-effect-dark ico"><i class="icon-feather-edit"></i></router-link>
 											<a @click="delperan(peran.id, index,peran.title)" class="button red ripple-effect ico" title="Hapus" data-tippy-placement="left"><i class="icon-feather-trash-2"></i></a>
 										</div>
 									</li>
@@ -75,7 +75,7 @@
 					<div class="dashboard-box margin-top-0">
 						<!-- Headline -->
 						<div class="headline">
-							<h3><i class="icon-material-outline-bookmarks"></i> KATEGORI</h3> <button v-on:click="showkategori" class="btn btn-primary">Tambah <i class="icon-material-outline-arrow-right-alt"></i></button>
+							<h3><i class="icon-material-outline-bookmarks"></i> KATEGORI</h3> <router-link :to="'/admin/kategori/new/'" data-tippy-placement="left" class="btn btn-primary">Tambah</router-link>
 						</div>
 
 						<div class="content">
@@ -88,14 +88,13 @@
 
 							 <template v-else>
 								<paginate name="kategoris" :list="kategoris" ref="paginator" :per="4" class="paginate-list">
-								<ul class="dashboard-box-list" v-for="(kategori, index) in paginated('kategoris')" :key="kategori.id">
+								<ul class="dashboard-box-list" v-for="(kategori, key) in paginated('kategoris')" :key="key">
 									<li>
 										<!-- Job Listing -->
 										<div class="job-listing">
 
 											<!-- Job Listing Details -->
 											<div class="job-listing-details">
-												<label hidden>{{index}}</label>
 
 												<!-- Details -->
 												<div class="job-listing-description">
@@ -166,10 +165,7 @@
 			<!-- Footer / End -->
 
 		</div>
-		<Addperan></Addperan>
-		<Editperan></Editperan>
-        <Addkategori></Addkategori>
-		<!-- <Editkategori></Editkategori> -->
+
 	</div>
 	<!-- Dashboard Content / End -->
 </template>
@@ -178,11 +174,8 @@
 <script>
 
 let Addperan = require('./Newperan.vue');
-let Editperan = require('./Editperan.vue');
 let Addkategori = require('./Newkategori.vue');
-// let Editkategori = require('./Editkategori.vue');
     export default {
-		components:{Addperan,Addkategori,Editperan},
 		name: 'list',
 			data(){
 				return{
@@ -192,18 +185,11 @@ let Addkategori = require('./Newkategori.vue');
 				}
 		},
         mounted() {
-			if(this.kategoris.length > 1) {
+			if(this.kategoris.length && this.perans.length > 1) {
 				return;
 			}
 			this.$store.dispatch('getKategoris');
-
-            if(this.perans.length > 1) {
-				return;
-			}
-			this.$store.dispatch('getPerans');
-
-			
-			
+			this.$store.dispatch('getPerans');		
         },
         computed: {
             perans() {
@@ -252,10 +238,6 @@ let Addkategori = require('./Newkategori.vue');
 					}
 				});
 			},
-			editkategori(index) {
-				this.$children[4].kategori = this.kategoris[index];
-                this.$modal.show('edit-kategori');
-            },
 			delkategori(id,title){
 				var self = this;
 				self.$swal({

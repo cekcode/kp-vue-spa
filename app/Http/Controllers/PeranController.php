@@ -17,6 +17,14 @@ class PeranController extends Controller
         ], 200);
     }
 
+    public function get($slug)
+    {
+        $peran= Peran::where('slug', $slug)->first();
+        return response()->json([
+            "peran" => $peran
+        ], 200);
+    }
+
     public function new(CreatePeranRequest $request)
     {
         $peran = new Peran();
