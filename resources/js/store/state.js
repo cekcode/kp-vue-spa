@@ -8,6 +8,7 @@ export default {
     auth_error: null,
     profiles: [],
     kategoris: [],
-    perans: []
+    perans: [],
+    posts: []
     
 }

@@ -25,6 +25,9 @@ export default {
         },
         kategoris(state) {
             return state.kategoris;
+        },
+        posts(state) {
+            return state.posts;
         }
     },
     mutations: {
@@ -82,6 +85,9 @@ export default {
         },
         updateKategori(state) {
             state.kategoris;
+        },
+        updatePosts(state, payload) {
+            state.posts = payload;
         }
     },
     actions

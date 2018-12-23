@@ -1,6 +1,4 @@
 require('./bootstrap');
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-vue/dist/bootstrap-vue.css';
 import Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue';
 import VueRouter from 'vue-router';
@@ -10,7 +8,9 @@ import MainApp from './components/MainApp.vue';
 import StoreData from './store/index';
 import {initialize} from './helpers/general';
 import VuePaginate from 'vue-paginate';
-import VueSwal from 'vue-swal'
+import VueSwal from 'vue-swal';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 Vue.use(VueSwal)
 Vue.use(VuePaginate)

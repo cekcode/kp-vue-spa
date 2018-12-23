@@ -310,6 +310,16 @@
     <!-- Dashboard Content / End -->
 </template>
 
+<script>
+    export default {
+        computed: {
+            currentUser() {
+                return this.$store.getters.currentUser;
+            }
+        }
+    }
+</script>
+
 <style scoped>
 a { color: #66676b; transition: 0.3s; }
 a, button { outline: none !important; }

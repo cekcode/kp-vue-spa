@@ -31,7 +31,7 @@
                             <li><a href="#"><i class="icon-material-outline-speaker-notes"></i> Informasi</a>
                                 <ul>
                                     <li><router-link to="/admin/peran-dan-kategori"><a>Peran & Kategori</a></router-link></li>
-                                    <li><a href="dashboard-manage-candidates.html">Post</a></li>
+                                    <li><router-link to="/admin/post"><a>Post</a></router-link></li>
                                 </ul>	
                             </li>
                             <li><a href="#"><i class="icon-material-outline-business-center"></i> Karir</a>

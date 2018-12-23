@@ -66,5 +66,11 @@ export default {
         // context.commit('updateKategoris',payload);
         // context.commit('updateKategoris');
         context.commit('updateKategori');
+    },
+    getPosts(context) {
+        axios.get('/api/posts')
+        .then((response) => {
+            context.commit('updatePosts', response.data.posts);
+        })
     }
 }

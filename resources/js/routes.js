@@ -22,6 +22,7 @@ import KategoriEdit from './admins/perandankategori/Editkategori.vue';
 import KategoriNew from './admins/perandankategori/Newkategori.vue';
 import PeranEdit from './admins/perandankategori/Editperan.vue';
 import PeranNew from './admins/perandankategori/Newperan.vue';
+import AdminPost from './admins/post/List.vue';
 
 export const routes = [
     {
@@ -132,6 +133,10 @@ export const routes = [
             {
                 path: 'perans/edit/:slug',
                 component: PeranEdit
+            },
+            {
+                path: 'post',
+                component: AdminPost
             }
         ]
     }
