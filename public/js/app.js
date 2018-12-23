@@ -110177,61 +110177,43 @@ var render = function() {
                       fn: function(row) {
                         return [
                           _c(
-                            "b-button",
+                            "router-link",
                             {
-                              staticClass: "mr-1",
-                              attrs: { size: "sm" },
-                              on: {
-                                click: function($event) {
-                                  $event.stopPropagation()
-                                  _vm.info(row.item, row.index, $event.target)
-                                }
+                              staticClass: "btn btn-secondary ico",
+                              attrs: {
+                                to: "/admin/post/" + row.item.slug,
+                                title: "Lihat",
+                                "data-tippy-placement": "left"
                               }
                             },
-                            [
-                              _vm._v(
-                                "\n                                Info modal\n                                "
-                              )
-                            ]
+                            [_c("i", { staticClass: "icon-feather-eye" })]
                           ),
                           _vm._v(" "),
                           _c(
-                            "b-button",
+                            "router-link",
                             {
-                              attrs: { size: "sm" },
-                              on: {
-                                click: function($event) {
-                                  $event.stopPropagation()
-                                  return row.toggleDetails($event)
-                                }
+                              staticClass: "btn btn-warning ico",
+                              attrs: {
+                                to: "/admin/post/edit/" + row.item.slug,
+                                title: "Edit",
+                                "data-tippy-placement": "left"
                               }
                             },
-                            [
-                              _vm._v(
-                                "\n                                " +
-                                  _vm._s(row.detailsShowing ? "Hide" : "Show") +
-                                  " Details\n                                "
-                              )
-                            ]
+                            [_c("i", { staticClass: "icon-feather-edit" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "btn btn-danger ico",
+                              attrs: {
+                                to: "/admin/post/edit/" + row.item.slug,
+                                title: "Hapus",
+                                "data-tippy-placement": "left"
+                              }
+                            },
+                            [_c("i", { staticClass: "icon-feather-trash" })]
                           )
-                        ]
-                      }
-                    },
-                    {
-                      key: "row-details",
-                      fn: function(row) {
-                        return [
-                          _c("b-card", [
-                            _c(
-                              "ul",
-                              _vm._l(row.item, function(value, key) {
-                                return _c("li", { key: key }, [
-                                  _vm._v(_vm._s(key) + ": " + _vm._s(value))
-                                ])
-                              }),
-                              0
-                            )
-                          ])
                         ]
                       }
                     }
@@ -110264,19 +110246,6 @@ var render = function() {
                     )
                   ],
                   1
-                ),
-                _vm._v(" "),
-                _c(
-                  "b-modal",
-                  {
-                    attrs: {
-                      id: "modalInfo",
-                      title: _vm.modalInfo.title,
-                      "ok-only": ""
-                    },
-                    on: { hide: _vm.resetModal }
-                  },
-                  [_c("pre", [_vm._v(_vm._s(_vm.modalInfo.content))])]
                 )
               ],
               1
@@ -110389,22 +110358,6 @@ if (false) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
