@@ -72,5 +72,9 @@ export default {
         .then((response) => {
             context.commit('updatePosts', response.data.posts);
         })
+    },
+    getKategoribyidperan(context, id){
+        axios.get('/api/post/get-kategori/'+id);
+        context.commit('updateKategori');
     }
 }

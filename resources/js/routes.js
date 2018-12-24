@@ -23,6 +23,7 @@ import KategoriNew from './admins/perandankategori/Newkategori.vue';
 import PeranEdit from './admins/perandankategori/Editperan.vue';
 import PeranNew from './admins/perandankategori/Newperan.vue';
 import AdminPost from './admins/post/List.vue';
+import PostNew from './admins/post/New.vue';
 
 export const routes = [
     {
@@ -137,6 +138,11 @@ export const routes = [
             {
                 path: 'post',
                 component: AdminPost
+            },
+            ,
+            {
+                path: 'post/new',
+                component: PostNew
             }
         ]
     }

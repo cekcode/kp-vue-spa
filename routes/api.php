@@ -40,6 +40,7 @@ Route::group(['middleware' => 'jwt.auth'], function ($router) {
     Route::post('kategoris/update/{id}', 'KategoriController@update');
     Route::get('kategoris/{slug}', 'KategoriController@get');
     Route::get('posts', 'PostController@all');
+    Route::get('post/get-kategori/{id}', 'PostController@getkategori');
  
     Route::post('images', 'ImageController@upload');
 });

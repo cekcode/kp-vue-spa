@@ -25,7 +25,7 @@
 					<div class="dashboard-box margin-top-0">
 						<!-- Headline -->
 						<div class="headline">
-							<h3><i class="icon-material-outline-business"></i> PROFILE </h3> <router-link to="/admin/profile/new" class="btn btn-primary">Tambah <i class="icon-material-outline-arrow-right-alt"></i></router-link>
+							<h3><i class="icon-material-outline-business"></i> PROFILE </h3> <router-link to="/admin/post/new" class="btn btn-primary">Tambah <i class="icon-material-outline-arrow-right-alt"></i></router-link>
 						</div>
                             <b-col md="6" class="my-1">
                                 <b-form-group horizontal label="Cari" class="mb-0">
@@ -70,7 +70,7 @@
                                     @filtered="onFiltered"
                             >
                             <!-- <template slot="name" slot-scope="row">{{row.value.name}}</template> -->
-                            <!-- <template slot="isActive" slot-scope="row">{{row.value?'Yes :)':'No :('}}</template> -->
+                            <!-- <template slot="Status" slot-scope="row">{{row.value.status?'Yes :)':'No :('}}</template> -->
                             <template slot="actions" slot-scope="row">
                                 <router-link :to="`/admin/post/`+row.item.slug" title="Lihat" data-tippy-placement="left" class="btn btn-secondary ico"><i class="icon-feather-eye"></i></router-link> 
                                 <router-link :to="`/admin/post/edit/`+row.item.slug" title="Edit" data-tippy-placement="left" class="btn btn-warning ico"><i class="icon-feather-edit"></i></router-link>
@@ -139,8 +139,10 @@ const posts = ['posts'];
 				return{
 					// posts: posts,
                     fields: [
-                        { key: 'title', label: 'Judul', sortable: true, sortDirection: 'desc' },
-                        { key: 'created_at', label: 'Dibuat', sortable: true, 'class': 'text-center' },
+                        { key: 'title', label: 'Judul', sortable: true},
+                        { key: 'status', label: 'Status', sortable: true },
+                        { key: 'created_at', label: 'Dibuat', sortable: true, 'class': 'text-center', sortDirection: 'desc' },
+                        { key: 'updated_at', label: 'Diupdate', sortable: true, 'class': 'text-center' },
                         { key: 'actions', label: 'Actions' }
                     ],
                     currentPage: 1,

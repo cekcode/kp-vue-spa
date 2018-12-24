@@ -17,6 +17,6 @@ class Kategori extends Model
     public function posts()
     {
         // return $this->belongsToMany('App\Posts','kategori_posts')->orderBy('created_at','DESC')->paginate(5);
-        return $this->belongsToMany('App\Posts','kategori_posts', 'kategori_id', 'post_id')->withTimestamps();
+        return $this->belongsToMany('App\Post','kategori_posts', 'kategori_id', 'post_id')->withTimestamps();
     }
 }
