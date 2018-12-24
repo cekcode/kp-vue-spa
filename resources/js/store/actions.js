@@ -76,5 +76,9 @@ export default {
     addPost(context, formData){
         axios.post('/api/post/new', formData);
         context.commit('pushPost', formData);
+    },
+    deletePost({commit}, id) {
+        axios.delete(`/api/post/delete/${id}`);
+        commit('removePost');
     }
 }

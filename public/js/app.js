@@ -83517,6 +83517,9 @@ var index_esm = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__admins_post_List_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_24__admins_post_List_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__admins_post_New_vue__ = __webpack_require__(319);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__admins_post_New_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_25__admins_post_New_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__admins_post_View_vue__ = __webpack_require__(346);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__admins_post_View_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_26__admins_post_View_vue__);
+
 
 
 
@@ -83630,6 +83633,9 @@ var routes = [{
     },, {
         path: 'post/new',
         component: __WEBPACK_IMPORTED_MODULE_25__admins_post_New_vue___default.a
+    }, {
+        path: 'post/:slug',
+        component: __WEBPACK_IMPORTED_MODULE_26__admins_post_View_vue___default.a
     }]
 }];
 
@@ -104725,7 +104731,7 @@ var Addkategori = __webpack_require__(87);
 		delkategori: function delkategori(id, title) {
 			var self = this;
 			self.$swal({
-				title: "Ingin Hapus Kategori " + title + " ?",
+				title: "Yakin Hapus Kategori " + title + " ?",
 				text: "Data akan dihapus permanen!",
 				icon: "warning",
 				buttons: true,
@@ -107220,61 +107226,85 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 var posts = ['posts'];
 /* harmony default export */ __webpack_exports__["default"] = ({
-    name: 'list',
-    data: function data() {
-        return {
-            // posts: posts,
-            fields: [{ key: 'title', label: 'Judul', sortable: true }, { key: 'status', label: 'Status', sortable: true }, { key: 'created_at', label: 'Dibuat', sortable: true, 'class': 'text-center', sortDirection: 'desc' }, { key: 'updated_at', label: 'Diupdate', sortable: true, 'class': 'text-center' }, { key: 'actions', label: 'Actions' }],
-            currentPage: 1,
-            perPage: 5,
-            totalRows: posts.length,
-            pageOptions: [5, 10, 15],
-            sortBy: null,
-            sortDesc: false,
-            sortDirection: 'asc',
-            filter: null,
-            modalInfo: { title: '', content: '' }
-        };
-    },
-    mounted: function mounted() {
-        //  if (this.posts.length > 1) {
-        //     return;
-        // }
-        this.$store.dispatch('getPosts');
-    },
+  name: 'list',
+  data: function data() {
+    return {
+      // posts: posts,
+      fields: [{ key: 'title', label: 'Judul', sortable: true }, { key: 'status', label: 'Status', sortable: true }, { key: 'created_at', label: 'Dibuat', sortable: true, 'class': 'text-center', sortDirection: 'desc' }, { key: 'updated_at', label: 'Diupdate', sortable: true, 'class': 'text-center' }, { key: 'actions', label: 'Actions' }],
+      currentPage: 1,
+      perPage: 5,
+      totalRows: posts.length,
+      pageOptions: [5, 10, 15],
+      sortBy: null,
+      sortDesc: false,
+      sortDirection: 'asc',
+      filter: null,
+      modalInfo: { title: '', content: '' }
+    };
+  },
+  mounted: function mounted() {
+    //  if (this.posts.length > 1) {
+    //     return;
+    // }
+    this.$store.dispatch('getPosts');
+  },
 
-    computed: {
-        posts: function posts() {
-            return this.$store.getters.posts;
-        },
-        currentUser: function currentUser() {
-            return this.$store.getters.currentUser;
-        },
-        sortOptions: function sortOptions() {
-            // Create an options list from our fields
-            return this.fields.filter(function (f) {
-                return f.sortable;
-            }).map(function (f) {
-                return { text: f.label, value: f.key };
-            });
-        }
+  computed: {
+    posts: function posts() {
+      return this.$store.getters.posts;
     },
-    methods: {
-        info: function info(item, index, button) {
-            this.modalInfo.title = 'Row index: ' + index;
-            this.modalInfo.content = JSON.stringify(item, null, 2);
-            this.$root.$emit('bv::show::modal', 'modalInfo', button);
-        },
-        resetModal: function resetModal() {
-            this.modalInfo.title = '';
-            this.modalInfo.content = '';
-        },
-        onFiltered: function onFiltered(filteredItems) {
-            // Trigger pagination to update the number of buttons/pages due to filtering
-            this.totalRows = filteredItems.length;
-            this.currentPage = 1;
-        }
+    currentUser: function currentUser() {
+      return this.$store.getters.currentUser;
+    },
+    sortOptions: function sortOptions() {
+      // Create an options list from our fields
+      return this.fields.filter(function (f) {
+        return f.sortable;
+      }).map(function (f) {
+        return { text: f.label, value: f.key };
+      });
     }
+  },
+  methods: {
+    info: function info(item, index, button) {
+      this.modalInfo.title = 'Row index: ' + index;
+      this.modalInfo.content = JSON.stringify(item, null, 2);
+      this.$root.$emit('bv::show::modal', 'modalInfo', button);
+    },
+    resetModal: function resetModal() {
+      this.modalInfo.title = '';
+      this.modalInfo.content = '';
+    },
+    onFiltered: function onFiltered(filteredItems) {
+      // Trigger pagination to update the number of buttons/pages due to filtering
+      this.totalRows = filteredItems.length;
+      this.currentPage = 1;
+    },
+    del: function del(id, title) {
+      var self = this;
+      self.$swal({
+        title: "Yakin Hapus Post " + title + " ?",
+        text: "Data akan dihapus permanen!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+        closeOnConfirm: true
+      }).then(function (isConfirm) {
+        if (isConfirm) {
+          self.$store.dispatch("deletePost", id);
+          window.location.reload(true);
+          self.$swal({
+            title: "Berhasil!",
+            text: "Berhasil Menghapus Post " + title,
+            icon: "success"
+          });
+          return true;
+        } else {
+          return false;
+        }
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -107294,7 +107324,7 @@ var render = function() {
     [
       _c("div", { staticClass: "dashboard-content-inner" }, [
         _c("div", { staticClass: "dashboard-headline" }, [
-          _c("h3", [_vm._v("Profile")]),
+          _c("h3", [_vm._v("Post")]),
           _vm._v(" "),
           _c("nav", { staticClass: "dark", attrs: { id: "breadcrumbs" } }, [
             _c("ul", [
@@ -107308,7 +107338,7 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("li", [_vm._v("Profile")])
+              _c("li", [_vm._v("Post")])
             ])
           ])
         ]),
@@ -107552,13 +107582,17 @@ var render = function() {
                           ),
                           _vm._v(" "),
                           _c(
-                            "router-link",
+                            "a",
                             {
                               staticClass: "btn btn-danger ico",
                               attrs: {
-                                to: "/admin/post/edit/" + row.item.slug,
                                 title: "Hapus",
                                 "data-tippy-placement": "left"
+                              },
+                              on: {
+                                click: function($event) {
+                                  _vm.del(row.item.id, row.item.title)
+                                }
                               }
                             },
                             [_c("i", { staticClass: "icon-feather-trash" })]
@@ -107616,7 +107650,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("h3", [
       _c("i", { staticClass: "icon-material-outline-business" }),
-      _vm._v(" PROFILE ")
+      _vm._v(" POST ")
     ])
   },
   function() {
@@ -107989,7 +108023,7 @@ __WEBPACK_IMPORTED_MODULE_2_quill___default.a.register('modules/imageResize', __
                 description: ''
             },
             peran_id: '',
-            kategoris: null,
+            kategoris: '',
             errors: null
         };
     },
@@ -108062,6 +108096,11 @@ __WEBPACK_IMPORTED_MODULE_2_quill___default.a.register('modules/imageResize', __
 
             this.$store.dispatch("addPost", formData);
             this.$router.push('/admin/post');
+            this.$swal({
+                title: "Berhasil!",
+                text: "Berhasil Menambah Post " + this.$refs.title.value,
+                icon: "success"
+            });
         },
         getConstraints: function getConstraints() {
             return {
@@ -109993,6 +110032,9 @@ if (false) {
         },
         pushPost: function pushPost(state, formData) {
             state.posts.push(formData);
+        },
+        removePost: function removePost(state) {
+            state.posts;
         }
     },
     actions: __WEBPACK_IMPORTED_MODULE_1__actions__["a" /* default */]
@@ -110104,6 +110146,12 @@ var user = Object(__WEBPACK_IMPORTED_MODULE_0__helpers_auth__["a" /* getLocalUse
     addPost: function addPost(context, formData) {
         axios.post('/api/post/new', formData);
         context.commit('pushPost', formData);
+    },
+    deletePost: function deletePost(_ref4, id) {
+        var commit = _ref4.commit;
+
+        axios.delete('/api/post/delete/' + id);
+        commit('removePost');
     }
 });
 
@@ -111415,6 +111463,504 @@ exports.push([module.i, ".fade-enter-active, .fade-leave-active {\n    transitio
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 345 */,
+/* 346 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(347)
+}
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(349)
+/* template */
+var __vue_template__ = __webpack_require__(350)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-64b8ecf2"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/admins/post/View.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-64b8ecf2", Component.options)
+  } else {
+    hotAPI.reload("data-v-64b8ecf2", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 347 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(348);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(13)("56d19823", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-64b8ecf2\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./View.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-64b8ecf2\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./View.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 348 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(7)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\na[data-v-64b8ecf2] { color: #66676b; -webkit-transition: 0.3s; transition: 0.3s;\n}\na[data-v-64b8ecf2], button[data-v-64b8ecf2] { outline: none !important;\n}\na[data-v-64b8ecf2]:focus,\r\na[data-v-64b8ecf2]:hover { text-decoration: none; color: #333;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 349 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    created: function created() {
+        var _this = this;
+
+        if (this.posts.length) {
+            this.post = this.posts.find(function (post) {
+                return post.slug == _this.$route.params.slug;
+            });
+        } else {
+            axios.get('/api/post/' + this.$route.params.slug).then(function (response) {
+                _this.post = response.data.post;
+            });
+        }
+    },
+    data: function data() {
+        return {
+            post: '',
+            kategori: ''
+        };
+    },
+
+    computed: {
+        currentUser: function currentUser() {
+            return this.$store.getters.currentUser;
+        },
+        posts: function posts() {
+            return this.$store.getters.posts;
+        },
+        kategories: function kategories() {
+            return this.$store.getters.kategories;
+        },
+        perans: function perans() {
+            return this.$store.getters.perans;
+        }
+    },
+    methods: {}
+});
+
+/***/ }),
+/* 350 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "dashboard-content-container",
+      attrs: { "data-simplebar": "" }
+    },
+    [
+      _c("div", { staticClass: "dashboard-content-inner" }, [
+        _c("div", { staticClass: "dashboard-headline" }, [
+          _c("h3", [_vm._v("Post")]),
+          _vm._v(" "),
+          _c("nav", { staticClass: "dark", attrs: { id: "breadcrumbs" } }, [
+            _c("ul", [
+              _c(
+                "li",
+                [
+                  _c("router-link", { attrs: { to: "/admin" } }, [
+                    _vm._v("Admin")
+                  ])
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                [
+                  _c("router-link", { attrs: { to: "/admin/post" } }, [
+                    _vm._v("Post")
+                  ])
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("li", [_vm._v(_vm._s(_vm.post.title))])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-xl-12" }, [
+            _c("div", { staticClass: "dashboard-box margin-top-0" }, [
+              _c("div", { staticClass: "blog-post single-post" }, [
+                _c("div", { staticClass: "blog-post-thumbnail" }, [
+                  _c("div", { staticClass: "blog-post-thumbnail-inner" }, [
+                    _c("span", { staticClass: "blog-item-tag" }, [
+                      _vm._v("Gambar Utama")
+                    ]),
+                    _vm._v(" "),
+                    _c("img", {
+                      attrs: { src: "../../uploads/" + _vm.post.image, alt: "" }
+                    })
+                  ])
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-xl-8" }, [
+            _c("div", { staticClass: "dashboard-box main-box-in-row" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "content" }, [
+                _c("div", {
+                  staticClass: "chart",
+                  domProps: { innerHTML: _vm._s(_vm.post.description) }
+                })
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-xl-4" }, [
+            _c("div", { staticClass: "dashboard-box child-box-in-row" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "dashboard-box-scrollbar",
+                  staticStyle: { "max-height": "400px" }
+                },
+                [
+                  _c("div", { staticClass: "content" }, [
+                    _c("div", { staticClass: "chart" }, [
+                      _c(
+                        "ul",
+                        [
+                          _vm._l(_vm.post.kategoris, function(kategori) {
+                            return _c("li", { key: kategori.id }, [
+                              _c("b", [_vm._v("Kategori :")]),
+                              _vm._v(" " + _vm._s(kategori.title))
+                            ])
+                          }),
+                          _vm._v(" "),
+                          _c("li", [
+                            _c("b", [_vm._v("Status :")]),
+                            _vm._v(" " + _vm._s(_vm.post.status))
+                          ]),
+                          _vm._v(" "),
+                          _c("li", [
+                            _c("b", [_vm._v("Dibuat :")]),
+                            _vm._v(" " + _vm._s(_vm.post.created_at))
+                          ]),
+                          _vm._v(" "),
+                          _c("li", [
+                            _c("b", [_vm._v("Diupdate :")]),
+                            _vm._v(" " + _vm._s(_vm.post.updated_at))
+                          ])
+                        ],
+                        2
+                      )
+                    ])
+                  ])
+                ]
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "dashboard-footer-spacer" }),
+        _vm._v(" "),
+        _vm._m(2)
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "headline" }, [
+      _c("h3", [
+        _c("i", { staticClass: "icon-feather-bar-chart-2" }),
+        _vm._v(" Deskripsi")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "headline" }, [
+      _c("h3", [
+        _c("i", { staticClass: "icon-material-outline-note-add" }),
+        _vm._v(" Catatan")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "small-footer margin-top-15" }, [
+      _c("div", { staticClass: "small-footer-copyrights" }, [
+        _vm._v("\n\t\t\t\t\t© 2018 "),
+        _c("strong", [_vm._v("Hireo")]),
+        _vm._v(". All Rights Reserved.\n\t\t\t\t")
+      ]),
+      _vm._v(" "),
+      _c("ul", { staticClass: "footer-social-links" }, [
+        _c("li", [
+          _c(
+            "a",
+            {
+              attrs: {
+                href: "#",
+                title: "Facebook",
+                "data-tippy-placement": "top"
+              }
+            },
+            [_c("i", { staticClass: "icon-brand-facebook-f" })]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c(
+            "a",
+            {
+              attrs: {
+                href: "#",
+                title: "Twitter",
+                "data-tippy-placement": "top"
+              }
+            },
+            [_c("i", { staticClass: "icon-brand-twitter" })]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c(
+            "a",
+            {
+              attrs: {
+                href: "#",
+                title: "Google Plus",
+                "data-tippy-placement": "top"
+              }
+            },
+            [_c("i", { staticClass: "icon-brand-google-plus-g" })]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c(
+            "a",
+            {
+              attrs: {
+                href: "#",
+                title: "LinkedIn",
+                "data-tippy-placement": "top"
+              }
+            },
+            [_c("i", { staticClass: "icon-brand-linkedin-in" })]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix" })
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-64b8ecf2", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

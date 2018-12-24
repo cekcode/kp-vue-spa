@@ -180,7 +180,7 @@ Quill.register('modules/imageResize', ImageResize);
                     description: ''
                 },
                 peran_id:'',
-                kategoris:null,
+                kategoris:'',
                 errors: null
             };
         },
@@ -252,6 +252,11 @@ Quill.register('modules/imageResize', ImageResize);
                 
                 this.$store.dispatch("addPost", formData);
                 this.$router.push('/admin/post');
+                this.$swal({
+							title: "Berhasil!",
+							text: "Berhasil Menambah Post "+this.$refs.title.value,
+							icon: "success",
+						});
             },
             getConstraints() {
                 return {

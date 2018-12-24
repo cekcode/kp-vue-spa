@@ -24,6 +24,7 @@ import PeranEdit from './admins/perandankategori/Editperan.vue';
 import PeranNew from './admins/perandankategori/Newperan.vue';
 import AdminPost from './admins/post/List.vue';
 import PostNew from './admins/post/New.vue';
+import PostView from './admins/post/View.vue';
 
 export const routes = [
     {
@@ -143,6 +144,10 @@ export const routes = [
             {
                 path: 'post/new',
                 component: PostNew
+            },
+            {
+                path: 'post/:slug',
+                component: PostView
             }
         ]
     }

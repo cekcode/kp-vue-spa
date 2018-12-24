@@ -241,7 +241,7 @@ let Addkategori = require('./Newkategori.vue');
 			delkategori(id,title){
 				var self = this;
 				self.$swal({
-					title: "Ingin Hapus Kategori "+title+" ?",
+					title: "Yakin Hapus Kategori "+title+" ?",
 					text: "Data akan dihapus permanen!",
 					icon: "warning",
 					buttons: true,

@@ -13,7 +13,7 @@ class PostController extends Controller
 {
     public function all()
     {
-        $posts = Post::all();
+        $posts = Post::with('kategoris')->get();
         
         return response()->json([
             "posts" => $posts
@@ -47,5 +47,18 @@ class PostController extends Controller
             "post" => $post
         ], 200);
 
+    }
+
+    public function get($slug)
+    {
+        $post = Post::where('slug', $slug)->first();
+        return response()->json([
+            "post" => $post
+        ], 200);
+    }
+
+    public function destroy($id)
+    {
+        Post::where('id',$id)->delete();
     }
 }

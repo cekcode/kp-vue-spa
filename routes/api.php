@@ -42,6 +42,8 @@ Route::group(['middleware' => 'jwt.auth'], function ($router) {
     Route::get('posts', 'PostController@all');
     Route::get('post/get-kategori/{id}', 'PostController@getkategori');
     Route::post('post/new', 'PostController@new');
+    Route::delete('post/delete/{id}', 'PostController@destroy');
+    Route::get('post/{slug}', 'PostController@get');
  
     Route::post('images', 'ImageController@upload');
 });

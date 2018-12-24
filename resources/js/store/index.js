@@ -91,6 +91,9 @@ export default {
         },
         pushPost(state, formData){
             state.posts.push(formData);
+        },
+        removePost(state){
+            state.posts;
         }
     },
     actions
