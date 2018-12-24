@@ -88,6 +88,9 @@ export default {
         },
         updatePosts(state, payload) {
             state.posts = payload;
+        },
+        pushPost(state, formData){
+            state.posts.push(formData);
         }
     },
     actions

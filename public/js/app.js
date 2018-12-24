@@ -107956,12 +107956,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 
@@ -107989,7 +107983,7 @@ __WEBPACK_IMPORTED_MODULE_2_quill___default.a.register('modules/imageResize', __
                 title: '',
                 id: ''
             },
-            profile: {
+            post: {
                 title: '',
                 image: '',
                 description: ''
@@ -108016,6 +108010,9 @@ __WEBPACK_IMPORTED_MODULE_2_quill___default.a.register('modules/imageResize', __
         }
     },
     methods: {
+        changekategori: function changekategori(event) {
+            this.$refs.kategori_id.value = event.target.value;
+        },
         onChange: function onChange(event) {
             var _this = this;
 
@@ -108046,10 +108043,10 @@ __WEBPACK_IMPORTED_MODULE_2_quill___default.a.register('modules/imageResize', __
             this.selectedFile = event.target.files[0];
             this.url = URL.createObjectURL(this.selectedFile);
         },
-        add: function add() {
+        save: function save() {
             this.errors = null;
             var constraints = this.getConstraints();
-            var errors = __WEBPACK_IMPORTED_MODULE_0_validate_js___default()(this.$data.profile, constraints);
+            var errors = __WEBPACK_IMPORTED_MODULE_0_validate_js___default()(this.$data.post, constraints);
             if (errors) {
                 this.errors = errors;
                 return;
@@ -108060,17 +108057,11 @@ __WEBPACK_IMPORTED_MODULE_2_quill___default.a.register('modules/imageResize', __
             formData.append("image", this.selectedFile, this.selectedFile.name);
             formData.append("title", this.$refs.title.value);
             formData.append("description", this.$refs.description.value);
+            formData.append("kategori_id", this.$refs.kategori_id.value);
+            formData.append("status", this.$refs.status.value);
 
-            this.$store.dispatch("addProfile", formData);
-            this.$router.push('/admin/profile');
-            // this.$router.push('/admin/profile');
-            // axios.post('/api/profiles/new', formData)
-            //     .then((response) => {
-            //         this.$router.push('/admin/profile');
-            //         location.reload();
-            //     }).catch(e => {
-            //         console.log(e);
-            //     });
+            this.$store.dispatch("addPost", formData);
+            this.$router.push('/admin/post');
         },
         getConstraints: function getConstraints() {
             return {
@@ -108151,7 +108142,7 @@ var render = function() {
                       on: {
                         submit: function($event) {
                           $event.preventDefault()
-                          return _vm.add($event)
+                          return _vm.save($event)
                         }
                       }
                     },
@@ -108223,70 +108214,84 @@ var render = function() {
                         _vm._v(" "),
                         _c("div", { staticClass: "col-xl-12" }, [
                           _c("div", { staticClass: "submit-field" }, [
-                            _c("h5", [_vm._v("Kategori")]),
-                            _vm._v(" "),
                             _vm.kategoris
                               ? _c(
                                   "div",
-                                  _vm._l(_vm.kategoris, function(kategori) {
-                                    return _c(
-                                      "select",
-                                      {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.Kategori_id,
-                                            expression: "Kategori_id"
-                                          }
-                                        ],
-                                        key: kategori.id,
-                                        attrs: {
-                                          name: "status",
-                                          id: "status",
-                                          required: ""
-                                        },
-                                        on: {
-                                          change: function($event) {
-                                            var $$selectedVal = Array.prototype.filter
-                                              .call(
-                                                $event.target.options,
-                                                function(o) {
-                                                  return o.selected
-                                                }
-                                              )
-                                              .map(function(o) {
-                                                var val =
-                                                  "_value" in o
-                                                    ? o._value
-                                                    : o.value
-                                                return val
-                                              })
-                                            _vm.Kategori_id = $event.target
-                                              .multiple
-                                              ? $$selectedVal
-                                              : $$selectedVal[0]
-                                          }
-                                        }
-                                      },
-                                      _vm._l(kategori.kategoris, function(
-                                        value
-                                      ) {
-                                        return _c(
-                                          "option",
-                                          {
-                                            key: value.id,
-                                            domProps: { value: value.id }
+                                  [
+                                    _c("h5", [_vm._v("Kategori")]),
+                                    _vm._v(" "),
+                                    _vm._l(_vm.kategoris, function(kategori) {
+                                      return _c(
+                                        "select",
+                                        {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.Kategori_id,
+                                              expression: "Kategori_id"
+                                            }
+                                          ],
+                                          key: kategori.id,
+                                          ref: "kategori_id",
+                                          refInFor: true,
+                                          attrs: {
+                                            id: "kategori_id",
+                                            required: ""
                                           },
-                                          [_vm._v(_vm._s(value.title))]
-                                        )
-                                      }),
-                                      0
-                                    )
-                                  }),
-                                  0
+                                          on: {
+                                            change: [
+                                              function($event) {
+                                                var $$selectedVal = Array.prototype.filter
+                                                  .call(
+                                                    $event.target.options,
+                                                    function(o) {
+                                                      return o.selected
+                                                    }
+                                                  )
+                                                  .map(function(o) {
+                                                    var val =
+                                                      "_value" in o
+                                                        ? o._value
+                                                        : o.value
+                                                    return val
+                                                  })
+                                                _vm.Kategori_id = $event.target
+                                                  .multiple
+                                                  ? $$selectedVal
+                                                  : $$selectedVal[0]
+                                              },
+                                              _vm.changekategori
+                                            ]
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "option",
+                                            { attrs: { value: "" } },
+                                            [_vm._v("--Pilih Kategori--")]
+                                          ),
+                                          _vm._v(" "),
+                                          _vm._l(kategori.kategoris, function(
+                                            value
+                                          ) {
+                                            return _c(
+                                              "option",
+                                              {
+                                                key: value.id,
+                                                domProps: { value: value.id }
+                                              },
+                                              [_vm._v(_vm._s(value.title))]
+                                            )
+                                          })
+                                        ],
+                                        2
+                                      )
+                                    })
+                                  ],
+                                  2
                                 )
-                              : _c("div", [_vm._m(1)])
+                              : _c("div")
                           ])
                         ]),
                         _vm._v(" "),
@@ -108299,21 +108304,21 @@ var render = function() {
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: _vm.profile.title,
-                                  expression: "profile.title"
+                                  value: _vm.post.title,
+                                  expression: "post.title"
                                 }
                               ],
                               ref: "title",
                               staticClass: "with-border form-control",
                               attrs: { type: "text", required: "" },
-                              domProps: { value: _vm.profile.title },
+                              domProps: { value: _vm.post.title },
                               on: {
                                 input: function($event) {
                                   if ($event.target.composing) {
                                     return
                                   }
                                   _vm.$set(
-                                    _vm.profile,
+                                    _vm.post,
                                     "title",
                                     $event.target.value
                                   )
@@ -108395,11 +108400,11 @@ var render = function() {
                                 },
                                 on: { imageAdded: _vm.handleImageAdded },
                                 model: {
-                                  value: _vm.profile.description,
+                                  value: _vm.post.description,
                                   callback: function($$v) {
-                                    _vm.$set(_vm.profile, "description", $$v)
+                                    _vm.$set(_vm.post, "description", $$v)
                                   },
-                                  expression: "profile.description"
+                                  expression: "post.description"
                                 }
                               })
                             ],
@@ -108407,9 +108412,27 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
-                        _vm._m(2),
+                        _c("div", { staticClass: "col-xl-12" }, [
+                          _c("div", { staticClass: "submit-field" }, [
+                            _c("h5", [_vm._v("Status")]),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              { ref: "status", attrs: { required: "" } },
+                              [
+                                _c("option", { attrs: { value: "aktif" } }, [
+                                  _vm._v("Aktif")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "aktif" } }, [
+                                  _vm._v("Tidak")
+                                ])
+                              ]
+                            )
+                          ])
+                        ]),
                         _vm._v(" "),
-                        _vm._m(3)
+                        _vm._m(1)
                       ])
                     ]
                   )
@@ -108421,7 +108444,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "dashboard-footer-spacer" }),
         _vm._v(" "),
-        _vm._m(4)
+        _vm._m(2)
       ])
     ]
   )
@@ -108435,34 +108458,6 @@ var staticRenderFns = [
       _c("h3", [
         _c("i", { staticClass: "icon-feather-folder-plus" }),
         _vm._v(" Form Tambah Post Baru")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("select", { attrs: { name: "", id: "" } }, [
-      _c("option", { attrs: { value: "" } }, [_vm._v("--Pilih Kategori--")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-xl-12" }, [
-      _c("div", { staticClass: "submit-field" }, [
-        _c("h5", [_vm._v("Status")]),
-        _vm._v(" "),
-        _c(
-          "select",
-          { attrs: { name: "status", id: "status", required: "" } },
-          [
-            _c("option", { attrs: { value: "aktif" } }, [_vm._v("Aktif")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "aktif" } }, [_vm._v("Tidak")])
-          ]
-        )
       ])
     ])
   },
@@ -109995,6 +109990,9 @@ if (false) {
         },
         updatePosts: function updatePosts(state, payload) {
             state.posts = payload;
+        },
+        pushPost: function pushPost(state, formData) {
+            state.posts.push(formData);
         }
     },
     actions: __WEBPACK_IMPORTED_MODULE_1__actions__["a" /* default */]
@@ -110103,9 +110101,9 @@ var user = Object(__WEBPACK_IMPORTED_MODULE_0__helpers_auth__["a" /* getLocalUse
             context.commit('updatePosts', response.data.posts);
         });
     },
-    getKategoribyidperan: function getKategoribyidperan(context, id) {
-        axios.get('/api/post/get-kategori/' + id);
-        context.commit('updateKategori');
+    addPost: function addPost(context, formData) {
+        axios.post('/api/post/new', formData);
+        context.commit('pushPost', formData);
     }
 });
 

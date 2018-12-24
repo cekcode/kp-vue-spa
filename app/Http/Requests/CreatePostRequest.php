@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
-class CreatePostsRequest extends FormRequest
+class CreatePostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,18 +14,15 @@ class CreatePostsRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules()
+    public function rules(Request $request)
     {
         return [
-            //
+            "title" => "required|min:3|max:100|unique:posts,title,'.$request->id",
+            "image" => "mimes:jpeg,png,jpg,gif",
+            "description" => "required"
         ];
     }
 }

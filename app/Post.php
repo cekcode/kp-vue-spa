@@ -11,6 +11,6 @@ class Post extends Model
 
     public function kategoris()
     {
-    	return $this->belongsToMany('App\Kategori','kategori_posts', 'kategori_id', 'post_id')->withTimestamps();;
+    	return $this->belongsToMany('App\Kategori','kategori_posts', 'post_id', 'kategori_id')->withTimestamps();;
     }
 }

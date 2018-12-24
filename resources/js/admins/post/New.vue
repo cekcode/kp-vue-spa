@@ -31,7 +31,7 @@
 						</div>
 
 						<div class="content with-padding padding-bottom-10">
-                            <form @submit.prevent="add" enctype="multipart/form-data">
+                            <form @submit.prevent="save" enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col-xl-12">
                                         <div class="submit-field">
@@ -45,17 +45,14 @@
 
                                     <div class="col-xl-12">
                                         <div class="submit-field">
-                                            <h5>Kategori</h5>
                                             <div v-if="kategoris">
-                                                <select name="status" v-for="kategori in kategoris" :key="kategori.id" v-model="Kategori_id" id="status" required>
-                                                    <option v-for="value in kategori.kategoris" v-bind:value="value.id" :key="value.id">{{ value.title }}</option>
-                                                </select>
-                                            </div>
-                                            <div v-else>
-                                                <select name="" id="">
+                                                <h5>Kategori</h5>
+                                                <select ref="kategori_id" @change="changekategori" v-for="kategori in kategoris" :key="kategori.id" v-model="Kategori_id" id="kategori_id" required>
                                                     <option value="">--Pilih Kategori--</option>
+                                                    <option v-for="value in kategori.kategoris" :value="value.id" :key="value.id">{{ value.title }}</option>
                                                 </select>
                                             </div>
+                                            <div v-else></div>
                                         </div>
                                     </div>
 
@@ -63,7 +60,7 @@
                                     <div class="col-xl-12">
                                         <div class="submit-field">
                                             <h5>Judul</h5>
-                                            <input type="text" ref="title" class="with-border form-control" v-model="profile.title" required>
+                                            <input type="text" ref="title" class="with-border form-control" v-model="post.title" required>
                                         </div>
                                     </div>
 
@@ -84,17 +81,14 @@
                                     <div class="col-xl-12">
                                         <div class="submit-field">
                                             <h5>Description</h5>
-                                            <!-- <wysiwyg v-model="profile.description" /> -->
-                                            <vue-editor id="editor" :editorOptions="editorSettings" useCustomImageHandler @imageAdded="handleImageAdded" ref="description" v-model="profile.description"></vue-editor>
-                                            <!-- <textarea cols="30" rows="5" class="with-border" v-model="profile.description"></textarea> -->
-                                            
+                                            <vue-editor id="editor" :editorOptions="editorSettings" useCustomImageHandler @imageAdded="handleImageAdded" ref="description" v-model="post.description"></vue-editor>
                                         </div>
                                     </div>
 
                                     <div class="col-xl-12">
                                         <div class="submit-field">
                                             <h5>Status</h5>
-                                            <select name="status" id="status" required>
+                                            <select ref="status" required>
                                                 <option value="aktif">Aktif</option>
                                                 <option value="aktif">Tidak</option>
                                             </select>
@@ -180,7 +174,7 @@ Quill.register('modules/imageResize', ImageResize);
                     title: '',
                     id:''
                 },
-                profile: {
+                post: {
                     title: '',
                     image: '',
                     description: ''
@@ -206,6 +200,9 @@ Quill.register('modules/imageResize', ImageResize);
             } 
         },
         methods: {
+            changekategori:function(event){
+                this.$refs.kategori_id.value = event.target.value;
+            },
             onChange:function(event){
                 axios.get('/api/post/get-kategori/'+event.target.value)
                 .then(response => 
@@ -236,10 +233,10 @@ Quill.register('modules/imageResize', ImageResize);
                 this.selectedFile = event.target.files[0];
                 this.url = URL.createObjectURL(this.selectedFile);
             },
-            add() {
+            save() {
                 this.errors = null;
                 const constraints = this.getConstraints();
-                const errors = validate(this.$data.profile, constraints);
+                const errors = validate(this.$data.post, constraints);
                 if(errors) {
                     this.errors = errors;
                     return;
@@ -250,17 +247,11 @@ Quill.register('modules/imageResize', ImageResize);
                 formData.append("image", this.selectedFile, this.selectedFile.name);
                 formData.append("title", this.$refs.title.value);
                 formData.append("description", this.$refs.description.value);
+                formData.append("kategori_id", this.$refs.kategori_id.value);
+                formData.append("status", this.$refs.status.value);
                 
-                this.$store.dispatch("addProfile", formData);
-                this.$router.push('/admin/profile');
-                // this.$router.push('/admin/profile');
-                // axios.post('/api/profiles/new', formData)
-                //     .then((response) => {
-                //         this.$router.push('/admin/profile');
-                //         location.reload();
-                //     }).catch(e => {
-                //         console.log(e);
-                //     });
+                this.$store.dispatch("addPost", formData);
+                this.$router.push('/admin/post');
             },
             getConstraints() {
                 return {

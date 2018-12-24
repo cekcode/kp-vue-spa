@@ -73,8 +73,8 @@ export default {
             context.commit('updatePosts', response.data.posts);
         })
     },
-    getKategoribyidperan(context, id){
-        axios.get('/api/post/get-kategori/'+id);
-        context.commit('updateKategori');
+    addPost(context, formData){
+        axios.post('/api/post/new', formData);
+        context.commit('pushPost', formData);
     }
 }
